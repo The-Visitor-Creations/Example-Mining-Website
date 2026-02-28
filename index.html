@@ -1097,117 +1097,6 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* SECTION 6 — ESG COMMITMENT                                        */
-/* ================================================================ */
-.esg {
-  background: var(--dark-deep);
-  padding: 120px 60px;
-  border-top: 1px solid var(--border-card);
-}
-.esg-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.esg-header {
-  margin-bottom: 64px;
-  max-width: 600px;
-}
-.esg-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-bottom: 64px;
-}
-.esg-card {
-  padding: 40px 28px;
-  background: var(--dark-card);
-  border: 1px solid var(--border-card);
-  border-radius: 6px;
-}
-.esg-card-icon {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(158,27,50,0.1);
-  border-radius: 8px;
-}
-.esg-card-icon svg {
-  width: 26px;
-  height: 26px;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.esg-card h3 {
-  font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
-.esg-card ul { display: flex; flex-direction: column; gap: 10px; }
-.esg-card li {
-  font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.5;
-  padding-left: 16px;
-  position: relative;
-}
-.esg-card li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.esg-metrics {
-  display: flex;
-  gap: 48px;
-  padding-top: 40px;
-  border-top: 1px solid var(--border-card);
-  flex-wrap: wrap;
-}
-.esg-metric {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-.esg-metric-value {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--white);
-}
-.esg-metric-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-label);
-  letter-spacing: 0.5px;
-}
-.esg-metric-note {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: 0.5px;
-}
-
-@media (max-width: 1024px) {
-  .esg { padding: 80px 24px; }
-}
-@media (max-width: 768px) {
-  .esg-cards { grid-template-columns: 1fr; }
-  .esg-metrics { flex-direction: column; gap: 24px; }
-}
-
-/* ================================================================ */
 /* SECTION 7 — LEADERSHIP                                            */
 /* ================================================================ */
 .leadership {
@@ -1880,7 +1769,6 @@ sup.ast {
     <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
     <a href="technology.html">Technology</a>
-    <a href="#esg">ESG</a>
     <div class="nav-dropdown">
       <a href="#investors" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
       <div class="nav-dropdown-menu">
@@ -1917,7 +1805,6 @@ sup.ast {
       <li><a href="about.html">About</a></li>
       <li><a href="projects.html">Projects</a></li>
       <li><a href="technology.html">Technology</a></li>
-      <li><a href="#esg">ESG</a></li>
       <li>
         <div class="nav-sub-trigger" id="investorsTrigger">Investors <span class="sub-chevron">&#9662;</span></div>
         <div class="nav-sub-links" id="investorsSubLinks">
@@ -2103,70 +1990,6 @@ sup.ast {
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- SECTION 6 — ESG COMMITMENT                              -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section class="esg" id="esg">
-  <div class="esg-inner">
-    <div class="esg-header fade-up">
-      <div class="eyebrow">ESG Commitment</div>
-      <h2>Responsible Development at Every Stage</h2>
-    </div>
-
-    <div class="esg-cards">
-      <div class="esg-card fade-up">
-        <div class="esg-card-icon">
-          <svg viewBox="0 0 28 28"><path d="M14 4c-4 6-8 10-8 14a8 8 0 0016 0c0-4-4-8-8-14z"/></svg>
-        </div>
-        <h3>Environment</h3>
-        <ul>
-          <li>Closed-loop water system &mdash; zero net freshwater use</li>
-          <li>&lt;10% surface footprint vs. conventional extraction</li>
-          <li>No tailings or long-term waste liabilities</li>
-        </ul>
-      </div>
-      <div class="esg-card fade-up">
-        <div class="esg-card-icon">
-          <svg viewBox="0 0 28 28"><circle cx="14" cy="10" r="5"/><path d="M6 24c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
-        </div>
-        <h3>Social</h3>
-        <ul>
-          <li>Local hiring and workforce training programs</li>
-          <li>Indigenous partnership dialogue</li>
-          <li>Community investment and development programs</li>
-        </ul>
-      </div>
-      <div class="esg-card fade-up">
-        <div class="esg-card-icon">
-          <svg viewBox="0 0 28 28"><rect x="4" y="4" width="20" height="20" rx="3"/><path d="M4 12h20"/><path d="M10 4v20"/></svg>
-        </div>
-        <h3>Governance</h3>
-        <ul>
-          <li>Independent board majority</li>
-          <li>ESG-linked executive compensation</li>
-          <li>Annual ESG reporting and disclosure</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="esg-metrics fade-up">
-      <div class="esg-metric">
-        <div>
-          <div class="esg-metric-value">0.8 m&sup3;/t LCE</div>
-          <div class="esg-metric-label">Water Intensity</div>
-        </div>
-        <div class="esg-metric-note">91% below conventional avg.</div>
-      </div>
-      <div class="esg-metric">
-        <div>
-          <div class="esg-metric-value">2.1 t CO&#8322;e/t</div>
-          <div class="esg-metric-label">CO&#8322; Intensity</div>
-        </div>
-        <div class="esg-metric-note">Benchmark-leading</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <!-- ═══════════════════════════════════════════════════════ -->
@@ -2279,7 +2102,6 @@ sup.ast {
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
         <a href="technology.html">Technology</a>
-        <a href="#esg">ESG</a>
         <a href="#investors">Investors</a>
         <a href="contact.html">Contact</a>
       </nav>
@@ -2762,7 +2584,7 @@ gsap.utils.toArray('.fade-up').forEach(function(el) {
 /* ═══════════════════════════════════════════════════════ */
 /* 6. HEADING WORD REVEALS                                 */
 /* ═══════════════════════════════════════════════════════ */
-document.querySelectorAll('.who-we-are-copy h2, .opportunity-header h2, .esg-header h2, .leadership-header h2, .investors-cta h2, .flagship > h2').forEach(function(heading) {
+document.querySelectorAll('.who-we-are-copy h2, .opportunity-header h2, .leadership-header h2, .investors-cta h2, .flagship > h2').forEach(function(heading) {
   var text = heading.textContent;
   var words = text.split(' ');
   heading.innerHTML = words.map(function(w) {
