@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Boet Materials Corp.</title>
+<link rel="icon" type="image/png" href="boet-icon-logo.png">
+<link rel="apple-touch-icon" href="boet-icon-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================================ */
+/* CSS CUSTOM PROPERTIES — matches home page                        */
+/* ================================================================ */
+:root {
+  --dark: #0c0a09;
+  --dark-mid: #141210;
+  --dark-deep: #080706;
+  --dark-card: #1a1715;
+  --cream: #f7f2ec;
+  --gold: #CDAA88;
+  --gold-hover: #d9bc9e;
+  --accent: #9E1B32;
+  --accent-hover: #B42240;
+  --accent-deep: #7a1527;
+  --white: #f2ede8;
+  --text-dark: #f2ede8;
+  --text-muted: #9a8e80;
+  --text-label: #6b5f52;
+  --border-light: rgba(255,255,255,0.06);
+  --border-card: rgba(255,255,255,0.08);
+
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --header-h: 80px;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================================ */
+/* RESET & BASE                                                      */
+/* ================================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  background: var(--dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ================================================================ */
+/* TYPOGRAPHY                                                        */
+/* ================================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  line-height: 1.08;
+  color: var(--white);
+}
+h1 { font-size: clamp(38px, 6vw, 72px); text-transform: uppercase; }
+h2 { font-size: clamp(30px, 4.5vw, 52px); }
+h3 { font-size: clamp(20px, 2.5vw, 28px); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+/* Word-reveal animation */
+.word-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.word-reveal span {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+/* ================================================================ */
+/* BUTTONS                                                           */
+/* ================================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: var(--accent);
+  color: var(--white);
+  padding: 15px 32px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+.btn-primary .arrow { transition: transform 0.3s ease; }
+.btn-primary:hover .arrow { transform: translateX(4px); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: transparent;
+  color: var(--dark);
+  padding: 15px 32px;
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+.btn-outline:hover {
+  border-color: var(--dark);
+  background: rgba(0,0,0,0.04);
+  transform: translateY(-2px);
+}
+
+/* ================================================================ */
+/* HEADER                                                            */
+/* ================================================================ */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+/* Header scroll states */
+.header.header-cream {
+  background: rgba(247, 242, 236, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.header.header-cream .logo-img { filter: brightness(0) saturate(100%); }
+.header.header-cream .desktop-nav a { color: #6b5f52; }
+.header.header-cream .desktop-nav a:hover,
+.header.header-cream .desktop-nav a.nav-active { color: var(--dark); }
+.header.header-cream .hamburger span { background: var(--dark); }
+
+.header.header-dark {
+  background: rgba(8, 7, 6, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-card);
+}
+.header.header-dark .logo-img { filter: none; }
+.header.header-dark .desktop-nav a { color: var(--text-muted); }
+.header.header-dark .desktop-nav a:hover,
+.header.header-dark .desktop-nav a.nav-active { color: var(--white); }
+.header.header-dark .hamburger span { background: var(--white); }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--white);
+  z-index: 1001;
+}
+.logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.5s ease;
+}
+
+/* Desktop nav */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.desktop-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b5f52;
+  transition: color 0.5s ease;
+  position: relative;
+}
+.desktop-nav a:hover { color: var(--dark); }
+.desktop-nav a.nav-active { color: var(--dark); }
+
+/* Investors dropdown */
+.nav-dropdown { position: relative; }
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.nav-dropdown-trigger .chevron {
+  font-size: 8px;
+  transition: transform 0.3s ease;
+}
+.nav-dropdown:hover .chevron { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  padding-top: 12px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+.nav-dropdown-menu-inner {
+  background: var(--dark-card);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  padding: 8px 0;
+  min-width: 220px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Hamburger (mobile) */
+.hamburger {
+  width: 32px; height: 22px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+  display: none;
+}
+.hamburger span {
+  display: block;
+  width: 100%; height: 2px;
+  background: var(--white);
+  position: absolute; left: 0;
+  transition: transform 0.4s cubic-bezier(0.77,0,0.18,1), opacity 0.3s ease;
+}
+.hamburger span:nth-child(1) { top: 4px; }
+.hamburger span:nth-child(2) { bottom: 4px; }
+.hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+@media (max-width: 1024px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: block; }
+  .header { padding: 0 24px; }
+  .logo-img { height: auto; max-width: 240px; }
+}
+@media (max-width: 480px) {
+  .header { padding: 0 16px; --header-h: 64px; }
+  .logo-img { max-width: 180px; }
+}
+
+/* ================================================================ */
+/* TICKER STRIP                                                      */
+/* ================================================================ */
+.ticker-strip {
+  position: fixed;
+  top: var(--header-h);
+  left: 0; right: 0;
+  z-index: 999;
+  background: transparent;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  border-bottom: 1px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: background 0.5s ease, border-color 0.5s ease;
+}
+.ticker-strip .ticker-label { color: #6b5f52; font-weight: 600; transition: color 0.5s ease; }
+.ticker-strip .ticker-symbol { color: var(--accent); font-weight: 700; transition: color 0.5s ease; }
+.ticker-strip .ticker-sep { color: rgba(0,0,0,0.15); margin: 0 4px; transition: color 0.5s ease; }
+.ticker-strip .ticker-price { color: #5a5046; font-weight: 600; margin-left: 4px; transition: color 0.5s ease; }
+
+/* Ticker scroll states */
+.ticker-strip.ticker-cream {
+  background: rgba(247, 242, 236, 0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.ticker-strip.ticker-cream .ticker-label { color: #6b5f52; }
+.ticker-strip.ticker-cream .ticker-symbol { color: var(--accent); }
+.ticker-strip.ticker-sep { color: rgba(0,0,0,0.15); }
+.ticker-strip.ticker-cream .ticker-price { color: #5a5046; }
+
+.ticker-strip.ticker-dark {
+  background: var(--dark-deep);
+  border-bottom: 1px solid var(--border-card);
+}
+.ticker-strip.ticker-dark .ticker-label { color: var(--text-label); }
+.ticker-strip.ticker-dark .ticker-symbol { color: var(--gold); }
+.ticker-strip.ticker-dark .ticker-sep { color: rgba(255,255,255,0.15); }
+.ticker-strip.ticker-dark .ticker-price { color: rgba(255,255,255,0.45); }
+
+/* ================================================================ */
+/* MOBILE NAV OVERLAY                                                */
+/* ================================================================ */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--cream);
+  z-index: 999;
+  display: flex;
+  clip-path: inset(0 0 100% 0);
+  overflow: hidden;
+}
+
+/* Topographic pattern background layer */
+.nav-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('mining-pattern.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.06;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Animated gold light sweep */
+.nav-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(158, 27, 50, 0.04) 42%,
+    rgba(158, 27, 50, 0.08) 50%,
+    rgba(158, 27, 50, 0.04) 58%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  animation: goldSweep 6s ease-in-out infinite;
+}
+
+@keyframes goldSweep {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+.nav-overlay-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 60px;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-links a,
+.nav-links .nav-sub-trigger {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 48px);
+  text-transform: uppercase;
+  color: var(--dark);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: color 0.3s ease;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.nav-links a:hover,
+.nav-links .nav-sub-trigger:hover { color: var(--accent); }
+
+/* Investors sub-dropdown (mobile) */
+.nav-sub-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-sub-trigger .sub-chevron {
+  font-size: 0.5em;
+  transition: transform 0.35s ease;
+  display: inline-block;
+}
+.nav-sub-trigger.open .sub-chevron { transform: rotate(180deg); }
+
+.nav-sub-links {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding-left: 8px;
+}
+.nav-sub-links.open {
+  max-height: 280px;
+}
+.nav-sub-links a {
+  font-size: clamp(14px, 2.2vw, 18px) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  color: #5a5046 !important;
+  line-height: 1.6 !important;
+  padding: 4px 0;
+  letter-spacing: 0.5px;
+  display: block;
+  opacity: 1 !important;
+  transform: none !important;
+}
+.nav-sub-links a:hover { color: var(--accent) !important; }
+
+/* ================================================================ */
+/* LOAD-IN: start elements off-screen                                */
+/* ================================================================ */
+.header { transform: translateY(-100%); }
+.ticker-strip { transform: translateY(-100%); opacity: 0; }
+.ticker-strip > span { opacity: 0; transform: translateY(6px); }
+
+/* ================================================================ */
+/* LOAD-IN OVERLAY                                                   */
+/* ================================================================ */
+.load-overlay-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--dark);
+}
+.load-overlay-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  background-attachment: fixed;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.load-overlay-text {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+.load-overlay-text.fading { opacity: 0; }
+.load-company-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(36px, 6vw, 76px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--cream);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s cubic-bezier(0.25,0.1,0.25,1), transform 0.45s cubic-bezier(0.25,0.1,0.25,1);
+}
+.load-company-name.visible { opacity: 1; transform: translateY(0); }
+.load-accent-line {
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  margin: 16px auto 14px;
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.25,0.1,0.25,1) 0.2s;
+}
+.load-accent-line.visible { transform: scaleX(1); }
+.load-page-label {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  opacity: 0;
+  transition: opacity 0.3s ease 0.25s;
+}
+.load-page-label.visible { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .header { transform: none; }
+  .ticker-strip { transform: none; opacity: 1; }
+  .ticker-strip > span { opacity: 1; transform: none; }
+  .about-hero { clip-path: none; }
+  .about-hero-content .eyebrow,
+  .about-hero-content h1,
+  .about-hero-content .hero-sub { opacity: 1; transform: none; }
+  .load-overlay-text, .load-company-name, .load-accent-line,
+  .load-page-label {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ================================================================ */
+/* MAIN CONTENT OFFSET                                               */
+/* ================================================================ */
+.main-content {
+  padding-top: calc(var(--header-h) + 36px);
+  position: relative;
+  z-index: 2;
+}
+
+/* ================================================================ */
+/* HERO SECTION — About page                                         */
+/* ================================================================ */
+.about-hero {
+  position: relative;
+  padding: 120px 60px 100px;
+  min-height: 80vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--cream);
+  clip-path: inset(100% 0 0 0);
+}
+.about-hero.hero-entered {
+  clip-path: inset(0 0 0 0);
+}
+.about-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  background-attachment: fixed;
+  opacity: 0.06;
+  z-index: 0;
+}
+.about-hero-bg::after {
+  display: none;
+}
+.about-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+.about-hero-content .eyebrow {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.about-hero-content h1 {
+  font-size: clamp(44px, 7vw, 88px);
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(30px);
+  color: var(--dark);
+}
+.about-hero-content .hero-sub {
+  font-size: 18px;
+  color: #5a5046;
+  line-height: 1.8;
+  max-width: 620px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ================================================================ */
+/* WHO WE ARE — Two-column split                                     */
+/* ================================================================ */
+.who-split {
+  padding: 100px 60px;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.who-split::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  background-attachment: fixed;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.who-split-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+.who-split-left h2 {
+  font-size: clamp(32px, 4.5vw, 56px);
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--dark);
+}
+.who-split-left h2 .gold-word {
+  color: var(--gold);
+}
+.who-split-right p {
+  color: #5a5046;
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.who-split-right p:last-child { margin-bottom: 0; }
+
+/* Gold divider */
+.gold-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  margin: 28px 0;
+}
+
+/* ================================================================ */
+/* CORE VALUES — Grid                                                */
+/* ================================================================ */
+.values-section {
+  padding: 100px 60px;
+  background: var(--dark-mid);
+}
+.values-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.values-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.values-header h2 {
+  text-transform: uppercase;
+}
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.value-card {
+  background: var(--dark-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 40px 28px;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.25,1,0.5,1), border-color 0.4s ease;
+  opacity: 0;
+  transform: translateY(50px);
+}
+.value-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.15);
+}
+.value-icon {
+  font-size: 42px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.value-icon svg {
+  width: 48px; height: 48px;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  fill: none;
+}
+.value-card h3 {
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+.value-card p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ================================================================ */
+/* OUR APPROACH — Dark accent section                                */
+/* ================================================================ */
+.approach-section {
+  padding: 100px 60px;
+  background: var(--dark-deep);
+  position: relative;
+  overflow: hidden;
+}
+.approach-section::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 60%; height: 140%;
+  background: radial-gradient(ellipse, rgba(158,27,50,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.approach-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  position: relative;
+  z-index: 1;
+}
+.approach-left h2 {
+  font-size: clamp(32px, 4.5vw, 56px);
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 24px;
+}
+.approach-left .approach-sub {
+  font-size: 17px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+.approach-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.approach-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  align-items: start;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.step-number {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 32px;
+  color: var(--gold);
+  line-height: 1;
+}
+.step-content h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.step-content p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ================================================================ */
+/* GLOBAL STATS — Count-up strip                                     */
+/* ================================================================ */
+.stats-section {
+  padding: 80px 60px;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.stats-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  background-attachment: fixed;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.stats-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+.stat-item {
+  text-align: center;
+  padding: 32px 24px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateY(30px);
+}
+.stat-item:last-child { border-right: none; }
+.stat-number {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(42px, 5vw, 64px);
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #6b5f52;
+}
+
+/* ================================================================ */
+/* LEADERSHIP TEAM                                                   */
+/* ================================================================ */
+.team-section {
+  padding: 100px 60px;
+}
+.team-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.team-header {
+  margin-bottom: 64px;
+}
+.team-header h2 {
+  text-transform: uppercase;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.team-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--dark-card);
+  border: 1px solid var(--border-card);
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(50px);
+}
+.team-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.25,1,0.5,1);
+}
+.team-card:hover .team-card-img {
+  transform: scale(1.04);
+}
+.team-card-linkedin {
+  position: absolute;
+  top: 16px; left: 16px;
+  width: 36px; height: 36px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.team-card-linkedin:hover {
+  transform: scale(1.12);
+  opacity: 1;
+}
+.team-card-linkedin svg {
+  width: 20px; height: 20px;
+  fill: var(--white);
+}
+.team-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12,10,9,0.9) 0%, rgba(12,10,9,0.3) 40%, transparent 70%);
+  z-index: 1;
+}
+.team-card-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px;
+  z-index: 2;
+}
+.team-card-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.team-card-credentials {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.team-card-role {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Read Bio hover badge */
+.team-card-bio {
+  position: absolute;
+  top: 16px; right: 16px;
+  z-index: 4;
+  background: var(--accent);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 10px 18px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.team-card-bio .bio-arrow {
+  transition: transform 0.3s ease;
+}
+.team-card:hover .team-card-bio {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.team-card:hover .team-card-bio .bio-arrow {
+  transform: translateX(3px);
+}
+
+/* Bio overlay */
+.team-card-bio-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: rgba(12,10,9,0.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.team-card-bio-overlay.bio-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.bio-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 18px;
+  line-height: 1;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.bio-close:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08);
+}
+.bio-text {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.bio-overlay-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.bio-overlay-credentials {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bio-overlay-role {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+/* Hide the normal hover badge when bio is open */
+.team-card.bio-open .team-card-bio {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ================================================================ */
+/* CTA SECTION                                                       */
+/* ================================================================ */
+.cta-section {
+  padding: 100px 60px;
+  background: var(--cream);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  background-attachment: fixed;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.cta-section > * {
+  position: relative;
+  z-index: 1;
+}
+.cta-section .eyebrow {
+  margin-bottom: 24px;
+}
+.cta-section h2 {
+  font-size: clamp(36px, 5vw, 60px);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+.cta-section .cta-sub {
+  font-size: 17px;
+  color: #5a5046;
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.cta-section .btn-outline {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.cta-section .btn-outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--dark);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+.cta-section .btn-outline:hover::before {
+  transform: translateX(0);
+}
+.cta-section .btn-outline:hover {
+  color: var(--cream);
+  border-color: var(--dark);
+  background: transparent;
+}
+
+/* ================================================================ */
+/* FOOTER                                                            */
+/* ================================================================ */
+.footer {
+  background: var(--dark-deep);
+  padding: 60px 60px 40px;
+  border-top: 1px solid var(--border-card);
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.footer-brand .footer-logo-img { height: 24px; width: auto; margin-bottom: 8px; }
+.footer-tickers {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-label);
+  letter-spacing: 1px;
+}
+.footer-tickers .ticker-symbol { color: var(--gold); font-weight: 700; }
+.footer-nav {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+.footer-nav a:hover { color: var(--white); }
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-disclaimer {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  line-height: 1.6;
+  max-width: 800px;
+}
+.footer-copy {
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
+.footer-credit {
+  width: 100%;
+  text-align: center;
+  padding-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.5px;
+}
+.footer-credit a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.footer-credit a:hover { color: var(--gold-hover); }
+
+/* ================================================================ */
+/* FADE-UP HELPER                                                    */
+/* ================================================================ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+/* ================================================================ */
+/* RESPONSIVE                                                        */
+/* ================================================================ */
+@media (max-width: 1024px) {
+  .who-split-grid { grid-template-columns: 1fr; gap: 48px; }
+  .approach-inner { grid-template-columns: 1fr; gap: 48px; }
+  .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .about-hero { padding: 80px 24px 60px; min-height: 60vh; }
+  .who-split { padding: 60px 24px; }
+  .values-section { padding: 60px 24px; }
+  .approach-section { padding: 60px 24px; }
+  .stats-section { padding: 48px 24px; }
+  .stats-inner { grid-template-columns: 1fr; gap: 0; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); padding: 24px 16px; }
+  .stat-item:last-child { border-bottom: none; }
+  .team-section { padding: 60px 24px; }
+  .team-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 60px 24px; }
+  .footer { padding: 40px 24px 32px; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOAD-IN OVERLAY -->
+<div class="load-overlay-bg" id="loadOverlayBg"></div>
+<div class="load-overlay-text" id="loadOverlayText">
+  <div style="text-align:center; padding: 24px;">
+    <div class="load-company-name" id="loadCompanyName">Boet Materials</div>
+    <div class="load-accent-line" id="loadAccentLine"></div>
+    <div class="load-page-label" id="loadPageLabel">About Us</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HEADER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<header class="header" id="header">
+  <a href="/" class="logo">
+    <img src="boet-full-logo.png" alt="Boet Materials" class="logo-img">
+  </a>
+
+  <nav class="desktop-nav" id="desktop-nav">
+    <a href="about.html" class="nav-active">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="technology.html">Technology</a>
+    <a href="/#esg">ESG</a>
+    <div class="nav-dropdown">
+      <a href="/#investors" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-menu-inner">
+          <a href="/#investors">Investor Overview</a>
+          <a href="https://pitch-deck-example-the-visitor.vercel.app/">Corporate Presentation</a>
+          <a href="#">News & Press Releases</a>
+          <a href="#">Stock Information</a>
+        </div>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<!-- Ticker Strip -->
+<div class="ticker-strip" id="ticker-strip">
+  <span><span class="ticker-label">TSXV:</span> <span class="ticker-symbol">AUM</span> <span class="ticker-price">$2.34</span></span>
+  <span class="ticker-sep">|</span>
+  <span><span class="ticker-label">OTCQX:</span> <span class="ticker-symbol">AURMF</span> <span class="ticker-price">$1.68</span></span>
+  <span class="ticker-sep">|</span>
+  <span><span class="ticker-label">FSE:</span> <span class="ticker-symbol">9AUM</span> <span class="ticker-price">€1.55</span></span>
+</div>
+
+<!-- Mobile Nav Overlay -->
+<nav class="nav-overlay" id="nav-overlay">
+  <div class="nav-overlay-content">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="technology.html">Technology</a></li>
+      <li><a href="/#esg">ESG</a></li>
+      <li>
+        <div class="nav-sub-trigger" id="investorsTrigger">Investors <span class="sub-chevron">&#9662;</span></div>
+        <div class="nav-sub-links" id="investorsSubLinks">
+          <a href="/#investors">Investor Overview</a>
+          <a href="https://pitch-deck-example-the-visitor.vercel.app/">Corporate Presentation</a>
+          <a href="#">News &amp; Press Releases</a>
+          <a href="#">Stock Information</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="main-content">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 1. HERO                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="about-hero" id="about-hero">
+  <div class="about-hero-bg"></div>
+  <div class="about-hero-content">
+    <div class="eyebrow">About Boet Materials</div>
+    <h1 id="hero-h1">Our Story in Mining</h1>
+    <p class="hero-sub">Boet Materials Corp. is a multidisciplinary mine-building firm committed to delivering world-class mining projects with precision, integrity, and respect for people and the planet.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- GLOBAL STATS — Count-up strip                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="stats-section">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-number" data-count="102" data-suffix="+">0+</div>
+      <div class="stat-label">Projects Delivered</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-count="20" data-suffix="+">0+</div>
+      <div class="stat-label">Countries of Operation</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" data-count="500" data-suffix="+">0+</div>
+      <div class="stat-label">Experts Worldwide</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 2. WHO WE ARE — Two-column split                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="who-split">
+  <div class="who-split-grid">
+    <div class="who-split-left fade-up">
+      <h2>Built on <span class="gold-word">Expertise.</span> Driven by Purpose.</h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="who-split-right fade-up">
+      <p>Founded with a clear mission to advance the global energy transition, Boet Materials Corp. has grown from a regional exploration company into a vertically integrated critical minerals platform. Our team combines decades of geological, engineering, and environmental expertise.</p>
+      <p>With operations spanning from the resource-rich Clearwater Basin to emerging prospects in stable mining jurisdictions worldwide, we bring a global perspective with local precision. Every project begins with rigorous scientific assessment and community engagement.</p>
+      <p>We believe that responsible resource development is not just possible — it's essential. Our proprietary extraction technologies reduce environmental impact while maximizing recovery, setting a new standard for sustainable mining in the 21st century.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 6. LEADERSHIP TEAM                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="team-section" id="team">
+  <div class="team-inner">
+    <div class="team-header fade-up">
+      <div class="eyebrow">Leadership</div>
+      <h2>The Team Behind Boet</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="headshot-ceo.png" alt="James Thornton" class="team-card-img" loading="lazy">
+        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <div class="team-card-overlay"></div>
+        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
+        <div class="team-card-content">
+          <div class="team-card-credentials">P.Eng., MBA</div>
+          <div class="team-card-name">James Thornton</div>
+          <div class="team-card-role">Chief Executive Officer</div>
+        </div>
+        <div class="team-card-bio-overlay">
+          <button class="bio-close">&times;</button>
+          <div class="bio-text">With over 25 years in the mining and resources sector, James has led the development of multiple large-scale mineral projects across North America. He holds a P.Eng. designation and an MBA from the University of Toronto, bringing both technical depth and strategic vision to Boet Materials Corp.</div>
+          <div class="bio-overlay-credentials">P.Eng., MBA</div>
+          <div class="bio-overlay-name">James Thornton</div>
+          <div class="bio-overlay-role">Chief Executive Officer</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="headshot-2.png" alt="Robert Fraser" class="team-card-img" loading="lazy">
+        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <div class="team-card-overlay"></div>
+        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
+        <div class="team-card-content">
+          <div class="team-card-credentials">P.Geo., M.Sc.</div>
+          <div class="team-card-name">Robert Fraser</div>
+          <div class="team-card-role">VP Exploration</div>
+        </div>
+        <div class="team-card-bio-overlay">
+          <button class="bio-close">&times;</button>
+          <div class="bio-text">Robert is a professional geoscientist with 18 years of exploration experience across sedimentary basins in Western Canada. He specialises in lithium brine geochemistry and has been instrumental in defining the Clearwater Basin resource. He holds an M.Sc. in Geology from the University of Alberta.</div>
+          <div class="bio-overlay-credentials">P.Geo., M.Sc.</div>
+          <div class="bio-overlay-name">Robert Fraser</div>
+          <div class="bio-overlay-role">VP Exploration</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="headshot-3.png" alt="Jacklyn Davis" class="team-card-img" loading="lazy">
+        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <div class="team-card-overlay"></div>
+        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
+        <div class="team-card-content">
+          <div class="team-card-credentials">CPA, CFA</div>
+          <div class="team-card-name">Jacklyn Davis</div>
+          <div class="team-card-role">Chief Financial Officer</div>
+        </div>
+        <div class="team-card-bio-overlay">
+          <button class="bio-close">&times;</button>
+          <div class="bio-text">Jacklyn brings 20 years of capital markets and corporate finance expertise to Boet. Previously a managing director at a leading Canadian investment bank, she has structured over C$2 billion in mining financings. Her CPA and CFA designations underpin her rigorous approach to financial stewardship.</div>
+          <div class="bio-overlay-credentials">CPA, CFA</div>
+          <div class="bio-overlay-name">Jacklyn Davis</div>
+          <div class="bio-overlay-role">Chief Financial Officer</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="headshot-4.png" alt="John Peters" class="team-card-img" loading="lazy">
+        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <div class="team-card-overlay"></div>
+        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
+        <div class="team-card-content">
+          <div class="team-card-credentials">Ph.D., P.Eng.</div>
+          <div class="team-card-name">John Peters</div>
+          <div class="team-card-role">Chief Technology Officer</div>
+        </div>
+        <div class="team-card-bio-overlay">
+          <button class="bio-close">&times;</button>
+          <div class="bio-text">John holds a Ph.D. in Chemical Engineering and is the architect of Boet's proprietary sorbent-based direct lithium extraction process. With 15 years in process engineering and extractive metallurgy, he has driven innovations that reduce water use by 90% compared to conventional methods.</div>
+          <div class="bio-overlay-credentials">Ph.D., P.Eng.</div>
+          <div class="bio-overlay-name">John Peters</div>
+          <div class="bio-overlay-role">Chief Technology Officer</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="headshot-5.png" alt="Nicole Bersman" class="team-card-img" loading="lazy">
+        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <div class="team-card-overlay"></div>
+        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
+        <div class="team-card-content">
+          <div class="team-card-credentials">P.Eng., M.Eng.</div>
+          <div class="team-card-name">Nicole Bersman</div>
+          <div class="team-card-role">VP Operations</div>
+        </div>
+        <div class="team-card-bio-overlay">
+          <button class="bio-close">&times;</button>
+          <div class="bio-text">Nicole oversees all site operations and construction management across Boet's portfolio. A licensed professional engineer with an M.Eng. in Mining Engineering, she has managed large-scale build-outs in Alberta, British Columbia, and internationally, with an impeccable safety record.</div>
+          <div class="bio-overlay-credentials">P.Eng., M.Eng.</div>
+          <div class="bio-overlay-name">Nicole Bersman</div>
+          <div class="bio-overlay-role">VP Operations</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="headshot-6.png" alt="Rubert Holmes" class="team-card-img" loading="lazy">
+        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        <div class="team-card-overlay"></div>
+        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
+        <div class="team-card-content">
+          <div class="team-card-credentials">LL.B., ESG-P</div>
+          <div class="team-card-name">Rubert Holmes</div>
+          <div class="team-card-role">VP Sustainability & ESG</div>
+        </div>
+        <div class="team-card-bio-overlay">
+          <button class="bio-close">&times;</button>
+          <div class="bio-text">Rubert leads Boet's sustainability strategy, community relations, and ESG reporting. A qualified lawyer with an ESG practitioner certification, he ensures all operations meet the highest environmental and social governance standards while maintaining meaningful relationships with indigenous communities.</div>
+          <div class="bio-overlay-credentials">LL.B., ESG-P</div>
+          <div class="bio-overlay-name">Rubert Holmes</div>
+          <div class="bio-overlay-role">VP Sustainability & ESG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 7. CTA SECTION                                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="eyebrow fade-up">Get In Touch</div>
+  <h2 class="fade-up">Ready to Partner With Us?</h2>
+  <p class="cta-sub fade-up">Learn how Boet Materials Corp. is pioneering the future of responsible resource development and advancing the global energy transition.</p>
+  <div class="cta-buttons fade-up">
+    <a href="https://pitch-deck-example-the-visitor.vercel.app/" class="btn-primary">Corporate Presentation <span class="arrow">&rarr;</span></a>
+    <a href="contact.html" class="btn-outline">Contact Us <span class="arrow">&rarr;</span></a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<footer class="footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img"></a>
+        <div class="footer-tickers">
+          <span class="ticker-symbol">TSXV: AUM</span> &nbsp;|&nbsp;
+          <span class="ticker-symbol">OTCQX: AURMF</span> &nbsp;|&nbsp;
+          <span class="ticker-symbol">FSE: 9AUM</span>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="technology.html">Technology</a>
+        <a href="/#esg">ESG</a>
+        <a href="/#investors">Investors</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-disclaimer">
+        This website contains forward-looking statements. All financial figures, projections, and technical details are subject to assumptions and risks described in the Corporate Presentation and public filings. See the Corporate Presentation for full disclosures, qualified person statements, and cautionary notes. Boet Materials Corp. is listed on the TSX Venture Exchange and has not been reviewed or approved by any securities regulator.
+      </div>
+      <div class="footer-copy">&copy; 2026 Boet Materials Corp.</div>
+    </div>
+    <div class="footer-credit">Website Created By <a href="https://www.thevisitor.ca/" target="_blank" rel="noopener">THE VISITOR</a></div>
+  </div>
+</footer>
+
+</div><!-- /main-content -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SCRIPTS                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ═══════════════════════════════════════════════════════ */
+/* LOAD-IN OVERLAY                                         */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var overlayBg      = document.getElementById('loadOverlayBg');
+  var overlayText    = document.getElementById('loadOverlayText');
+  var companyName    = document.getElementById('loadCompanyName');
+  var accentLine     = document.getElementById('loadAccentLine');
+  var pageLabel      = document.getElementById('loadPageLabel');
+
+  /* Skip overlay on internal navigation */
+  var navEntry = performance.getEntriesByType('navigation')[0];
+  var navType = navEntry ? navEntry.type : '';
+  var sameOriginReferrer = document.referrer && document.referrer.indexOf(window.location.origin) === 0;
+  var isInternalNav = sameOriginReferrer && (navType === 'navigate' || navType === 'back_forward');
+
+  if (isInternalNav) {
+    /* Keep dark mining-pattern backdrop, skip text + blocks */
+    overlayText.style.display = 'none';
+    overlayBg.style.zIndex = '1';
+    initPageAnimations();
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+
+  /* Reduced motion shortcut */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    overlayText.style.transition = 'opacity 0.3s ease';
+    setTimeout(function() {
+      overlayText.style.opacity = '0';
+      setTimeout(function() {
+        overlayBg.style.display = 'none';
+        overlayText.style.display = 'none';
+        document.body.style.overflow = '';
+        initPageAnimations();
+      }, 400);
+    }, 300);
+    return;
+  }
+
+  /* Phase 1: Company name + accent line */
+  requestAnimationFrame(function() {
+    companyName.classList.add('visible');
+    accentLine.classList.add('visible');
+    pageLabel.classList.add('visible');
+  });
+
+  /* Phase 2: Hold then fade out text, keep mining-pattern backdrop */
+  setTimeout(function() {
+    overlayText.classList.add('fading');
+
+    setTimeout(function() {
+      overlayText.style.display = 'none';
+      /* Drop overlay z-index so page content sits above it */
+      overlayBg.style.zIndex = '1';
+      document.body.style.overflow = '';
+      initPageAnimations();
+    }, 250);
+  }, 1200);
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* PAGE ANIMATIONS (called after overlay completes)        */
+/* ═══════════════════════════════════════════════════════ */
+function initPageAnimations() {
+
+/* ═══════════════════════════════════════════════════════ */
+/* LENIS SMOOTH SCROLL                                     */
+/* ═══════════════════════════════════════════════════════ */
+var lenis = new Lenis({
+  duration: 1.2,
+  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+  smoothWheel: true,
+});
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+window.__lenis = lenis;
+
+/* ═══════════════════════════════════════════════════════ */
+/* HEADER + TICKER + HERO ENTRANCE SEQUENCE                */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var header      = document.getElementById('header');
+  var ticker      = document.getElementById('ticker-strip');
+  var hero        = document.getElementById('about-hero');
+  var heroContent = document.querySelector('.about-hero-content');
+  var eyebrow     = heroContent.querySelector('.eyebrow');
+  var h1          = document.getElementById('hero-h1');
+  var heroSub     = heroContent.querySelector('.hero-sub');
+
+  /* Split h1 into word-reveal spans */
+  var text = h1.textContent;
+  var words = text.split(' ');
+  h1.innerHTML = words.map(function(w) {
+    return '<span class="word-reveal"><span>' + w + '</span></span>';
+  }).join(' ');
+  var spans = h1.querySelectorAll('.word-reveal span');
+  gsap.set(spans, { y: 80, opacity: 0 });
+
+  var tickerItems = ticker.querySelectorAll(':scope > span');
+
+  var tl = gsap.timeline({ delay: 0.3 });
+
+  /* ── Phase 1: Nav bar + background ── */
+
+  /* 1. Header slides down */
+  tl.to(header, { y: 0, duration: 0.6, ease: 'power2.out' });
+
+  /* 2. Ticker slides down + items stagger */
+  tl.to(ticker, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
+  tl.to(tickerItems, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.12 }, '-=0.2');
+
+  /* 3. Hero background reveals via clip-path (slides up over dark mining pattern) */
+  tl.to(hero, { clipPath: 'inset(0% 0 0 0)', duration: 1.0, ease: 'power3.inOut',
+    onComplete: function() {
+      var bg = document.getElementById('loadOverlayBg');
+      if (bg) bg.style.display = 'none';
+    }
+  }, '-=0.15');
+
+  /* ── Phase 2: Title + description ── */
+
+  /* 4. Eyebrow fades up */
+  tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+
+  /* 5. H1 words reveal */
+  tl.to(h1, { opacity: 1, y: 0, duration: 0.01 }, '-=0.2');
+  tl.to(spans, {
+    y: 0, opacity: 1,
+    duration: 0.9, ease: 'power3.out',
+    stagger: 0.08
+  }, '-=0.2');
+
+  /* 6. Subtitle fades up */
+  tl.to(heroSub, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 2. FADE-UP SCROLL REVEALS                               */
+/* ═══════════════════════════════════════════════════════ */
+gsap.utils.toArray('.fade-up').forEach(function(el) {
+  gsap.to(el, {
+    opacity: 1, y: 0,
+    duration: 0.8, ease: 'power2.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 88%',
+      once: true
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════ */
+/* 3. VALUE CARDS — staggered cascade                      */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var cards = gsap.utils.toArray('.value-card');
+  gsap.to(cards, {
+    opacity: 1, y: 0,
+    duration: 0.8, ease: 'power2.out',
+    stagger: 0.12,
+    scrollTrigger: {
+      trigger: '.values-grid',
+      start: 'top 80%',
+      once: true
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 4. APPROACH STEPS — stagger in                          */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var steps = gsap.utils.toArray('.approach-step');
+  gsap.to(steps, {
+    opacity: 1, y: 0,
+    duration: 0.7, ease: 'power2.out',
+    stagger: 0.15,
+    scrollTrigger: {
+      trigger: '.approach-steps',
+      start: 'top 80%',
+      once: true
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 5. STATS COUNT-UP                                       */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var statItems = gsap.utils.toArray('.stat-item');
+  gsap.to(statItems, {
+    opacity: 1, y: 0,
+    duration: 0.7, ease: 'power2.out',
+    stagger: 0.12,
+    scrollTrigger: {
+      trigger: '.stats-inner',
+      start: 'top 85%',
+      once: true
+    }
+  });
+
+  var counters = document.querySelectorAll('.stat-number[data-count]');
+  counters.forEach(function(el) {
+    var target = parseFloat(el.dataset.count);
+    var suffix = el.dataset.suffix || '';
+    var prefix = el.dataset.prefix || '';
+    var duration = { val: 0 };
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%',
+      once: true,
+      onEnter: function() {
+        gsap.to(duration, {
+          val: target,
+          duration: 1.8,
+          ease: 'power2.out',
+          onUpdate: function() {
+            var v = Math.round(duration.val);
+            if (target >= 1000) v = v.toLocaleString();
+            el.textContent = prefix + v + suffix;
+          }
+        });
+      }
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 6. TEAM CARDS — staggered cascade                       */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var cards = gsap.utils.toArray('.team-card');
+  gsap.to(cards, {
+    opacity: 1, y: 0,
+    duration: 0.8, ease: 'power2.out',
+    stagger: 0.12,
+    scrollTrigger: {
+      trigger: '.team-grid',
+      start: 'top 80%',
+      once: true
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 7. HEADING WORD REVEALS                                 */
+/* ═══════════════════════════════════════════════════════ */
+document.querySelectorAll('.who-split-left h2, .values-header h2, .approach-left h2, .team-header h2, .cta-section h2').forEach(function(heading) {
+  if (heading.id === 'hero-h1') return;
+  var text = heading.innerHTML;
+  /* preserve gold-word spans */
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = text;
+  var nodes = [];
+  tempDiv.childNodes.forEach(function(node) {
+    if (node.nodeType === 3) {
+      node.textContent.split(' ').forEach(function(w) {
+        if (w.trim()) nodes.push({ type: 'text', word: w });
+      });
+    } else if (node.nodeType === 1) {
+      nodes.push({ type: 'element', html: node.outerHTML, word: node.textContent });
+    }
+  });
+
+  heading.innerHTML = nodes.map(function(n) {
+    if (n.type === 'element') {
+      return '<span class="word-reveal">' + n.html + '</span>';
+    }
+    return '<span class="word-reveal"><span>' + n.word + '</span></span>';
+  }).join(' ');
+
+  var spans = heading.querySelectorAll('.word-reveal span, .word-reveal .gold-word');
+  gsap.set(spans, { y: '110%' });
+
+  ScrollTrigger.create({
+    trigger: heading,
+    start: 'top 82%',
+    once: true,
+    onEnter: function() {
+      gsap.to(spans, {
+        y: '0%',
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.03
+      });
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════ */
+/* 8. MOBILE NAV                                           */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay = document.getElementById('nav-overlay');
+  var navItems = document.querySelectorAll('#nav-links > li > a, #nav-links > li > .nav-sub-trigger');
+  var closeLinks = document.querySelectorAll('#nav-links a');
+  var isOpen = false;
+
+  var tl = gsap.timeline({ paused: true });
+  tl.to(overlay, {
+    clipPath: 'inset(0 0 0% 0)',
+    duration: 0.6,
+    ease: 'power4.inOut'
+  })
+  .to(navItems, {
+    opacity: 1, x: 0,
+    duration: 0.45, ease: 'power3.out',
+    stagger: 0.05
+  }, '-=0.25');
+
+  hamburger.addEventListener('click', function() {
+    isOpen = !isOpen;
+    hamburger.classList.toggle('open', isOpen);
+    if (isOpen) { lenis.stop(); tl.play(); }
+    else { tl.reverse().then(function() { lenis.start(); }); }
+  });
+
+  closeLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (isOpen) {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        tl.reverse().then(function() { lenis.start(); });
+      }
+    });
+  });
+
+  /* Investors sub-dropdown toggle */
+  var subTrigger = document.getElementById('investorsTrigger');
+  var subLinks = document.getElementById('investorsSubLinks');
+  if (subTrigger && subLinks) {
+    subTrigger.addEventListener('click', function() {
+      subTrigger.classList.toggle('open');
+      subLinks.classList.toggle('open');
+    });
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 9. BIO OVERLAY OPEN / CLOSE                             */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  document.querySelectorAll('.team-card-bio').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var card = btn.closest('.team-card');
+      var overlay = card.querySelector('.team-card-bio-overlay');
+      card.classList.add('bio-open');
+      overlay.classList.add('bio-active');
+    });
+  });
+
+  document.querySelectorAll('.bio-close').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var card = btn.closest('.team-card');
+      var overlay = card.querySelector('.team-card-bio-overlay');
+      overlay.classList.remove('bio-active');
+      card.classList.remove('bio-open');
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* 10. SMOOTH ANCHOR SCROLL (via Lenis)                    */
+/* ═══════════════════════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var href = a.getAttribute('href');
+    if (!href || href === '#') return;
+    var target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -120 });
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════ */
+/* 11. SCROLL-BASED HEADER COLOR TRANSITIONS               */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var header = document.getElementById('header');
+  var ticker = document.getElementById('ticker-strip');
+  var teamSection = document.querySelector('.team-section');
+  var ctaSection = document.querySelector('.cta-section');
+  var footerSection = document.querySelector('.footer');
+  var currentState = '';
+
+  function updateHeaderState() {
+    var scrollY = window.scrollY;
+    var headerH = header.offsetHeight + ticker.offsetHeight;
+    var teamTop = teamSection.getBoundingClientRect().top + scrollY - headerH;
+    var ctaTop = ctaSection.getBoundingClientRect().top + scrollY - headerH;
+    var footerTop = footerSection.getBoundingClientRect().top + scrollY - headerH;
+
+    var newState;
+    if (scrollY < teamTop) {
+      /* Over hero / stats / who-we-are (cream sections) */
+      newState = 'cream';
+    } else if (scrollY < ctaTop) {
+      /* Over leadership (dark section) */
+      newState = 'dark';
+    } else if (scrollY < footerTop) {
+      /* Over CTA (cream section) */
+      newState = 'cream';
+    } else {
+      /* Over footer (dark section) */
+      newState = 'dark';
+    }
+
+    if (newState !== currentState) {
+      header.classList.remove('header-cream', 'header-dark');
+      ticker.classList.remove('ticker-cream', 'ticker-dark');
+
+      if (newState === 'cream') {
+        header.classList.add('header-cream');
+        ticker.classList.add('ticker-cream');
+      } else if (newState === 'dark') {
+        header.classList.add('header-dark');
+        ticker.classList.add('ticker-dark');
+      }
+      currentState = newState;
+    }
+  }
+
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
+  updateHeaderState();
+})();
+
+} /* end initPageAnimations */
+</script>
+</body>
+</html>

@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Boet Materials Corp.</title>
+<link rel="icon" type="image/png" href="boet-icon-logo.png">
+<link rel="apple-touch-icon" href="boet-icon-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================================ */
+/* CSS CUSTOM PROPERTIES — matches home page                        */
+/* ================================================================ */
+:root {
+  --dark: #0c0a09;
+  --dark-mid: #141210;
+  --dark-deep: #080706;
+  --dark-card: #1a1715;
+  --cream: #f7f2ec;
+  --gold: #CDAA88;
+  --gold-hover: #d9bc9e;
+  --accent: #9E1B32;
+  --accent-hover: #B42240;
+  --accent-deep: #7a1527;
+  --white: #f2ede8;
+  --text-dark: #f2ede8;
+  --text-muted: #9a8e80;
+  --text-label: #6b5f52;
+  --border-light: rgba(255,255,255,0.06);
+  --border-card: rgba(255,255,255,0.08);
+
+  /* Projects-specific accent colors */
+  --orange: #D3682C;
+  --golden: #D19C2B;
+  --steel: #5187B7;
+
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --header-h: 80px;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================================ */
+/* RESET & BASE                                                      */
+/* ================================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  color: #3d3830;
+  background: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ================================================================ */
+/* KEYFRAMES                                                          */
+/* ================================================================ */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes heroTitleIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+@keyframes grain { 0% { transform: translate(0,0); } 10% { transform: translate(-5%,-5%); } 20% { transform: translate(-10%,5%); } 30% { transform: translate(5%,-10%); } 40% { transform: translate(-5%,15%); } 50% { transform: translate(-10%,5%); } 60% { transform: translate(15%,0); } 70% { transform: translate(0,10%); } 80% { transform: translate(-15%,0); } 90% { transform: translate(10%,5%); } 100% { transform: translate(5%,0); } }
+@keyframes goldSweep {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+/* ================================================================ */
+/* ANIMATED ELEMENTS — DEFAULT STATE                                  */
+/* ================================================================ */
+.op { opacity: 0; transition: opacity 0.6s ease, transform 0.6s ease; }
+.op._visible { opacity: 1; }
+
+.op-child > * { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.op-child._visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0s; }
+.op-child._visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+.op-child._visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.op-child._visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.op-child._visible > *:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+
+.curtain { position: relative; overflow: hidden; }
+.curtain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transform: translateY(0);
+  transition: transform 0.7s cubic-bezier(0.77,0,0.175,1);
+}
+.curtain._visible::after { transform: translateY(-101%); }
+
+.line-x-right { width: 0; transition: width 0.5s ease; }
+.line-x-right._visible { width: 100%; }
+
+.slide-left { opacity: 0; transform: translateX(-60px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.slide-left._visible { opacity: 1; transform: translateX(0); }
+
+.slide-right { opacity: 0; transform: translateX(60px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.slide-right._visible { opacity: 1; transform: translateX(0); }
+
+.slide-up { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.slide-up._visible { opacity: 1; transform: translateY(0); }
+
+/* ================================================================ */
+/* SECTION LABEL (eyebrow)                                            */
+/* ================================================================ */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* ================================================================ */
+/* HEADER — identical to home page                                    */
+/* ================================================================ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-h);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease;
+}
+.header.scrolled {
+  background: rgba(8, 7, 6, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-card);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--white);
+  z-index: 1001;
+}
+.logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.4s ease;
+}
+.header.scrolled .logo-img {
+  filter: none;
+}
+
+/* Desktop nav */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.desktop-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--white);
+  transition: color 0.4s ease;
+  position: relative;
+}
+.desktop-nav a:hover { color: var(--white); }
+.desktop-nav a.active-page { color: var(--white); }
+
+/* Scrolled state — muted nav links */
+.header.scrolled .desktop-nav a { color: var(--text-muted); }
+.header.scrolled .desktop-nav a:hover { color: var(--white); }
+.header.scrolled .desktop-nav a.active-page { color: var(--white); }
+
+/* Investors dropdown */
+.nav-dropdown { position: relative; }
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.nav-dropdown-trigger .chevron {
+  font-size: 8px;
+  transition: transform 0.3s ease;
+}
+.nav-dropdown:hover .chevron { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+}
+.nav-dropdown-menu-inner {
+  background: var(--dark-card);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  padding: 8px 0;
+  min-width: 220px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Hamburger (mobile) */
+.hamburger {
+  width: 32px;
+  height: 22px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--white);
+  position: absolute;
+  left: 0;
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1), opacity 0.3s ease;
+}
+.hamburger span:nth-child(1) { top: 4px; }
+.hamburger span:nth-child(2) { bottom: 4px; }
+.hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+@media (max-width: 1024px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: block; }
+  .header { padding: 0 24px; }
+  .logo-img { height: auto; max-width: 240px; }
+}
+@media (max-width: 480px) {
+  .header { padding: 0 16px; --header-h: 64px; }
+  .logo-img { max-width: 180px; }
+}
+
+/* ================================================================ */
+/* TICKER STRIP — identical to home page                              */
+/* ================================================================ */
+.ticker-strip {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: transparent;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  border-bottom: 1px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+.ticker-strip.scrolled {
+  background: var(--dark-deep);
+  border-bottom: 1px solid var(--border-card);
+}
+
+/* Transparent state — hero-matching colours */
+.ticker-strip .ticker-label { color: rgba(255,255,255,0.5); transition: color 0.4s ease; }
+.ticker-strip .ticker-symbol { color: var(--white); font-weight: 700; transition: color 0.4s ease; }
+.ticker-strip .ticker-sep { color: rgba(255,255,255,0.25); margin: 0 4px; transition: color 0.4s ease; }
+.ticker-strip .ticker-price { color: rgba(255,255,255,0.6); font-weight: 400; margin-left: 4px; transition: color 0.4s ease; }
+
+/* Scrolled state — revert to muted colours */
+.ticker-strip.scrolled .ticker-label { color: var(--text-label); }
+.ticker-strip.scrolled .ticker-symbol { color: var(--gold); }
+.ticker-strip.scrolled .ticker-sep { color: rgba(255,255,255,0.15); }
+.ticker-strip.scrolled .ticker-price { color: rgba(255,255,255,0.45); }
+
+/* ================================================================ */
+/* NAV OVERLAY (MOBILE) — identical to home page                      */
+/* ================================================================ */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--dark);
+  z-index: 999;
+  display: flex;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.6s cubic-bezier(0.77, 0, 0.18, 1);
+  overflow: hidden;
+}
+.nav-overlay.open {
+  clip-path: inset(0 0 0% 0);
+}
+
+/* Topographic pattern background layer */
+.nav-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('mining-pattern.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Animated gold light sweep */
+.nav-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(205, 170, 136, 0.06) 42%,
+    rgba(205, 170, 136, 0.12) 50%,
+    rgba(205, 170, 136, 0.06) 58%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 250% 100%;
+  animation: goldSweep 6s ease-in-out infinite;
+}
+
+.nav-overlay-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 60px;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+.nav-links-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-links-mobile a,
+.nav-links-mobile .nav-sub-trigger {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 48px);
+  text-transform: uppercase;
+  color: var(--white);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: color 0.3s ease, opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.nav-overlay.open .nav-links-mobile a,
+.nav-overlay.open .nav-links-mobile .nav-sub-trigger {
+  opacity: 1;
+  transform: translateX(0);
+}
+.nav-overlay.open .nav-links-mobile li:nth-child(1) a,
+.nav-overlay.open .nav-links-mobile li:nth-child(1) .nav-sub-trigger { transition-delay: 0.15s; }
+.nav-overlay.open .nav-links-mobile li:nth-child(2) a { transition-delay: 0.2s; }
+.nav-overlay.open .nav-links-mobile li:nth-child(3) a { transition-delay: 0.25s; }
+.nav-overlay.open .nav-links-mobile li:nth-child(4) a { transition-delay: 0.3s; }
+.nav-overlay.open .nav-links-mobile li:nth-child(5) a,
+.nav-overlay.open .nav-links-mobile li:nth-child(5) .nav-sub-trigger { transition-delay: 0.35s; }
+.nav-overlay.open .nav-links-mobile li:nth-child(6) a { transition-delay: 0.4s; }
+
+.nav-links-mobile a:hover,
+.nav-links-mobile .nav-sub-trigger:hover { color: var(--accent); }
+
+/* Investors sub-dropdown (mobile) */
+.nav-sub-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-sub-trigger .sub-chevron {
+  font-size: 0.5em;
+  transition: transform 0.35s ease;
+  display: inline-block;
+}
+.nav-sub-trigger.open .sub-chevron { transform: rotate(180deg); }
+
+.nav-sub-links {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease-out);
+  padding-left: 8px;
+}
+.nav-sub-links.open { max-height: 280px; }
+.nav-sub-links a {
+  font-size: clamp(14px, 2.2vw, 18px) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  color: var(--text-muted) !important;
+  line-height: 1.6 !important;
+  padding: 4px 0;
+  letter-spacing: 0.5px;
+  display: block;
+  opacity: 1 !important;
+  transform: none !important;
+}
+.nav-sub-links a:hover { color: var(--gold) !important; }
+
+/* ================================================================ */
+/* HERO                                                               */
+/* ================================================================ */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: #1a1510;
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.1s linear;
+}
+.hero-video.vid-ready { opacity: 1; }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 10, 9, 0.40);
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-grain {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 1;
+  animation: grain 8s steps(10) infinite;
+}
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top left, rgba(12,10,9,0.7) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 900;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  line-height: 1.05;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.8vw, 20px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  margin-top: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(20px);
+}
+/* Triggered by JS once video is playing */
+.hero.hero-revealed .hero-title {
+  animation: heroTitleIn 0.8s ease-out 0.3s forwards;
+}
+.hero.hero-revealed .hero-subtitle {
+  animation: heroTitleIn 0.8s ease-out 0.6s forwards;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+}
+.hero.hero-revealed .hero-scroll {
+  animation: heroTitleIn 0.6s ease-out 0.9s forwards, bounce 2s infinite 1.8s;
+}
+.hero-scroll:hover { border-color: var(--white); }
+.hero-scroll svg { width: 16px; height: 16px; stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 2; }
+
+/* ================================================================ */
+/* INTRO SECTION                                                      */
+/* ================================================================ */
+.intro {
+  padding: 120px 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.intro h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--dark);
+  line-height: 1.1;
+  letter-spacing: 1px;
+}
+.intro-right { padding-top: 40px; }
+.intro-right p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #3d3830;
+  margin-bottom: 32px;
+}
+.intro-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Pill buttons with slide hover */
+.pill-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 14px 28px;
+  border: 2px solid var(--dark);
+  border-radius: 6px;
+  color: var(--dark);
+  cursor: pointer;
+  background: transparent;
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+.pill-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--dark);
+  z-index: -1;
+  transform: translateY(101%);
+  transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
+}
+.pill-btn:hover::before { transform: translateY(0); }
+.pill-btn:hover { color: var(--white); }
+
+@media (max-width: 768px) {
+  .intro { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+  .intro-right { padding-top: 0; }
+}
+
+/* ================================================================ */
+/* MINING SITE CARDS                                                   */
+/* ================================================================ */
+.cards-section { padding: 0 48px 120px; max-width: 1280px; margin: 0 auto; }
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.site-card {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 36px;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+}
+.site-card > div:last-child {
+  margin-top: auto;
+}
+.site-card::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  pointer-events: none;
+  animation: grain 6s steps(8) infinite;
+}
+.site-card.card-dark { background: var(--dark); }
+.site-card.card-accent { background: var(--accent); }
+.site-card.card-gold { background: linear-gradient(145deg, #3d3024, #2a1f16); }
+.site-card.card-dark::after { background: var(--dark); }
+.site-card.card-accent::after { background: var(--accent); }
+.site-card.card-gold::after { background: #2a1f16; }
+
+.card-metric {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 4vw, 56px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+.card-unit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
+}
+.card-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.3);
+  margin: 24px 0;
+  position: relative;
+  z-index: 1;
+}
+.card-name {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.card-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .cards-section { padding: 0 24px 80px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .site-card { min-height: 280px; }
+}
+
+/* ================================================================ */
+/* LOCATION MAP                                                        */
+/* ================================================================ */
+.location-section {
+  padding: 120px 48px;
+  background: var(--cream);
+}
+.location-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.location-inner h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--dark);
+  line-height: 1.15;
+  margin-bottom: 48px;
+}
+.location-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.location-map {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--dark);
+}
+.elevation-img {
+  width: 100%;
+  display: block;
+}
+
+/* — Map dots — */
+.map-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2.5px solid var(--cream);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 2px 8px rgba(158, 27, 50, 0.4);
+}
+.map-dot:hover, .map-dot:focus-visible, .map-dot.active {
+  transform: translate(-50%, -50%) scale(1.4);
+  box-shadow: 0 4px 16px rgba(158, 27, 50, 0.6);
+  outline: none;
+}
+.map-dot.active {
+  background: var(--gold);
+  border-color: var(--white);
+  box-shadow: 0 4px 16px rgba(205, 170, 136, 0.5);
+}
+.map-dot-pulse {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+  animation: dotPulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes dotPulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* — Map labels — */
+.map-label {
+  position: absolute;
+  transform: translate(-50%, 0);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--cream);
+  background: rgba(12, 10, 9, 0.6);
+  backdrop-filter: blur(6px);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* — Location info card — */
+.location-info {
+  position: relative;
+  border-radius: 12px;
+  padding: 36px 32px;
+  color: var(--white);
+  background-color: var(--dark);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition: background-image 0.4s ease;
+}
+.location-info::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12,10,9,0.55) 0%, rgba(12,10,9,0.85) 60%, rgba(12,10,9,0.95) 100%);
+  border-radius: 12px;
+  z-index: 0;
+}
+.location-info > * {
+  position: relative;
+  z-index: 1;
+}
+.loc-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.loc-title {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  line-height: 1.2;
+  color: var(--white);
+}
+.loc-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.loc-stats {
+  display: flex;
+  gap: 24px;
+  border-top: 1px solid var(--border-light);
+  padding-top: 20px;
+}
+.loc-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.loc-stat-val {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--gold);
+}
+.loc-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .location-section { padding: 80px 24px; }
+  .location-grid { grid-template-columns: 1fr; }
+  .loc-stats { flex-wrap: wrap; }
+}
+
+
+/* ================================================================ */
+/* ACTIVITY SECTION                                                    */
+/* ================================================================ */
+.activity-section {
+  padding: 120px 48px;
+  background: linear-gradient(180deg, rgba(12,10,9,0.03) 0%, var(--cream) 100%);
+}
+.activity-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.activity-inner h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--dark);
+  line-height: 1.15;
+  max-width: 800px;
+  margin-bottom: 40px;
+}
+.activity-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+.activity-body p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #3d3830;
+}
+.activity-stat { margin-bottom: 60px; }
+.activity-stat-number {
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 900;
+  color: var(--dark);
+  line-height: 1;
+}
+.activity-stat-label {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+.activity-image {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.activity-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .activity-section { padding: 80px 24px; }
+  .activity-body { grid-template-columns: 1fr; }
+  .activity-image { height: 250px; }
+}
+
+/* ================================================================ */
+/* CHARTER / VALUES SECTION                                            */
+/* ================================================================ */
+.charter-section {
+  padding: 120px 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.charter-photo {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 5px solid var(--gold);
+  aspect-ratio: 1;
+  max-width: 440px;
+}
+.charter-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.charter-divider {
+  height: 1px;
+  background: rgba(12,10,9,0.12);
+  margin-bottom: 24px;
+}
+.charter-content h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+.charter-content p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #3d3830;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .charter-section { grid-template-columns: 1fr; gap: 40px; padding: 80px 24px; }
+  .charter-photo { max-width: 100%; aspect-ratio: 4/3; }
+}
+
+/* ================================================================ */
+/* FOOTER — matches home page                                        */
+/* ================================================================ */
+.footer {
+  background: var(--dark-deep);
+  padding: 60px 60px 40px;
+  border-top: 1px solid var(--border-card);
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.footer-brand .footer-logo-img {
+  height: 24px;
+  width: auto;
+  margin-bottom: 8px;
+}
+.footer-tickers {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-label);
+  letter-spacing: 1px;
+}
+.footer-tickers .ticker-symbol { color: var(--gold); font-weight: 700; }
+
+.footer-nav {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+.footer-nav a:hover { color: var(--white); }
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-disclaimer {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.25);
+  line-height: 1.6;
+  max-width: 800px;
+}
+.footer-copy {
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
+.footer-credit {
+  width: 100%;
+  text-align: center;
+  padding-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.5px;
+}
+.footer-credit a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.footer-credit a:hover { color: var(--gold-hover); }
+
+@media (max-width: 768px) {
+  .footer { padding: 40px 24px 32px; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; }
+}
+
+/* ================================================================ */
+/* BACK TO HOME LINK                                                   */
+/* ================================================================ */
+.back-link {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 998;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--white);
+  background: var(--dark);
+  padding: 12px 20px;
+  border-radius: 60px;
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.back-link:hover { background: var(--accent); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HEADER — identical to home page                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<header class="header" id="header">
+  <a href="index.html" class="logo">
+    <img src="boet-full-logo.png" alt="Boet Materials" class="logo-img">
+  </a>
+
+  <nav class="desktop-nav" id="desktop-nav">
+    <a href="about.html">About</a>
+    <a href="projects.html" class="active-page">Projects</a>
+    <a href="technology.html">Technology</a>
+    <a href="index.html#esg">ESG</a>
+    <div class="nav-dropdown">
+      <a href="index.html#investors" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-menu-inner">
+          <a href="index.html#investors">Investor Overview</a>
+          <a href="https://pitch-deck-example-the-visitor.vercel.app/">Corporate Presentation</a>
+          <a href="#">News & Press Releases</a>
+          <a href="#">Stock Information</a>
+        </div>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Ticker Strip -->
+<div class="ticker-strip" id="ticker-strip">
+  <span><span class="ticker-label">TSXV:</span> <span class="ticker-symbol">AUM</span> <span class="ticker-price">$2.34</span></span>
+  <span class="ticker-sep">|</span>
+  <span><span class="ticker-label">OTCQX:</span> <span class="ticker-symbol">AURMF</span> <span class="ticker-price">$1.68</span></span>
+  <span class="ticker-sep">|</span>
+  <span><span class="ticker-label">FSE:</span> <span class="ticker-symbol">9AUM</span> <span class="ticker-price">€1.55</span></span>
+</div>
+
+<!-- Mobile Nav Overlay -->
+<nav class="nav-overlay" id="nav-overlay">
+  <div class="nav-overlay-content">
+    <ul class="nav-links-mobile" id="nav-links-mobile">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="technology.html">Technology</a></li>
+      <li><a href="index.html#esg">ESG</a></li>
+      <li>
+        <div class="nav-sub-trigger" id="investorsTrigger">Investors <span class="sub-chevron">&#9662;</span></div>
+        <div class="nav-sub-links" id="investorsSubLinks">
+          <a href="index.html#investors">Investor Overview</a>
+          <a href="https://pitch-deck-example-the-visitor.vercel.app/">Corporate Presentation</a>
+          <a href="#">News &amp; Press Releases</a>
+          <a href="#">Stock Information</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO SECTION                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="hero" id="hero-top">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"></video>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Project Overview</h1>
+    <p class="hero-subtitle">Three Flagship Mining Operations</p>
+  </div>
+  <a href="#intro" class="hero-scroll">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </a>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- INTRO                                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="intro" id="intro">
+  <div class="intro-left op-child">
+    <div class="section-label">Our Projects</div>
+    <h2>Three Flagship Mining Operations</h2>
+  </div>
+  <div class="intro-right op">
+    <p>Boet Materials Corp. operates three world-class mining sites across strategically significant mineral basins. Each site leverages proprietary Direct Lithium Extraction technology, supported by advanced processing infrastructure and strong government partnerships. Our operations are designed for long-term sustainable production with minimal environmental footprint.</p>
+    <div class="intro-buttons">
+      <a href="#cards" class="pill-btn">Operations &rarr;</a>
+      <a href="#activity" class="pill-btn">ESG &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- THREE MINING SITE CARDS                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="cards-section" id="cards">
+  <div class="cards-grid">
+    <div class="site-card card-dark curtain" data-delay="0">
+      <div>
+        <div class="card-metric" data-count="2.4" data-suffix="M" data-decimals="1">0M</div>
+        <div class="card-unit">tonnes / year</div>
+      </div>
+      <div class="card-divider"></div>
+      <div>
+        <div class="card-name">Highland Ridge</div>
+        <div class="card-desc">Open-pit copper and gold operation in the northern highlands. Advanced DLE processing with 94% recovery rates.</div>
+      </div>
+    </div>
+    <div class="site-card card-accent curtain" data-delay="150">
+      <div>
+        <div class="card-metric" data-count="1.8" data-suffix="M" data-decimals="1">0M</div>
+        <div class="card-unit">tonnes / year</div>
+      </div>
+      <div class="card-divider"></div>
+      <div>
+        <div class="card-name">Kingsgate</div>
+        <div class="card-desc">Deep underground molybdenum extraction with modern flotation plant. Industry-leading worker safety record.</div>
+      </div>
+    </div>
+    <div class="site-card card-gold curtain" data-delay="300">
+      <div>
+        <div class="card-metric" data-count="3.1" data-suffix="M" data-decimals="1">0M</div>
+        <div class="card-unit">tonnes / year</div>
+      </div>
+      <div class="card-divider"></div>
+      <div>
+        <div class="card-name">Clearwater Basin</div>
+        <div class="card-desc">Large-scale open-cast operation with integrated processing facility. Premier lithium asset with direct lithium extraction.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LOCATION MAP                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="location-section" id="locations">
+  <div class="location-inner">
+    <div class="section-label op">Our Locations</div>
+    <h2 class="slide-up">Strategic Mine Locations</h2>
+    <div class="location-grid">
+      <div class="location-map op">
+        <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img">
+        <button class="map-dot" data-site="0" style="top:28%;left:32%;" aria-label="Highland Ridge">
+          <span class="map-dot-pulse"></span>
+        </button>
+        <button class="map-dot" data-site="1" style="top:52%;left:58%;" aria-label="Kingsgate">
+          <span class="map-dot-pulse"></span>
+        </button>
+        <button class="map-dot" data-site="2" style="top:68%;left:76%;" aria-label="Clearwater Basin">
+          <span class="map-dot-pulse"></span>
+        </button>
+        <div class="map-label" data-site="0" style="top:23%;left:32%;">Highland Ridge</div>
+        <div class="map-label" data-site="1" style="top:47%;left:58%;">Kingsgate</div>
+        <div class="map-label" data-site="2" style="top:63%;left:76%;">Clearwater Basin</div>
+      </div>
+      <div class="location-info" id="locationInfo">
+        <div class="loc-eyebrow" id="locEyebrow">Select a Site</div>
+        <h3 class="loc-title" id="locTitle">Explore Our Operations</h3>
+        <p class="loc-desc" id="locDesc">Click on a map marker to learn more about each of our three flagship mining sites and their operational capabilities.</p>
+        <div class="loc-stats" id="locStats">
+          <div class="loc-stat"><span class="loc-stat-val">3</span><span class="loc-stat-label">Active Sites</span></div>
+          <div class="loc-stat"><span class="loc-stat-val">7.3M</span><span class="loc-stat-label">Total Tonnes/Yr</span></div>
+          <div class="loc-stat"><span class="loc-stat-val">94%</span><span class="loc-stat-label">Recovery Rate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ACTIVITY                                                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="activity-section" id="activity">
+  <div class="activity-inner">
+    <div class="section-label op">Activity</div>
+    <h2 class="slide-up">We Create Value Through Responsible Resource Extraction</h2>
+    <div class="activity-body op-child">
+      <p>Our operations are guided by a commitment to environmental stewardship and community partnership. We employ industry-leading water recycling systems, progressive land rehabilitation, and zero-discharge processing protocols across all three sites.</p>
+      <p>Through continuous investment in technology and workforce development, we maintain production efficiency while minimising our environmental footprint. Our integrated approach to mining ensures that every tonne of ore extracted delivers maximum value to shareholders and stakeholders alike.</p>
+    </div>
+    <div class="activity-stat slide-up">
+      <div class="activity-stat-number" data-target="7.3" id="counterStat">0</div>
+      <div class="activity-stat-label">Million Tonnes — Annual Ore Production</div>
+    </div>
+    <div class="activity-image op">
+      <img src="https://picsum.photos/id/1015/1400/600" alt="Mountain landscape" loading="lazy">
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<footer class="footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img"></a>
+        <div class="footer-tickers">
+          <span class="ticker-symbol">TSXV: AUM</span> &nbsp;|&nbsp;
+          <span class="ticker-symbol">OTCQX: AURMF</span> &nbsp;|&nbsp;
+          <span class="ticker-symbol">FSE: 9AUM</span>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="technology.html">Technology</a>
+        <a href="index.html#esg">ESG</a>
+        <a href="index.html#investors">Investors</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-disclaimer">
+        This website contains forward-looking statements. All financial figures, projections, and technical details are subject to assumptions and risks described in the Corporate Presentation and public filings. See the Corporate Presentation for full disclosures, qualified person statements, and cautionary notes. Boet Materials Corp. is listed on the TSX Venture Exchange and has not been reviewed or approved by any securities regulator.
+      </div>
+      <div class="footer-copy">&copy; 2026 Boet Materials Corp.</div>
+    </div>
+    <div class="footer-credit">Website Created By <a href="https://www.thevisitor.ca/" target="_blank" rel="noopener">THE VISITOR</a></div>
+  </div>
+</footer>
+
+
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════ */
+/* LENIS SMOOTH SCROLL                                     */
+/* ═══════════════════════════════════════════════════════ */
+var lenis = new Lenis({
+  duration: 1.2,
+  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+  smoothWheel: true,
+});
+function lenisRaf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(lenisRaf);
+}
+requestAnimationFrame(lenisRaf);
+window.__lenis = lenis;
+
+/* ═══════════════════════════════════════════════════════ */
+/* INTERSECTION OBSERVER ANIMATION SYSTEM                   */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var delay = parseInt(el.dataset.delay || 0);
+        setTimeout(function() {
+          el.classList.add('_visible');
+        }, delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  var animEls = document.querySelectorAll('.op, .op-child, .curtain, .slide-left, .slide-right, .slide-up, .line-x-right');
+  animEls.forEach(function(el) { observer.observe(el); });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* HEADER SCROLL STATE                                      */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var header = document.getElementById('header');
+  var ticker = document.getElementById('ticker-strip');
+  var hero   = document.getElementById('hero-top');
+  var threshold = hero ? hero.offsetHeight - header.offsetHeight - ticker.offsetHeight : 80;
+
+  function onScroll() {
+    var past = window.scrollY > threshold;
+    header.classList.toggle('scrolled', past);
+    ticker.classList.toggle('scrolled', past);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* HERO VIDEO — lazy load + parallax                        */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var video = document.getElementById('heroVideo');
+  var hero  = document.getElementById('hero-top');
+  var revealed = false;
+
+  function revealHero() {
+    if (revealed) return;
+    revealed = true;
+    /* Fade in the video */
+    video.classList.add('vid-ready');
+    /* After the video fade completes, reveal the text */
+    setTimeout(function() {
+      hero.classList.add('hero-revealed');
+    }, 400);
+  }
+
+  /* Ensure autoplay fires once data is available */
+  function tryPlay() {
+    if (video.paused) video.play().catch(function() {});
+  }
+
+  /* Reveal once the video actually starts playing */
+  video.addEventListener('playing', revealHero, { once: true });
+  /* Fallback: if playing event never fires, reveal on canplay */
+  video.addEventListener('canplay', function() {
+    tryPlay();
+    setTimeout(revealHero, 200);
+  }, { once: true });
+  video.addEventListener('loadeddata', function() {
+    tryPlay();
+    setTimeout(revealHero, 200);
+  }, { once: true });
+
+  /* Lazy-load: inject the src after initial page content is rendered */
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(function() { video.src = 'projects-hero.mp4'; });
+  } else {
+    setTimeout(function() { video.src = 'projects-hero.mp4'; }, 100);
+  }
+
+  /* Safety fallback: if nothing fires within 4s, reveal anyway */
+  setTimeout(revealHero, 4000);
+
+  /* Parallax on scroll */
+  window.addEventListener('scroll', function() {
+    if (window.scrollY < window.innerHeight) {
+      video.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* MOBILE NAV                                               */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay = document.getElementById('nav-overlay');
+  var isOpen = false;
+
+  hamburger.addEventListener('click', function() {
+    isOpen = !isOpen;
+    hamburger.classList.toggle('open', isOpen);
+    overlay.classList.toggle('open', isOpen);
+    if (isOpen) { lenis.stop(); }
+    else { lenis.start(); }
+  });
+
+  /* Close nav on link click */
+  document.querySelectorAll('#nav-links-mobile a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (isOpen) {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        overlay.classList.remove('open');
+        lenis.start();
+      }
+    });
+  });
+
+  /* Investors sub-dropdown toggle */
+  var subTrigger = document.getElementById('investorsTrigger');
+  var subLinks = document.getElementById('investorsSubLinks');
+  if (subTrigger && subLinks) {
+    subTrigger.addEventListener('click', function() {
+      subTrigger.classList.toggle('open');
+      subLinks.classList.toggle('open');
+    });
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* COUNTER ANIMATION                                        */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var el = document.getElementById('counterStat');
+  if (!el) return;
+  var target = parseFloat(el.dataset.target);
+  var counted = false;
+
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !counted) {
+      counted = true;
+      var start = performance.now();
+      var duration = 1500;
+      function update(now) {
+        var progress = Math.min((now - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var val = (eased * target).toFixed(1);
+        el.textContent = val;
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = target.toFixed(1);
+      }
+      requestAnimationFrame(update);
+      obs.unobserve(el);
+    }
+  }, { threshold: 0.5 });
+  obs.observe(el);
+})();
+
+
+/* ═══════════════════════════════════════════════════════ */
+/* LOCATION MAP — 3 DOT SELECTOR                            */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var dots = document.querySelectorAll('.map-dot');
+  var locEyebrow = document.getElementById('locEyebrow');
+  var locTitle = document.getElementById('locTitle');
+  var locDesc = document.getElementById('locDesc');
+  var locStats = document.getElementById('locStats');
+
+  if (!dots.length || !locTitle) return;
+
+  var infoCard = document.getElementById('locationInfo');
+
+  var overview = {
+    eyebrow: 'Project Portfolio',
+    title: 'Three Flagship Operations',
+    desc: 'Boet Materials Corp. operates three world-class mining sites across strategically significant mineral basins. Combined annual production of 7.3 million tonnes with industry-leading recovery rates and fully integrated processing.',
+    img: 'photo-industrial-1-desktop.jpg',
+    stats: [{ val: '3', label: 'Active Sites' }, { val: '7.3M', label: 'Total Tonnes/Yr' }, { val: '94%', label: 'Recovery Rate' }]
+  };
+
+  var sites = [
+    { eyebrow: 'Flagship Operation', title: 'Highland Ridge', desc: 'Open-pit copper and gold operation in the northern highlands. Advanced DLE processing with 94% recovery rates across a 12km strike length.', img: 'photo-industrial-2-desktop.jpg', stats: [{ val: '2.4M', label: 'Tonnes/Year' }, { val: '94%', label: 'Recovery' }, { val: '12km', label: 'Strike Length' }] },
+    { eyebrow: 'Underground Asset', title: 'Kingsgate', desc: 'Deep underground molybdenum extraction with modern flotation plant. Industry-leading worker safety record and fully permitted for expansion.', img: 'photo-industrial-3-desktop.jpg', stats: [{ val: '1.8M', label: 'Tonnes/Year' }, { val: '850m', label: 'Depth' }, { val: '15yr', label: 'Mine Life' }] },
+    { eyebrow: 'Growth Project', title: 'Clearwater Basin', desc: 'Large-scale open-cast operation with integrated processing facility. Premier lithium asset with direct lithium extraction technology.', img: 'photo-tech-1-desktop.jpg', stats: [{ val: '3.1M', label: 'Tonnes/Year' }, { val: 'DLE', label: 'Technology' }, { val: '$4.8B', label: 'NPV' }] }
+  ];
+
+  var active = -1;
+
+  function renderCard(data) {
+    locEyebrow.textContent = data.eyebrow;
+    locTitle.textContent = data.title;
+    locDesc.textContent = data.desc;
+    infoCard.style.backgroundImage = "url('" + data.img + "')";
+    locStats.innerHTML = data.stats.map(function(st) {
+      return '<div class="loc-stat"><span class="loc-stat-val">' + st.val + '</span><span class="loc-stat-label">' + st.label + '</span></div>';
+    }).join('');
+  }
+
+  function selectSite(idx) {
+    if (idx === active) return;
+    active = idx;
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+    renderCard(sites[idx]);
+  }
+
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { selectSite(i); });
+  });
+
+  /* Show overview by default */
+  renderCard(overview);
+
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* SMOOTH ANCHOR SCROLLING (via Lenis)                     */
+/* ═══════════════════════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var href = a.getAttribute('href');
+    if (!href || href === '#') return;
+    var target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -120 });
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════ */
+/* CARD METRIC COUNT-UP                                    */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var metrics = document.querySelectorAll('.card-metric[data-count]');
+  var countObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      countObserver.unobserve(el);
+
+      var target   = parseFloat(el.dataset.count);
+      var suffix   = el.dataset.suffix || '';
+      var prefix   = el.dataset.prefix || '';
+      var decimals = parseInt(el.dataset.decimals) || 0;
+      var duration = 1800;
+      var start    = performance.now();
+
+      function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function tick(now) {
+        var elapsed = now - start;
+        var progress = Math.min(elapsed / duration, 1);
+        var val = target * easeOut(progress);
+        if (decimals > 0) {
+          val = val.toFixed(decimals);
+        } else {
+          val = Math.round(val);
+          if (target >= 1000) val = val.toLocaleString();
+        }
+        el.textContent = prefix + val + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.3 });
+
+  metrics.forEach(function(el) { countObserver.observe(el); });
+})();
+</script>
+</body>
+</html>

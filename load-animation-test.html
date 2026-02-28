@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Load-In Animation Test — Boet Materials</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f5f2ee;
+  --dark: #0c0a09;
+  --accent: #9E1B32;
+  --green: #22c55e;
+  --green-muted: #16a34a;
+  --text-name: #1a1714;
+  --text-ticker: #8a7e70;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  font-family: var(--font-heading);
+  background: var(--dark);
+  color: #f2ede8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Page underneath ── */
+.page-content {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  background-image: url('photo-industrial-1-desktop.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.page-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(12,10,9,0.88), rgba(12,10,9,0.6));
+}
+.page-inner {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  padding: 60px;
+  max-width: 800px;
+}
+.page-inner h1 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(38px, 6vw, 72px);
+  text-transform: uppercase;
+  line-height: 1.06;
+  margin-bottom: 20px;
+}
+.page-inner p {
+  color: rgba(255,255,255,0.55);
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* ── Overlay layers ── */
+.overlay-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--bg);
+}
+
+.overlay-text {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  background: var(--bg);
+  transition: opacity 0.2s ease;
+}
+.overlay-text.fading { opacity: 0; }
+
+/* ── Company name ── */
+.company-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(36px, 6vw, 76px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--text-name);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s cubic-bezier(0.25,0.1,0.25,1), transform 0.45s cubic-bezier(0.25,0.1,0.25,1);
+}
+.company-name.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Accent line ── */
+.accent-line {
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  margin: 16px auto 14px;
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.25,0.1,0.25,1) 0.2s;
+}
+.accent-line.visible { transform: scaleX(1); }
+
+/* ── Exchange label ── */
+.exchange-label {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-ticker);
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.25s;
+}
+.exchange-label.visible { opacity: 1; }
+
+/* ── Stock price (odometer) ── */
+.stock-price {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 56px);
+  color: var(--text-name);
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0;
+  min-height: 1.15em;
+}
+
+/* ── Odometer character ── */
+.odo-char {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.15em;
+  vertical-align: bottom;
+  position: relative;
+}
+.odo-char-static {
+  display: inline-block;
+  height: 1.15em;
+  line-height: 1.15em;
+}
+.odo-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.odo-strip span {
+  display: block;
+  height: 1.15em;
+  line-height: 1.15em;
+  text-align: center;
+}
+
+/* ── Day change ── */
+.day-change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1.3vw, 15px);
+  font-weight: 600;
+  color: var(--green);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25,0.1,0.25,1);
+}
+.day-change.visible { opacity: 1; transform: translateY(0); }
+.day-change .arrow-up {
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 2px;
+}
+
+/* ── Block grid ── */
+.block-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+}
+.grid-block {
+  position: absolute;
+  background: var(--bg);
+  will-change: transform;
+}
+
+/* ── Replay button ── */
+.replay-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 20000;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.2s ease;
+}
+.replay-btn:hover { background: #b42240; }
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay-text, .company-name, .accent-line, .exchange-label,
+  .day-change, .odo-strip, .grid-block {
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Page content (revealed after blocks drop) -->
+<main class="page-content">
+  <div class="page-inner">
+    <p style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; color: #9E1B32; margin-bottom: 20px;">CRITICAL MINERALS FOR THE ENERGY TRANSITION</p>
+    <h1>Pioneering the Future of Advanced Materials</h1>
+    <p>A next-generation critical minerals company built for the energy transition.</p>
+  </div>
+</main>
+
+<!-- Overlay: solid background -->
+<div class="overlay-bg" id="overlayBg"></div>
+
+<!-- Overlay: text layer -->
+<div class="overlay-text" id="overlayText">
+  <div style="text-align:center; padding: 24px;">
+    <div class="company-name" id="companyName">Boet Materials</div>
+    <div class="accent-line" id="accentLine"></div>
+    <div class="exchange-label" id="exchangeLabel">TSXV: AUM</div>
+    <div class="stock-price" id="stockPrice"></div>
+    <div class="day-change" id="dayChange">
+      <span><span class="arrow-up">&#9650;</span> +$0.18</span>
+      <span>(+5.56%)</span>
+    </div>
+  </div>
+</div>
+
+<!-- Block container (populated by JS) -->
+<div class="block-container" id="blockContainer" style="display:none;"></div>
+
+<!-- Replay button -->
+<button class="replay-btn" id="replayBtn" style="display:none;">Replay Animation</button>
+
+<script>
+(function() {
+  /* ═══════════════════════════════════════════════════ */
+  /* Configuration                                       */
+  /* ═══════════════════════════════════════════════════ */
+  const STOCK_PRICE    = '$3.42';
+  const DAY_CHANGE_ABS = '+$0.18';
+  const DAY_CHANGE_PCT = '(+5.56%)';
+  const BG_COLOR       = '#f5f2ee';
+
+  /* Odometer settings */
+  const DIGIT_POOL     = '0123456789';
+  const STRIP_LENGTH   = 8;          // random digits before the real one
+  const CHAR_HEIGHT    = 1.15;       // em
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Timing (ms)                                         */
+  /* ═══════════════════════════════════════════════════ */
+  const INTRO_HOLD       = 400;      // pause before price rolls
+  const ODO_STAGGER      = 70;       // delay between each digit
+  const ODO_DURATION     = 600;      // roll duration per digit
+  const POST_PRICE_HOLD  = 150;      // pause after price lands
+  const DAY_CHANGE_HOLD  = 600;      // how long day change is visible
+  const TEXT_FADE         = 200;
+  const BLOCK_STAGGER    = 30;
+  const BLOCK_DURATION   = 450;
+
+  /* ═══════════════════════════════════════════════════ */
+  /* DOM refs                                            */
+  /* ═══════════════════════════════════════════════════ */
+  const overlayBg      = document.getElementById('overlayBg');
+  const overlayText    = document.getElementById('overlayText');
+  const companyName    = document.getElementById('companyName');
+  const accentLine     = document.getElementById('accentLine');
+  const exchangeLabel  = document.getElementById('exchangeLabel');
+  const stockPrice     = document.getElementById('stockPrice');
+  const dayChange      = document.getElementById('dayChange');
+  const blockContainer = document.getElementById('blockContainer');
+  const replayBtn      = document.getElementById('replayBtn');
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Grid helpers                                        */
+  /* ═══════════════════════════════════════════════════ */
+  function getColCount(w) {
+    if (w < 640)  return 8;
+    if (w < 1024) return 12;
+    return 16;
+  }
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Build stock-price odometer                          */
+  /* ═══════════════════════════════════════════════════ */
+  function buildPriceOdometer() {
+    stockPrice.innerHTML = '';
+    const chars = STOCK_PRICE.split('');
+    const odoElements = [];
+    let digitIndex = 0;
+
+    chars.forEach((char) => {
+      const isDigit = /[0-9]/.test(char);
+
+      if (!isDigit) {
+        // Static character ($ . etc) — just place it
+        const el = document.createElement('span');
+        el.className = 'odo-char-static';
+        el.textContent = char;
+        stockPrice.appendChild(el);
+      } else {
+        // Digit — build odometer strip
+        const wrapper = document.createElement('span');
+        wrapper.className = 'odo-char';
+
+        const strip = document.createElement('span');
+        strip.className = 'odo-strip';
+
+        // Random digits before the real one
+        for (let j = 0; j < STRIP_LENGTH; j++) {
+          const s = document.createElement('span');
+          s.textContent = DIGIT_POOL[Math.floor(Math.random() * 10)];
+          strip.appendChild(s);
+        }
+        // Target digit
+        const target = document.createElement('span');
+        target.textContent = char;
+        strip.appendChild(target);
+
+        wrapper.appendChild(strip);
+        stockPrice.appendChild(wrapper);
+        odoElements.push({ strip, digitIndex });
+        digitIndex++;
+      }
+    });
+
+    return odoElements;
+  }
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Build block grid                                    */
+  /* ═══════════════════════════════════════════════════ */
+  function buildBlocks() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const cols = getColCount(w);
+    const blockW = Math.ceil(w / cols);
+    const blockH = blockW;
+    const rows = Math.ceil(h / blockH) + 1;
+
+    blockContainer.innerHTML = '';
+    const blocks = [];
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const div = document.createElement('div');
+        div.className = 'grid-block';
+        div.style.left   = (c * blockW) + 'px';
+        div.style.top    = (r * blockH) + 'px';
+        div.style.width  = (blockW + 1) + 'px';
+        div.style.height = (blockH + 1) + 'px';
+        div.style.transform  = 'translateY(0)';
+        div.style.transition = 'none';
+        blockContainer.appendChild(div);
+        blocks.push({ el: div, r, c, delay: (r + c) * BLOCK_STAGGER });
+      }
+    }
+
+    return {
+      blocks,
+      maxDelay: ((rows - 1) + (cols - 1)) * BLOCK_STAGGER,
+      vh: h,
+      blockH,
+    };
+  }
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Run the full animation                              */
+  /* ═══════════════════════════════════════════════════ */
+  function runAnimation() {
+    /* ── Reset everything ── */
+    overlayBg.style.display   = '';
+    overlayText.style.display = '';
+    overlayText.style.opacity = '';
+    overlayText.classList.remove('fading');
+    companyName.classList.remove('visible');
+    accentLine.classList.remove('visible');
+    exchangeLabel.classList.remove('visible');
+    stockPrice.innerHTML = '';
+    dayChange.classList.remove('visible');
+    blockContainer.style.display = 'none';
+    blockContainer.innerHTML     = '';
+    replayBtn.style.display      = 'none';
+    document.body.style.overflow = 'hidden';
+
+    /* ── Phase 1: Reveal company name + exchange label ── */
+    requestAnimationFrame(() => {
+      companyName.classList.add('visible');
+      accentLine.classList.add('visible');
+      exchangeLabel.classList.add('visible');
+    });
+
+    /* ── Phase 2: Stock price odometer roll ── */
+    setTimeout(() => {
+      const odoElements = buildPriceOdometer();
+
+      // Force layout so initial position is painted
+      stockPrice.offsetHeight;
+
+      // Stagger each digit's roll
+      odoElements.forEach(({ strip, digitIndex }) => {
+        setTimeout(() => {
+          const scrollY = -(STRIP_LENGTH * CHAR_HEIGHT);
+          strip.style.transform = 'translateY(' + scrollY + 'em)';
+        }, digitIndex * ODO_STAGGER);
+      });
+
+      // Total time for all digits to finish rolling
+      const allDigitsDone = (odoElements.length - 1) * ODO_STAGGER + ODO_DURATION;
+
+      /* ── Phase 3: Show day change in green ── */
+      setTimeout(() => {
+        dayChange.classList.add('visible');
+
+        /* ── Phase 4: Hold, then fade out and drop blocks ── */
+        setTimeout(() => {
+          overlayText.classList.add('fading');
+
+          setTimeout(() => {
+            overlayText.style.display = 'none';
+            overlayBg.style.display   = 'none';
+
+            blockContainer.style.display = '';
+            const { blocks, maxDelay, vh, blockH } = buildBlocks();
+            blockContainer.offsetHeight; // force layout
+
+            blocks.forEach(({ el, delay }) => {
+              setTimeout(() => {
+                el.style.transition = 'transform ' + BLOCK_DURATION + 'ms cubic-bezier(0.76, 0, 0.24, 1)';
+                el.style.transform  = 'translateY(' + (vh + blockH) + 'px)';
+              }, delay);
+            });
+
+            setTimeout(() => {
+              blockContainer.style.display = 'none';
+              document.body.style.overflow = '';
+              replayBtn.style.display      = '';
+            }, maxDelay + BLOCK_DURATION + 100);
+
+          }, TEXT_FADE);
+        }, DAY_CHANGE_HOLD);
+      }, allDigitsDone + POST_PRICE_HOLD);
+
+    }, INTRO_HOLD);
+  }
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Replay                                              */
+  /* ═══════════════════════════════════════════════════ */
+  replayBtn.addEventListener('click', runAnimation);
+
+  /* ═══════════════════════════════════════════════════ */
+  /* Reduced motion                                      */
+  /* ═══════════════════════════════════════════════════ */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    overlayText.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+      overlayText.style.opacity = '0';
+      setTimeout(() => {
+        overlayBg.style.display   = 'none';
+        overlayText.style.display = 'none';
+        document.body.style.overflow = '';
+        replayBtn.style.display = '';
+      }, 400);
+    }, 300);
+  } else {
+    runAnimation();
+  }
+})();
+</script>
+</body>
+</html>

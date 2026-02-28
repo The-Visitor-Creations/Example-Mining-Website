@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technology & Operations — Boet Materials Corp.</title>
+<link rel="icon" type="image/png" href="boet-icon-logo.png">
+<link rel="apple-touch-icon" href="boet-icon-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================================ */
+/* CSS CUSTOM PROPERTIES                                              */
+/* ================================================================ */
+:root {
+  --dark: #0c0a09;
+  --dark-mid: #141210;
+  --dark-deep: #080706;
+  --dark-card: #1a1715;
+  --cream: #f7f2ec;
+  --gold: #CDAA88;
+  --gold-hover: #d9bc9e;
+  --accent: #9E1B32;
+  --accent-hover: #B42240;
+  --accent-deep: #7a1527;
+  --white: #f2ede8;
+  --text-dark: #f2ede8;
+  --text-muted: #9a8e80;
+  --text-label: #6b5f52;
+  --border-light: rgba(255,255,255,0.06);
+  --border-card: rgba(255,255,255,0.08);
+
+  --neon: #C8FF00;
+
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --header-h: 80px;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ================================================================ */
+/* RESET & BASE                                                      */
+/* ================================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  color: #3d3830;
+  background: var(--dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ================================================================ */
+/* TYPOGRAPHY                                                        */
+/* ================================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  line-height: 1.08;
+  color: var(--dark);
+}
+h1 { font-size: clamp(38px, 6vw, 72px); text-transform: uppercase; }
+h2 { font-size: clamp(30px, 4.5vw, 52px); text-transform: uppercase; }
+h3 { font-size: clamp(18px, 2vw, 24px); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ================================================================ */
+/* BUTTONS                                                           */
+/* ================================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: var(--accent);
+  color: var(--white);
+  padding: 15px 32px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: transparent;
+  color: var(--white);
+  padding: 15px 32px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.btn-outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+.btn-outline:hover::before { transform: translateX(0); }
+.btn-outline:hover {
+  color: var(--accent);
+  border-color: var(--cream);
+  background: transparent;
+}
+
+/* ================================================================ */
+/* HEADER                                                            */
+/* ================================================================ */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.5s ease, border-color 0.5s ease;
+}
+
+.header.header-scrolled {
+  background: rgba(12, 10, 9, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-card);
+}
+
+.header.header-cream {
+  background: rgba(247, 242, 236, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.header.header-cream .logo-img { filter: brightness(0) saturate(100%); }
+.header.header-cream .desktop-nav a { color: #6b5f52; }
+.header.header-cream .desktop-nav a:hover,
+.header.header-cream .desktop-nav a.nav-active { color: var(--dark); }
+.header.header-cream .hamburger span { background: var(--dark); }
+
+.logo { display: flex; align-items: center; gap: 14px; z-index: 1001; }
+.logo-img {
+  height: 28px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.5s ease;
+}
+.header.header-scrolled .logo-img {
+  filter: none;
+}
+
+/* Desktop nav */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.desktop-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.8);
+  transition: color 0.5s ease;
+  position: relative;
+}
+.desktop-nav a:hover,
+.desktop-nav a.nav-active { color: var(--white); }
+
+/* Investors dropdown */
+.nav-dropdown { position: relative; }
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.nav-dropdown-trigger .chevron {
+  font-size: 8px;
+  transition: transform 0.3s ease;
+}
+.nav-dropdown:hover .chevron { transform: rotate(180deg); }
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  padding-top: 12px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; }
+.nav-dropdown-menu-inner {
+  background: var(--dark-card);
+  border: 1px solid var(--border-card);
+  border-radius: 6px;
+  padding: 8px 0;
+  min-width: 220px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover {
+  color: var(--white);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Hamburger */
+.hamburger {
+  width: 32px; height: 22px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;
+  display: none;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 100%; height: 2px;
+  background: var(--white);
+  position: absolute; left: 0;
+  transition: transform 0.4s cubic-bezier(0.77,0,0.18,1), opacity 0.3s ease;
+}
+.hamburger span:nth-child(1) { top: 4px; }
+.hamburger span:nth-child(2) { bottom: 4px; }
+.hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+@media (max-width: 1024px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: block; }
+  .header { padding: 0 24px; }
+  .logo-img { height: auto; max-width: 240px; }
+}
+@media (max-width: 480px) {
+  .header { padding: 0 16px; --header-h: 64px; }
+  .logo-img { max-width: 180px; }
+}
+
+/* ================================================================ */
+/* TICKER STRIP                                                      */
+/* ================================================================ */
+.ticker-strip {
+  position: fixed;
+  top: var(--header-h);
+  left: 0; right: 0;
+  z-index: 999;
+  background: transparent;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  transition: background 0.5s ease, border-color 0.5s ease;
+}
+.ticker-strip.ticker-scrolled {
+  background: rgba(12, 10, 9, 0.9);
+  border-bottom: 1px solid var(--border-card);
+}
+.ticker-strip.ticker-cream {
+  background: rgba(247, 242, 236, 0.92);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.ticker-strip .ticker-label { color: rgba(255,255,255,0.5); font-weight: 600; transition: color 0.5s ease; }
+.ticker-strip .ticker-symbol { color: var(--accent); font-weight: 700; }
+.ticker-strip .ticker-sep { color: rgba(255,255,255,0.15); margin: 0 4px; transition: color 0.5s ease; }
+.ticker-strip .ticker-price { color: rgba(255,255,255,0.6); font-weight: 600; margin-left: 4px; transition: color 0.5s ease; }
+.ticker-strip.ticker-cream .ticker-label { color: #6b5f52; }
+.ticker-strip.ticker-cream .ticker-sep { color: rgba(0,0,0,0.15); }
+.ticker-strip.ticker-cream .ticker-price { color: #5a5046; }
+
+/* ================================================================ */
+/* MOBILE NAV OVERLAY (cream)                                        */
+/* ================================================================ */
+@keyframes goldSweep {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+.nav-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background: var(--cream);
+  z-index: 999;
+  display: flex;
+  clip-path: inset(0 0 100% 0);
+  overflow: hidden;
+}
+.nav-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('mining-pattern.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.06;
+  z-index: 0;
+  pointer-events: none;
+}
+.nav-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 0%, transparent 35%, rgba(158,27,50,0.04) 42%, rgba(158,27,50,0.08) 50%, rgba(158,27,50,0.04) 58%, transparent 65%, transparent 100%);
+  background-size: 250% 100%;
+  animation: goldSweep 6s ease-in-out infinite;
+}
+.nav-overlay-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 60px;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+.nav-links { display: flex; flex-direction: column; gap: 4px; }
+.nav-links a,
+.nav-links .nav-sub-trigger {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 48px);
+  text-transform: uppercase;
+  color: var(--dark);
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: color 0.3s ease;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.nav-links a:hover,
+.nav-links .nav-sub-trigger:hover { color: var(--accent); }
+.nav-sub-trigger { display: flex; align-items: center; gap: 12px; }
+.nav-sub-trigger .sub-chevron { font-size: 0.5em; transition: transform 0.35s ease; display: inline-block; }
+.nav-sub-trigger.open .sub-chevron { transform: rotate(180deg); }
+.nav-sub-links {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding-left: 8px;
+}
+.nav-sub-links.open { max-height: 280px; }
+.nav-sub-links a {
+  font-size: clamp(14px, 2.2vw, 18px) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  color: #5a5046 !important;
+  line-height: 1.6 !important;
+  padding: 4px 0;
+  letter-spacing: 0.5px;
+  display: block;
+  opacity: 1 !important;
+  transform: none !important;
+}
+.nav-sub-links a:hover { color: var(--accent) !important; }
+
+/* ================================================================ */
+/* LOAD-IN OVERLAY                                                   */
+/* ================================================================ */
+.header { transform: translateY(-100%); }
+.ticker-strip { transform: translateY(-100%); opacity: 0; }
+.ticker-strip > span { opacity: 0; transform: translateY(6px); }
+
+.load-overlay-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--dark);
+}
+.load-overlay-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  opacity: 0.1;
+  pointer-events: none;
+}
+.load-overlay-text {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.2s ease;
+}
+.load-overlay-text.fading { opacity: 0; }
+.load-company-name {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(36px, 6vw, 76px);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--cream);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s cubic-bezier(0.25,0.1,0.25,1), transform 0.45s cubic-bezier(0.25,0.1,0.25,1);
+}
+.load-company-name.visible { opacity: 1; transform: translateY(0); }
+.load-accent-line {
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  margin: 16px auto 14px;
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.25,0.1,0.25,1) 0.2s;
+}
+.load-accent-line.visible { transform: scaleX(1); }
+.load-page-label {
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  opacity: 0;
+  transition: opacity 0.3s ease 0.25s;
+}
+.load-page-label.visible { opacity: 1; }
+.load-block-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+}
+.load-grid-block {
+  position: absolute;
+  background: var(--dark);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header { transform: none; }
+  .ticker-strip { transform: none; opacity: 1; }
+  .ticker-strip > span { opacity: 1; transform: none; }
+  .load-overlay-text, .load-company-name, .load-accent-line,
+  .load-page-label, .load-grid-block {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ================================================================ */
+/* HERO — VIDEO BACKGROUND                                           */
+/* ================================================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 60px 80px;
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.hero-video.vid-ready { opacity: 1; }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12,10,9,0.3) 0%, rgba(12,10,9,0.15) 40%, rgba(12,10,9,0.6) 100%);
+  pointer-events: none;
+}
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.5;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+}
+.hero-content .eyebrow {
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(20px);
+}
+.hero-content h1 {
+  color: var(--white);
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.hero-content .hero-sub {
+  color: rgba(255,255,255,0.7);
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.hero-content .hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 0 24px 60px; }
+}
+
+/* ================================================================ */
+/* PROCESS STEPS — SCROLL-DRIVEN REVEAL                              */
+/* ================================================================ */
+.process-section {
+  position: relative;
+  background: var(--cream);
+  padding: 120px 60px;
+  overflow: hidden;
+}
+.process-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.process-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 80px;
+  position: relative;
+  z-index: 1;
+}
+.process-header h2 {
+  margin-bottom: 16px;
+}
+.process-header p {
+  font-size: 17px;
+  color: #5a5046;
+  line-height: 1.8;
+}
+
+/* Timeline layout */
+.process-timeline {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+/* Vertical line in center */
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0,0,0,0.08);
+  transform: translateX(-50%);
+}
+
+.process-step {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  align-items: center;
+  margin-bottom: 100px;
+  position: relative;
+}
+.process-step:last-child { margin-bottom: 0; }
+
+/* Step number in the middle */
+.step-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid rgba(0,0,0,0.1);
+  margin: 0 auto;
+  z-index: 2;
+  position: relative;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+.step-marker span {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+.process-step.step-visible .step-marker {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 6px rgba(158,27,50,0.1);
+}
+
+/* Content side */
+.step-content {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.process-step:nth-child(even) .step-content {
+  transform: translateX(40px);
+  grid-column: 3;
+  grid-row: 1;
+}
+.process-step:nth-child(even) .step-image {
+  grid-column: 1;
+  grid-row: 1;
+}
+.process-step.step-visible .step-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.step-content .step-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.step-content h3 {
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.step-content p {
+  font-size: 16px;
+  color: #5a5046;
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+.step-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.step-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.step-stat .stat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--neon);
+  flex-shrink: 0;
+}
+.step-stat .stat-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #3d3830;
+}
+
+/* Image side */
+.step-image {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.process-step:nth-child(even) .step-image {
+  transform: translateX(-40px);
+}
+.process-step.step-visible .step-image {
+  opacity: 1;
+  transform: translateX(0);
+}
+.step-image img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.6s ease;
+}
+.step-image:hover img {
+  transform: scale(1.03);
+}
+
+@media (max-width: 900px) {
+  .process-section { padding: 80px 24px; }
+  .process-step {
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+  }
+  .process-timeline::before { left: 24px; }
+  .step-marker { width: 48px; height: 48px; }
+  .step-content,
+  .process-step:nth-child(even) .step-content {
+    grid-column: 2;
+    grid-row: auto;
+    transform: translateY(20px);
+  }
+  .step-image,
+  .process-step:nth-child(even) .step-image {
+    grid-column: 2;
+    grid-row: auto;
+    transform: translateY(20px);
+  }
+  .process-step.step-visible .step-content,
+  .process-step.step-visible .step-image {
+    transform: translateY(0);
+  }
+}
+
+/* ================================================================ */
+/* SVG INTERACTIVE SECTION                                           */
+/* ================================================================ */
+.interactive-section {
+  position: relative;
+  padding: 120px 0 0;
+  background: var(--cream);
+  overflow: hidden;
+}
+.interactive-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #D8D5D0 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.interactive-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.interactive-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 60px;
+}
+.interactive-header h2 { margin-bottom: 16px; }
+.interactive-header p {
+  font-size: 16px;
+  color: #5a5046;
+  line-height: 1.75;
+}
+
+/* Layout: info panel + SVG */
+.tech-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 60px;
+}
+
+.tech-info-col {
+  position: sticky;
+  top: 140px;
+  min-height: 380px;
+}
+
+.info-panel {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 32px;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+.info-panel[data-state="visible"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.info-panel .info-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.info-panel h3 { margin-bottom: 14px; }
+.info-panel .info-desc {
+  font-size: 15px;
+  color: #5a5046;
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.info-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 20px;
+}
+.info-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.stat-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--neon);
+  flex-shrink: 0;
+}
+.stat-text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #3d3830;
+}
+
+/* SVG scene */
+.tech-scene-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.tech-scene-wrapper svg { display: block; width: 100%; height: auto; }
+
+/* Hotspot buttons */
+.hotspot {
+  position: absolute;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  border: 2px solid #D8D5D0;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  transition: all 0.35s ease;
+  outline: none;
+}
+.hotspot::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.35s ease;
+}
+.hotspot:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 0 4px rgba(200,255,0,0.15), 0 4px 20px rgba(0,0,0,0.12);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.hotspot:hover::before { border-color: rgba(200,255,0,0.3); }
+.hotspot.active {
+  background: var(--neon);
+  border-color: var(--neon);
+  box-shadow: 0 0 0 6px rgba(200,255,0,0.2), 0 4px 24px rgba(200,255,0,0.3);
+  transform: translate(-50%, -50%) scale(1.12);
+}
+.hotspot.active::before {
+  border-color: rgba(200,255,0,0.4);
+  animation: hotspotPulse 2s ease-in-out infinite;
+}
+@keyframes hotspotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0; }
+}
+.hotspot svg { width: 18px; height: 18px; fill: #666; transition: fill 0.3s ease; }
+.hotspot.active svg { fill: #1a1a1a; }
+.hotspot-label {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: rgba(255,255,255,0.92);
+  padding: 5px 10px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateX(-50%) translateY(4px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.hotspot:hover .hotspot-label,
+.hotspot.active .hotspot-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Bottom tabs */
+.tech-tabs {
+  display: flex;
+  gap: 12px;
+  padding: 0 60px 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.tech-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+.tech-tab:hover {
+  background: rgba(255,255,255,0.8);
+  border-color: rgba(0,0,0,0.1);
+}
+.tech-tab.active {
+  background: rgba(255,255,255,0.95);
+  border-color: var(--neon);
+  box-shadow: 0 0 0 3px rgba(200,255,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+}
+.tab-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #b0a89e;
+  transition: color 0.3s;
+}
+.tech-tab.active .tab-num { color: var(--accent); }
+.tab-info { display: flex; flex-direction: column; gap: 2px; }
+.tab-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tab-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #9a8e80;
+  letter-spacing: 0.5px;
+}
+
+/* SVG flow animations */
+@keyframes flowDash {
+  to { stroke-dashoffset: -24; }
+}
+.flow-accent {
+  stroke-dasharray: 12 12;
+  animation: flowDash 1.5s linear infinite;
+}
+.flow-accent-2 {
+  stroke-dasharray: 8 16;
+  animation: flowDash 2s linear infinite;
+}
+
+/* ================================================================ */
+/* CTA SECTION                                                       */
+/* ================================================================ */
+.cta-section {
+  padding: 120px 60px;
+  background: var(--dark);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('mining-pattern.jpg') center / 1200px auto repeat;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.cta-section > * { position: relative; z-index: 1; }
+.cta-section .eyebrow { color: var(--gold); margin-bottom: 24px; }
+.cta-section h2 {
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.cta-section .cta-sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ================================================================ */
+/* FOOTER                                                            */
+/* ================================================================ */
+.footer {
+  background: var(--dark-deep);
+  padding: 60px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  border-top: 1px solid var(--border-card);
+}
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.footer-brand .footer-logo-img { height: 24px; width: auto; margin-bottom: 8px; }
+.footer-tickers {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+.footer-tickers .ticker-symbol { color: var(--gold); font-weight: 600; }
+.footer-nav { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+.footer-nav a:hover { color: var(--white); }
+.footer-bottom {
+  border-top: 1px solid var(--border-card);
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-disclaimer {
+  max-width: 750px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.3);
+}
+.footer-copy { color: rgba(255,255,255,0.3); font-size: 12px; }
+.footer-credit {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 1px;
+}
+.footer-credit a {
+  color: var(--gold);
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.footer-credit a:hover { color: var(--gold-hover); }
+
+/* ================================================================ */
+/* RESPONSIVE                                                        */
+/* ================================================================ */
+@media (max-width: 1100px) {
+  .tech-layout { grid-template-columns: 1fr; }
+  .tech-info-col { position: static; order: 2; min-height: auto; }
+  .tech-scene-wrapper { order: 1; }
+  .tech-tabs { flex-wrap: wrap; }
+  .tech-tab { flex: 1 1 calc(50% - 6px); }
+}
+
+@media (max-width: 768px) {
+  .interactive-inner { padding: 0 24px; }
+  .tech-tabs { padding: 0 24px 60px; flex-direction: column; }
+  .tech-tab { flex: 1 1 100%; }
+  .interactive-header { padding: 0 24px; }
+  .interactive-section { padding: 80px 0 0; }
+  .cta-section { padding: 80px 24px; }
+  .footer { padding: 40px 24px; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; }
+}
+
+/* ================================================================ */
+/* WORD REVEAL                                                       */
+/* ================================================================ */
+.word-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.word-reveal span {
+  display: inline-block;
+  transform: translateY(110%);
+}
+</style>
+</head>
+<body>
+
+<!-- LOAD-IN OVERLAY -->
+<div class="load-overlay-bg" id="loadOverlayBg"></div>
+<div class="load-overlay-text" id="loadOverlayText">
+  <div style="text-align:center; padding: 24px;">
+    <div class="load-company-name" id="loadCompanyName">Boet Materials</div>
+    <div class="load-accent-line" id="loadAccentLine"></div>
+    <div class="load-page-label" id="loadPageLabel">Technology</div>
+  </div>
+</div>
+<div class="load-block-container" id="loadBlockContainer" style="display:none;"></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HEADER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<header class="header" id="header">
+  <a href="index.html" class="logo">
+    <img src="boet-full-logo.png" alt="Boet Materials" class="logo-img">
+  </a>
+
+  <nav class="desktop-nav" id="desktop-nav">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="technology.html" class="nav-active">Technology</a>
+    <a href="index.html#esg">ESG</a>
+    <div class="nav-dropdown">
+      <a href="index.html#investors" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-menu-inner">
+          <a href="index.html#investors">Investor Overview</a>
+          <a href="https://pitch-deck-example-the-visitor.vercel.app/">Corporate Presentation</a>
+          <a href="#">News & Press Releases</a>
+          <a href="#">Stock Information</a>
+        </div>
+      </div>
+    </div>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Ticker Strip -->
+<div class="ticker-strip" id="ticker-strip">
+  <span><span class="ticker-label">TSXV:</span> <span class="ticker-symbol">AUM</span> <span class="ticker-price">$2.34</span></span>
+  <span class="ticker-sep">|</span>
+  <span><span class="ticker-label">OTCQX:</span> <span class="ticker-symbol">AURMF</span> <span class="ticker-price">$1.68</span></span>
+  <span class="ticker-sep">|</span>
+  <span><span class="ticker-label">FSE:</span> <span class="ticker-symbol">9AUM</span> <span class="ticker-price">€1.55</span></span>
+</div>
+
+<!-- Mobile Nav Overlay -->
+<nav class="nav-overlay" id="nav-overlay">
+  <div class="nav-overlay-content">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="technology.html">Technology</a></li>
+      <li><a href="index.html#esg">ESG</a></li>
+      <li>
+        <div class="nav-sub-trigger" id="investorsTrigger">Investors <span class="sub-chevron">&#9662;</span></div>
+        <div class="nav-sub-links" id="investorsSubLinks">
+          <a href="index.html#investors">Investor Overview</a>
+          <a href="https://pitch-deck-example-the-visitor.vercel.app/">Corporate Presentation</a>
+          <a href="#">News &amp; Press Releases</a>
+          <a href="#">Stock Information</a>
+        </div>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO — VIDEO                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata"></video>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content" id="heroContent">
+    <div class="eyebrow">Technology &amp; Operations</div>
+    <h1 id="hero-h1">How We Mine</h1>
+    <p class="hero-sub">An integrated, end-to-end mining operation engineered for maximum efficiency and minimal environmental impact.</p>
+    <div class="hero-ctas">
+      <a href="#process" class="btn-primary">Explore Process <span class="arrow">&rarr;</span></a>
+      <a href="#interactive" class="btn-outline">Interactive Map <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PROCESS STEPS — SCROLL DRIVEN                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="process-section" id="process">
+  <div class="process-header">
+    <div class="eyebrow">Our Process</div>
+    <h2>From Ground to Product</h2>
+    <p>Four integrated stages take raw ore from the earth and transform it into market-ready critical minerals — responsibly and efficiently.</p>
+  </div>
+
+  <div class="process-timeline">
+    <!-- Step 1 -->
+    <div class="process-step" data-step="1">
+      <div class="step-content">
+        <div class="step-eyebrow">Phase 01</div>
+        <h3>Extraction</h3>
+        <p>Multi-bench open-pit mining with precision blasting and GPS-guided excavation. We extract ore from carefully planned benches while maintaining slope stability and environmental controls.</p>
+        <div class="step-stats">
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">2.4M t/yr capacity</span></div>
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">GPS-guided fleet</span></div>
+        </div>
+      </div>
+      <div class="step-marker"><span>01</span></div>
+      <div class="step-image">
+        <img src="photo-tech-1-desktop.jpg" alt="Open-pit mining extraction" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="process-step" data-step="2">
+      <div class="step-image">
+        <img src="photo-tech-2-desktop.jpg" alt="Ore processing plant" loading="lazy">
+      </div>
+      <div class="step-marker"><span>02</span></div>
+      <div class="step-content">
+        <div class="step-eyebrow">Phase 02</div>
+        <h3>Processing</h3>
+        <p>State-of-the-art gravity separation and carbon-in-leach (CIL) circuit with a modern flotation plant. Our process achieves industry-leading recovery rates while minimizing chemical usage.</p>
+        <div class="step-stats">
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">94% recovery rate</span></div>
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">Gravity + CIL circuit</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="process-step" data-step="3">
+      <div class="step-content">
+        <div class="step-eyebrow">Phase 03</div>
+        <h3>Tailings Management</h3>
+        <p>Dry-stack tailings storage facility using advanced filtered tailings technology. This approach eliminates conventional tailings dams, reducing water consumption and environmental risk.</p>
+        <div class="step-stats">
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">Zero tailings dams</span></div>
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">85% water recovery</span></div>
+        </div>
+      </div>
+      <div class="step-marker"><span>03</span></div>
+      <div class="step-image">
+        <img src="photo-tech-3-desktop.jpg" alt="Tailings management facility" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="process-step" data-step="4">
+      <div class="step-image">
+        <picture>
+          <img src="photo-tech-1-desktop.jpg" alt="Power infrastructure and solar array" loading="lazy" style="filter: hue-rotate(30deg) brightness(1.05);">
+        </picture>
+      </div>
+      <div class="step-marker"><span>04</span></div>
+      <div class="step-content">
+        <div class="step-eyebrow">Phase 04</div>
+        <h3>Power Infrastructure</h3>
+        <p>Hybrid power system combining grid connection with on-site solar array. Our 12-panel solar installation supplements grid power, reducing carbon intensity and operating costs.</p>
+        <div class="step-stats">
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">Grid + Solar hybrid</span></div>
+          <div class="step-stat"><div class="stat-dot"></div><span class="stat-text">30% renewable mix</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- INTERACTIVE SVG SECTION                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="interactive-section" id="interactive">
+  <div class="interactive-inner">
+    <div class="interactive-header">
+      <div class="eyebrow">Operations</div>
+      <h2>Explore Our Mine</h2>
+      <p>Click on any hotspot or tab below to learn about each stage of our integrated mining and processing workflow.</p>
+    </div>
+
+    <div class="tech-layout">
+      <!-- Left: Info Panels -->
+      <div class="tech-info-col">
+        <div class="info-panel" id="panel-default" data-state="visible">
+          <div class="info-eyebrow">Operations</div>
+          <h3>Explore Our Mine</h3>
+          <p class="info-desc">Our fully integrated mining operation encompasses extraction, processing, tailings management, and power infrastructure — all engineered for maximum efficiency and minimal environmental impact.</p>
+          <div class="info-stats">
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">4 Operational Stages</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">End-to-End Integration</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">94% Gold Recovery</span></div>
+          </div>
+        </div>
+
+        <div class="info-panel" id="panel-extraction" data-state="hidden">
+          <div class="info-eyebrow">01 — Extraction</div>
+          <h3>Open-Pit Mining</h3>
+          <p class="info-desc">Multi-bench open-pit operation with precision blasting and GPS-guided excavation. 180-tonne haul trucks transport ore along engineered roads to the primary crusher.</p>
+          <div class="info-stats">
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">2.4M t/yr capacity</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">5 active benches</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">GPS-guided fleet</span></div>
+          </div>
+        </div>
+
+        <div class="info-panel" id="panel-processing" data-state="hidden">
+          <div class="info-eyebrow">02 — Processing</div>
+          <h3>Gravity &amp; CIL Circuit</h3>
+          <p class="info-desc">Crushed ore enters a gravity separation circuit followed by carbon-in-leach processing. The thickener recycles process water while reagent systems maintain optimal chemistry.</p>
+          <div class="info-stats">
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">94% Au recovery</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">SAG + Ball mill</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">Closed-loop water</span></div>
+          </div>
+        </div>
+
+        <div class="info-panel" id="panel-tailings" data-state="hidden">
+          <div class="info-eyebrow">03 — Tailings</div>
+          <h3>Dry-Stack TSF</h3>
+          <p class="info-desc">Filtered tailings are stacked in engineered cells with compacted lifts. No conventional tailings dam required — significantly reducing environmental risk and water consumption.</p>
+          <div class="info-stats">
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">Zero tailings dams</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">85% water recovery</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">Progressive rehab</span></div>
+          </div>
+        </div>
+
+        <div class="info-panel" id="panel-power" data-state="hidden">
+          <div class="info-eyebrow">04 — Power</div>
+          <h3>Grid + Solar Hybrid</h3>
+          <p class="info-desc">On-site substation connects to the regional grid, supplemented by a 12-panel photovoltaic array. Dual supply ensures reliability while reducing carbon intensity.</p>
+          <div class="info-stats">
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">Grid + PV hybrid</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">N+1 redundancy</span></div>
+            <div class="info-stat"><div class="stat-dot"></div><span class="stat-text">30% renewable mix</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: SVG Scene -->
+      <div class="tech-scene-wrapper" id="techScene">
+        <!-- SVG inserted by JS to keep HTML clean -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Tabs -->
+  <div class="tech-tabs">
+    <button class="tech-tab" data-target="extraction">
+      <span class="tab-num">01</span>
+      <div class="tab-info"><span class="tab-title">Extraction</span><span class="tab-sub">Open-Pit Mining</span></div>
+    </button>
+    <button class="tech-tab" data-target="processing">
+      <span class="tab-num">02</span>
+      <div class="tab-info"><span class="tab-title">Processing</span><span class="tab-sub">Gravity &amp; CIL</span></div>
+    </button>
+    <button class="tech-tab" data-target="tailings">
+      <span class="tab-num">03</span>
+      <div class="tab-info"><span class="tab-title">Tailings</span><span class="tab-sub">Dry-Stack TSF</span></div>
+    </button>
+    <button class="tech-tab" data-target="power">
+      <span class="tab-num">04</span>
+      <div class="tab-info"><span class="tab-title">Power</span><span class="tab-sub">Grid + Solar</span></div>
+    </button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CTA                                                     -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="eyebrow">Get In Touch</div>
+  <h2>Ready to Partner<br>With Us?</h2>
+  <p class="cta-sub">Learn how Boet Materials Corp. is pioneering the future of responsible resource development and advancing the global energy transition.</p>
+  <div class="cta-buttons">
+    <a href="https://pitch-deck-example-the-visitor.vercel.app/" class="btn-primary">Corporate Presentation <span class="arrow">&rarr;</span></a>
+    <a href="contact.html" class="btn-outline">Contact Us <span class="arrow">&rarr;</span></a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img"></a>
+        <div class="footer-tickers">
+          <span class="ticker-symbol">TSXV: AUM</span> &nbsp;|&nbsp;
+          <span class="ticker-symbol">OTCQX: AURMF</span> &nbsp;|&nbsp;
+          <span class="ticker-symbol">FSE: 9AUM</span>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="technology.html">Technology</a>
+        <a href="index.html#esg">ESG</a>
+        <a href="index.html#investors">Investors</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-disclaimer">
+        This website contains forward-looking statements. All financial figures, projections, and technical details are subject to assumptions and risks described in the Corporate Presentation and public filings. See the Corporate Presentation for full disclosures, qualified person statements, and cautionary notes. Boet Materials Corp. is listed on the TSX Venture Exchange and has not been reviewed or approved by any securities regulator.
+      </div>
+      <div class="footer-copy">&copy; 2026 Boet Materials Corp.</div>
+    </div>
+    <div class="footer-credit">Website Created By <a href="https://www.thevisitor.ca/" target="_blank" rel="noopener">THE VISITOR</a></div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SCRIPTS                                                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════ */
+/* LOAD-IN OVERLAY                                         */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var HOLD = 1200, BLOCK_STAGGER = 18, BLOCK_DURATION = 600;
+  var overlayBg     = document.getElementById('loadOverlayBg');
+  var overlayText   = document.getElementById('loadOverlayText');
+  var companyName   = document.getElementById('loadCompanyName');
+  var accentLine    = document.getElementById('loadAccentLine');
+  var pageLabel     = document.getElementById('loadPageLabel');
+  var blockContainer= document.getElementById('loadBlockContainer');
+
+  var navEntry = performance.getEntriesByType('navigation')[0];
+  var navType = navEntry ? navEntry.type : '';
+  var sameOriginReferrer = document.referrer && document.referrer.indexOf(window.location.origin) === 0;
+  var isInternalNav = sameOriginReferrer && (navType === 'navigate' || navType === 'back_forward');
+
+  if (isInternalNav) {
+    overlayText.style.display = 'none';
+    overlayBg.style.display = 'none';
+    initPageAnimations();
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+
+  function getColCount(w) {
+    if (w < 640) return 8;
+    if (w < 1024) return 12;
+    return 16;
+  }
+
+  function buildBlocks() {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var cols = getColCount(w);
+    var blockW = Math.ceil(w / cols);
+    var blockH = blockW;
+    var rows = Math.ceil(h / blockH) + 1;
+    blockContainer.innerHTML = '';
+    var blocks = [];
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var div = document.createElement('div');
+        div.className = 'load-grid-block';
+        div.style.left   = (c * blockW) + 'px';
+        div.style.top    = (r * blockH) + 'px';
+        div.style.width  = (blockW + 1) + 'px';
+        div.style.height = (blockH + 1) + 'px';
+        div.style.transform  = 'translateY(0)';
+        div.style.transition = 'none';
+        blockContainer.appendChild(div);
+        blocks.push({ el: div, r: r, c: c, delay: (r + c) * BLOCK_STAGGER });
+      }
+    }
+    return { blocks: blocks, maxDelay: ((rows - 1) + (cols - 1)) * BLOCK_STAGGER, vh: h, blockH: blockH };
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    overlayText.style.transition = 'opacity 0.3s ease';
+    setTimeout(function() {
+      overlayText.style.opacity = '0';
+      setTimeout(function() {
+        overlayBg.style.display = 'none';
+        overlayText.style.display = 'none';
+        document.body.style.overflow = '';
+        initPageAnimations();
+      }, 400);
+    }, 300);
+    return;
+  }
+
+  requestAnimationFrame(function() {
+    companyName.classList.add('visible');
+    accentLine.classList.add('visible');
+    pageLabel.classList.add('visible');
+  });
+
+  setTimeout(function() {
+    overlayText.classList.add('fading');
+
+    setTimeout(function() {
+      overlayText.style.display = 'none';
+      overlayBg.style.display   = 'none';
+
+      blockContainer.style.display = '';
+      var grid = buildBlocks();
+      blockContainer.offsetHeight;
+
+      grid.blocks.forEach(function(block) {
+        setTimeout(function() {
+          block.el.style.transition = 'transform ' + BLOCK_DURATION + 'ms cubic-bezier(0.76, 0, 0.24, 1)';
+          block.el.style.transform  = 'translateY(' + (grid.vh + grid.blockH) + 'px)';
+        }, block.delay);
+      });
+
+      setTimeout(function() {
+        blockContainer.style.display = 'none';
+        document.body.style.overflow = '';
+        initPageAnimations();
+      }, grid.maxDelay + BLOCK_DURATION + 100);
+    }, 200);
+  }, HOLD);
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* PAGE ANIMATIONS                                         */
+/* ═══════════════════════════════════════════════════════ */
+function initPageAnimations() {
+
+/* Lenis smooth scroll */
+var lenis = new Lenis({
+  duration: 1.2,
+  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+  smoothWheel: true,
+});
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+gsap.ticker.lagSmoothing(0);
+window.__lenis = lenis;
+
+/* ═══════════════════════════════════════════════════════ */
+/* HERO ENTRANCE                                           */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var header  = document.getElementById('header');
+  var ticker  = document.getElementById('ticker-strip');
+  var hero    = document.getElementById('hero');
+  var video   = document.getElementById('heroVideo');
+  var content = document.getElementById('heroContent');
+  var h1      = document.getElementById('hero-h1');
+  var eyebrow = content.querySelector('.eyebrow');
+  var sub     = content.querySelector('.hero-sub');
+  var ctas    = content.querySelector('.hero-ctas');
+  var tickerItems = ticker.querySelectorAll(':scope > span');
+
+  /* H1 animates in with the rest of the text */
+
+  /* Load video */
+  function loadVid() {
+    video.src = 'technology-hero.mp4';
+    var playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(function() { /* autoplay blocked — rely on safety timeout */ });
+    }
+  }
+  if ('requestIdleCallback' in window) { requestIdleCallback(loadVid); }
+  else { setTimeout(loadVid, 100); }
+
+  var revealed = false;
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+
+    var tl = gsap.timeline({ delay: 0.2 });
+    tl.to(header, { y: 0, duration: 0.6, ease: 'power2.out' });
+    tl.to(ticker, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
+    tl.to(tickerItems, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.12 }, '-=0.2');
+    tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2');
+    tl.to(h1, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.3');
+    tl.to(sub, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+    tl.to(ctas, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+  }
+
+  video.addEventListener('playing', function() {
+    video.classList.add('vid-ready');
+    setTimeout(reveal, 300);
+  }, { once: true });
+
+  setTimeout(reveal, 4000);
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* HEADER COLOR TRANSITIONS ON SCROLL                      */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var header = document.getElementById('header');
+  var ticker = document.getElementById('ticker-strip');
+  var hero   = document.getElementById('hero');
+  var processSection = document.querySelector('.process-section');
+  var interactiveSection = document.querySelector('.interactive-section');
+  var ctaSection = document.querySelector('.cta-section');
+  var currentState = '';
+
+  function updateHeaderState() {
+    var scrollY = window.scrollY;
+    var headerH = header.offsetHeight + ticker.offsetHeight;
+    var heroBottom = hero.offsetHeight;
+    var processTop = processSection ? processSection.getBoundingClientRect().top + scrollY - headerH : Infinity;
+    var processBottom = processSection ? processTop + processSection.offsetHeight : Infinity;
+    var interactiveTop = interactiveSection ? interactiveSection.getBoundingClientRect().top + scrollY - headerH : Infinity;
+    var interactiveBottom = interactiveSection ? interactiveTop + interactiveSection.offsetHeight : Infinity;
+    var ctaTop = ctaSection ? ctaSection.getBoundingClientRect().top + scrollY - headerH : Infinity;
+
+    var newState;
+    if (scrollY < heroBottom - headerH) {
+      newState = 'hero';
+    } else if (scrollY >= processTop && scrollY < processBottom) {
+      newState = 'cream';
+    } else if (scrollY >= interactiveTop && scrollY < interactiveBottom) {
+      newState = 'cream';
+    } else if (scrollY >= ctaTop) {
+      newState = 'dark';
+    } else {
+      newState = 'dark';
+    }
+
+    if (newState === currentState) return;
+    currentState = newState;
+
+    header.classList.remove('header-scrolled', 'header-cream');
+    ticker.classList.remove('ticker-scrolled', 'ticker-cream');
+
+    if (newState === 'hero') {
+      /* transparent over video */
+    } else if (newState === 'cream') {
+      header.classList.add('header-cream');
+      ticker.classList.add('ticker-cream');
+    } else {
+      header.classList.add('header-scrolled');
+      ticker.classList.add('ticker-scrolled');
+    }
+  }
+
+  ScrollTrigger.create({
+    trigger: document.body,
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: updateHeaderState
+  });
+  updateHeaderState();
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* HERO PARALLAX                                           */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var video = document.getElementById('heroVideo');
+  gsap.to(video, {
+    yPercent: 20,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* PROCESS STEPS — SCROLL REVEAL                           */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  document.querySelectorAll('.process-step').forEach(function(step) {
+    ScrollTrigger.create({
+      trigger: step,
+      start: 'top 75%',
+      onEnter: function() { step.classList.add('step-visible'); },
+      once: true
+    });
+  });
+
+  /* Header word reveal */
+  var processH2 = document.querySelector('.process-header h2');
+  if (processH2) {
+    var text = processH2.textContent;
+    var words = text.split(' ');
+    processH2.innerHTML = words.map(function(w) {
+      return '<span class="word-reveal"><span>' + w + '</span></span>';
+    }).join(' ');
+    var spans = processH2.querySelectorAll('.word-reveal span');
+    ScrollTrigger.create({
+      trigger: processH2,
+      start: 'top 80%',
+      onEnter: function() {
+        gsap.to(spans, { y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 });
+      },
+      once: true
+    });
+  }
+
+  /* Interactive section header word reveal */
+  var interH2 = document.querySelector('.interactive-header h2');
+  if (interH2) {
+    var text2 = interH2.textContent;
+    var words2 = text2.split(' ');
+    interH2.innerHTML = words2.map(function(w) {
+      return '<span class="word-reveal"><span>' + w + '</span></span>';
+    }).join(' ');
+    var spans2 = interH2.querySelectorAll('.word-reveal span');
+    ScrollTrigger.create({
+      trigger: interH2,
+      start: 'top 80%',
+      onEnter: function() {
+        gsap.to(spans2, { y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 });
+      },
+      once: true
+    });
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* MOBILE NAV                                              */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var hamburger = document.getElementById('hamburger');
+  var overlay = document.getElementById('nav-overlay');
+  var navItems = document.querySelectorAll('#nav-links > li > a, #nav-links > li > .nav-sub-trigger');
+  var closeLinks = document.querySelectorAll('#nav-links a');
+  var isOpen = false;
+
+  hamburger.addEventListener('click', function() {
+    isOpen = !isOpen;
+    hamburger.classList.toggle('open', isOpen);
+    if (isOpen) {
+      lenis.stop();
+      overlay.style.transition = 'clip-path 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
+      overlay.style.clipPath = 'inset(0 0 0% 0)';
+      navItems.forEach(function(item, i) {
+        setTimeout(function() {
+          item.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+          item.style.opacity = '1';
+          item.style.transform = 'translateX(0)';
+        }, 200 + i * 50);
+      });
+    } else {
+      navItems.forEach(function(item) {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(-30px)';
+      });
+      overlay.style.clipPath = 'inset(0 0 100% 0)';
+      setTimeout(function() { lenis.start(); }, 600);
+    }
+  });
+
+  closeLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (isOpen) {
+        isOpen = false;
+        hamburger.classList.remove('open');
+        navItems.forEach(function(item) {
+          item.style.opacity = '0';
+          item.style.transform = 'translateX(-30px)';
+        });
+        overlay.style.clipPath = 'inset(0 0 100% 0)';
+        setTimeout(function() { lenis.start(); }, 600);
+      }
+    });
+  });
+
+  var subTrigger = document.getElementById('investorsTrigger');
+  var subLinks = document.getElementById('investorsSubLinks');
+  if (subTrigger && subLinks) {
+    subTrigger.addEventListener('click', function() {
+      subTrigger.classList.toggle('open');
+      subLinks.classList.toggle('open');
+    });
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* ANCHOR SMOOTH SCROLL                                    */
+/* ═══════════════════════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: -120 });
+    }
+  });
+});
+
+/* ═══════════════════════════════════════════════════════ */
+/* HOTSPOT INTERACTIONS                                    */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var hotspots = document.querySelectorAll('.hotspot');
+  var tabs = document.querySelectorAll('.tech-tab');
+  var panels = document.querySelectorAll('.info-panel');
+  var activeTarget = null;
+
+  function activate(target) {
+    if (activeTarget === target) {
+      deactivateAll();
+      return;
+    }
+    activeTarget = target;
+
+    hotspots.forEach(function(h) {
+      h.classList.toggle('active', h.dataset.target === target);
+    });
+    tabs.forEach(function(t) {
+      t.classList.toggle('active', t.dataset.target === target);
+    });
+    panels.forEach(function(p) {
+      var id = p.id.replace('panel-', '');
+      p.dataset.state = (id === target) ? 'visible' : 'hidden';
+    });
+  }
+
+  function deactivateAll() {
+    activeTarget = null;
+    hotspots.forEach(function(h) { h.classList.remove('active'); });
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    panels.forEach(function(p) {
+      p.dataset.state = (p.id === 'panel-default') ? 'visible' : 'hidden';
+    });
+  }
+
+  hotspots.forEach(function(h) {
+    h.addEventListener('click', function(e) {
+      e.stopPropagation();
+      activate(h.dataset.target);
+    });
+  });
+  tabs.forEach(function(t) {
+    t.addEventListener('click', function(e) {
+      e.stopPropagation();
+      activate(t.dataset.target);
+    });
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.hotspot') && !e.target.closest('.tech-tab') && !e.target.closest('.info-panel')) {
+      deactivateAll();
+    }
+  });
+})();
+
+} /* end initPageAnimations */
+</script>
+
+<!-- Load SVG into scene wrapper -->
+<script>
+(function() {
+  var wrapper = document.getElementById('techScene');
+  if (!wrapper) return;
+
+  /* Fetch the SVG from the old page's embedded content */
+  var svgMarkup = '<svg viewBox="0 0 1400 800" xmlns="http://www.w3.org/2000/svg" style="background:#f5f0ea"><defs><filter id="shadow"><feDropShadow dx="2" dy="4" stdDeviation="6" flood-opacity="0.12"/></filter><filter id="shadowSmall"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.10"/></filter><filter id="flowGlow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="structureShadow"><feDropShadow dx="1.5" dy="3" stdDeviation="4" flood-opacity="0.14"/></filter><filter id="structureShadowSm"><feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.12"/></filter></defs>'
+    + '<g id="terrain"><path d="M0 780 Q200 760 400 770 T800 765 T1200 775 L1400 780 L1400 800 L0 800Z" fill="#d4cfc7" opacity="0.4"/><path d="M0 770 Q350 750 700 760 T1400 755 L1400 800 L0 800Z" fill="#ccc7be" opacity="0.3"/>'
+    + '<path d="M50 600 Q150 580 250 610 Q350 620 400 590" stroke="#c8c3bb" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M100 550 Q200 530 300 560 Q400 570 450 540" stroke="#c8c3bb" stroke-width="0.8" fill="none" opacity="0.4"/><path d="M900 650 Q1000 630 1100 660 Q1200 670 1300 640" stroke="#c8c3bb" stroke-width="0.8" fill="none" opacity="0.4"/><path d="M950 600 Q1050 580 1150 610 Q1250 620 1350 590" stroke="#c8c3bb" stroke-width="0.8" fill="none" opacity="0.3"/></g>'
+    + '<g id="flowLines"><path d="M320 480 Q400 450 480 460 Q560 465 620 440" stroke="#b8860b" stroke-width="1.5" fill="none" opacity="0.4" class="flow-accent" filter="url(#flowGlow)"/><path d="M700 420 Q750 440 800 430 Q850 420 900 445" stroke="#b8860b" stroke-width="1.2" fill="none" opacity="0.35" class="flow-accent-2" filter="url(#flowGlow)"/><path d="M950 460 Q1000 470 1050 450 Q1100 440 1150 460" stroke="#2196F3" stroke-width="1" fill="none" opacity="0.3" class="flow-accent"/></g>'
+    + '<g id="roads"><path d="M350 520 Q450 500 550 490 Q650 480 700 470" stroke="#b5ad9e" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.5"/><path d="M350 520 Q450 500 550 490 Q650 480 700 470" stroke="#c2bab0" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.6"/><path d="M350 520 Q450 500 550 490 Q650 480 700 470" stroke="#c8c3bb" stroke-width="1" fill="none" stroke-dasharray="8 6" opacity="0.4"/><path d="M700 470 Q780 465 850 480 Q920 495 980 505" stroke="#b5ad9e" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.5"/><path d="M700 470 Q780 465 850 480 Q920 495 980 505" stroke="#c2bab0" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.6"/></g>'
+    + '<g id="openPit" filter="url(#shadow)"><path d="M150 550 L350 520 L380 600 L320 650 L170 640Z" fill="#8B7355" stroke="#5C4A32" stroke-width="1.5"/><path d="M170 560 L340 535 L360 590 L310 630 L185 625Z" fill="#7A6548" stroke="#5C4A32" stroke-width="0.8"/><path d="M190 575 L325 555 L340 580 L300 610 L200 605Z" fill="#6B5840" stroke="#5C4A32" stroke-width="0.8"/><path d="M210 585 L310 570 L320 590 L290 600 L220 595Z" fill="#5C4A32" stroke="#4A3828" stroke-width="0.8"/><ellipse cx="265" cy="595" rx="25" ry="8" fill="#3a6b8a" opacity="0.5"/><rect x="285" y="560" width="18" height="25" fill="#D4A017" rx="2" stroke="#8B6914" stroke-width="0.8"/><rect x="295" y="550" width="12" height="15" fill="#D4A017" rx="1"/><line x1="288" y1="580" x2="270" y2="595" stroke="#444" stroke-width="1.5"/></g>'
+    + '<g id="wasteRock" filter="url(#shadowSmall)"><path d="M100 600 Q130 540 180 560 Q220 530 250 570 L260 620 L110 630Z" fill="#9E9585" stroke="#7A7062" stroke-width="1"/><path d="M120 610 Q145 555 185 570 Q215 545 240 575 L245 615 L125 625Z" fill="#8A8272" stroke="#7A7062" stroke-width="0.6"/></g>'
+    + '<g id="oreStockpile" filter="url(#shadowSmall)"><path d="M380 530 Q400 490 430 510 Q450 480 475 510 L480 545 L385 545Z" fill="#B8860B" stroke="#8B6914" stroke-width="1" opacity="0.8"/></g>'
+    + '<g id="haulTrucks"><g transform="translate(420,495) rotate(-8)" filter="url(#structureShadowSm)"><rect x="-12" y="-6" width="24" height="12" fill="#D4A017" rx="2" stroke="#8B6914" stroke-width="0.8"/><rect x="-15" y="-4" width="8" height="8" fill="#6B5840" rx="1"/><circle cx="-8" cy="7" r="2.5" fill="#333"/><circle cx="8" cy="7" r="2.5" fill="#333"/></g><g transform="translate(520,488) rotate(-5)" filter="url(#structureShadowSm)"><rect x="-12" y="-6" width="24" height="12" fill="#D4A017" rx="2" stroke="#8B6914" stroke-width="0.8"/><rect x="-15" y="-4" width="8" height="8" fill="#6B5840" rx="1"/><circle cx="-8" cy="7" r="2.5" fill="#333"/><circle cx="8" cy="7" r="2.5" fill="#333"/></g><g transform="translate(780,470) rotate(5)" filter="url(#structureShadowSm)"><rect x="-12" y="-6" width="24" height="12" fill="#D4A017" rx="2" stroke="#8B6914" stroke-width="0.8"/><rect x="-15" y="-4" width="8" height="8" fill="#6B5840" rx="1"/><circle cx="-8" cy="7" r="2.5" fill="#333"/><circle cx="8" cy="7" r="2.5" fill="#333"/></g><g transform="translate(650,480) rotate(-2)" filter="url(#structureShadowSm)"><rect x="-10" y="-5" width="20" height="10" fill="#5B8FB9" rx="2" stroke="#3d6d8f" stroke-width="0.8"/><rect x="-13" y="-3" width="7" height="7" fill="#3d6d8f" rx="1"/><circle cx="-7" cy="6" r="2" fill="#333"/><circle cx="7" cy="6" r="2" fill="#333"/></g></g>'
+    + '<g id="conveyor" filter="url(#structureShadow)"><path d="M500 480 L600 450" stroke="#666" stroke-width="6" stroke-linecap="round"/><path d="M500 480 L600 450" stroke="#888" stroke-width="3" stroke-linecap="round"/><rect x="520" y="460" width="4" height="18" fill="#555" transform="rotate(-12 522 469)"/><rect x="555" y="450" width="4" height="18" fill="#555" transform="rotate(-12 557 459)"/><rect x="580" y="442" width="4" height="18" fill="#555" transform="rotate(-12 582 451)"/></g>'
+    + '<g id="processingPlant" filter="url(#structureShadow)"><rect x="600" y="380" width="120" height="70" fill="#8B8178" rx="3" stroke="#5C5650" stroke-width="1.5"/><rect x="605" y="385" width="30" height="25" fill="#6B6560" rx="2"/><rect x="640" y="385" width="35" height="25" fill="#7B7570" rx="2"/><rect x="680" y="385" width="35" height="30" fill="#6B6560" rx="2"/><rect x="610" y="420" width="50" height="20" fill="#7B7570" rx="2"/><rect x="665" y="420" width="50" height="20" fill="#8B8178" rx="2" stroke="#5C5650" stroke-width="0.8"/><rect x="725" y="380" width="12" height="50" fill="#6B6560" rx="1" stroke="#5C5650" stroke-width="0.8"/><rect x="740" y="390" width="10" height="40" fill="#6B6560" rx="1"/><circle cx="610" cy="375" r="4" fill="#D4A017" stroke="#8B6914" stroke-width="0.8"/><circle cx="700" cy="375" r="3" fill="#B0B0B0" stroke="#888" stroke-width="0.8"/></g>'
+    + '<g id="thickener" filter="url(#structureShadow)"><ellipse cx="800" cy="420" rx="30" ry="15" fill="#7B7570" stroke="#5C5650" stroke-width="1"/><rect x="770" y="420" width="60" height="25" fill="#8B8178" stroke="#5C5650" stroke-width="1"/><ellipse cx="800" cy="445" rx="30" ry="10" fill="#6B6560" stroke="#5C5650" stroke-width="0.8"/><ellipse cx="800" cy="420" rx="25" ry="10" fill="#5B8FB9" opacity="0.4"/><line x1="800" y1="410" x2="800" y2="445" stroke="#555" stroke-width="1.5"/></g>'
+    + '<g id="reagentTanks" filter="url(#structureShadowSm)"><rect x="850" y="400" width="18" height="28" fill="#8B8178" rx="3" stroke="#5C5650" stroke-width="0.8"/><rect x="875" y="405" width="15" height="24" fill="#7B7570" rx="3" stroke="#5C5650" stroke-width="0.8"/></g>'
+    + '<g id="workshop" filter="url(#structureShadowSm)"><rect x="630" y="460" width="60" height="35" fill="#8B8178" rx="2" stroke="#5C5650" stroke-width="1"/><rect x="640" y="468" width="12" height="12" fill="#A09890" rx="1"/><rect x="660" y="468" width="12" height="12" fill="#A09890" rx="1"/></g>'
+    + '<g id="adminBuilding" filter="url(#structureShadowSm)"><rect x="700" y="460" width="40" height="30" fill="#B0A898" rx="2" stroke="#8B8178" stroke-width="1"/><rect x="710" y="465" width="8" height="10" fill="#D0C8BE" rx="1"/><rect x="722" y="465" width="8" height="10" fill="#D0C8BE" rx="1"/></g>'
+    + '<g id="parkingLot"><rect x="750" y="465" width="35" height="20" fill="#B5AD9E" rx="2" opacity="0.5"/><rect x="755" y="470" width="6" height="4" fill="#666" rx="0.5"/><rect x="764" y="470" width="6" height="4" fill="#888" rx="0.5"/><rect x="773" y="470" width="6" height="4" fill="#555" rx="0.5"/></g>'
+    + '<g id="pipelineToTailings"><path d="M830 445 Q880 470 950 500" stroke="#6B6560" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M830 445 Q880 470 950 500" stroke="#8B8178" stroke-width="2" fill="none" stroke-linecap="round"/></g>'
+    + '<g id="tailingsStorage" filter="url(#structureShadow)"><path d="M920 490 L1080 480 L1100 560 L1070 590 L940 580Z" fill="#B5AD9E" stroke="#8B8178" stroke-width="1.5"/><path d="M940 500 L1060 492 L1075 555 L1050 575 L955 568Z" fill="#C5BDB0" stroke="#8B8178" stroke-width="0.8"/><ellipse cx="1000" cy="530" rx="40" ry="18" fill="#5B8FB9" opacity="0.35"/><rect x="1030" y="520" width="8" height="20" fill="#6B6560" rx="1"/><circle cx="1034" cy="518" r="3" fill="#B0B0B0"/></g>'
+    + '<g id="powerSubstation" filter="url(#structureShadow)"><rect x="1100" y="270" width="50" height="40" fill="#8B8178" rx="3" stroke="#5C5650" stroke-width="1.5"/><rect x="1110" y="278" width="12" height="18" fill="#6B6560" rx="1"/><rect x="1128" y="278" width="12" height="18" fill="#6B6560" rx="1"/><line x1="1125" y1="270" x2="1125" y2="255" stroke="#555" stroke-width="2"/><line x1="1115" y1="255" x2="1135" y2="255" stroke="#555" stroke-width="2"/><line x1="1125" y1="255" x2="1125" y2="245" stroke="#555" stroke-width="1.5"/><circle cx="1125" cy="243" r="3" fill="#D4A017" opacity="0.7"/><line x1="1100" y1="260" x2="1070" y2="240" stroke="#333" stroke-width="1.5"/><line x1="1150" y1="260" x2="1180" y2="240" stroke="#333" stroke-width="1.5"/><line x1="1070" y1="240" x2="1070" y2="230" stroke="#333" stroke-width="2"/><line x1="1180" y1="240" x2="1180" y2="230" stroke="#333" stroke-width="2"/><line x1="1060" y1="230" x2="1080" y2="230" stroke="#333" stroke-width="1.5"/><line x1="1170" y1="230" x2="1190" y2="230" stroke="#333" stroke-width="1.5"/></g>'
+    + '<g id="solarArray" filter="url(#structureShadowSm)">'
+    + '<g transform="translate(1100, 340)">'
+    + '<rect x="0" y="0" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="22" y="0" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="44" y="0" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="66" y="0" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="0" y="16" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="22" y="16" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="44" y="16" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="66" y="16" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="0" y="32" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="22" y="32" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="44" y="32" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '<rect x="66" y="32" width="18" height="10" fill="#2c4a7c" rx="1" stroke="#1a3560" stroke-width="0.5" transform="skewY(-5)"/>'
+    + '</g></g>'
+    + '<g id="waterTreatment" filter="url(#structureShadowSm)"><ellipse cx="1050" cy="620" rx="25" ry="12" fill="#5B8FB9" opacity="0.3" stroke="#3d6d8f" stroke-width="0.8"/><ellipse cx="1050" cy="618" rx="20" ry="8" fill="#5B8FB9" opacity="0.2"/></g>'
+    + '<g id="fuelStorage" filter="url(#structureShadowSm)"><ellipse cx="580" cy="510" rx="12" ry="8" fill="#8B8178" stroke="#5C5650" stroke-width="0.8"/><ellipse cx="560" cy="515" rx="10" ry="7" fill="#7B7570" stroke="#5C5650" stroke-width="0.8"/></g>'
+    + '<g id="groundDetails" opacity="0.4"><circle cx="400" cy="620" r="1.5" fill="#8B8178"/><circle cx="420" cy="635" r="1" fill="#8B8178"/><circle cx="500" cy="600" r="1.5" fill="#8B8178"/><circle cx="850" cy="580" r="1" fill="#8B8178"/><circle cx="870" cy="595" r="1.5" fill="#8B8178"/><circle cx="300" cy="580" r="2" fill="#6B8E4E" opacity="0.5"/><circle cx="320" cy="590" r="1.5" fill="#6B8E4E" opacity="0.4"/><circle cx="1200" cy="550" r="2" fill="#6B8E4E" opacity="0.4"/></g>'
+    + '</svg>';
+
+  wrapper.innerHTML = svgMarkup;
+
+  /* Add hotspot buttons */
+  var hotspotData = [
+    { target: 'extraction', left: '26%', top: '52%', label: 'Extraction', icon: '<svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l7 14H5l7-14z"/></svg>' },
+    { target: 'processing', left: '62%', top: '48%', label: 'Processing', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4m-9-11h4m14 0h4m-3.3-6.7l-2.8 2.8m-9.8 9.8l-2.8 2.8m0-15.4l2.8 2.8m9.8 9.8l2.8 2.8"/></svg>' },
+    { target: 'tailings', left: '86%', top: '70%', label: 'Tailings', icon: '<svg viewBox="0 0 24 24"><path d="M3 17h18v2H3v-2zm0-5h18v2H3v-2zm0-5h18v2H3V7z"/></svg>' },
+    { target: 'power', left: '84%', top: '33%', label: 'Power', icon: '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>' }
+  ];
+
+  hotspotData.forEach(function(h) {
+    var btn = document.createElement('button');
+    btn.className = 'hotspot';
+    btn.dataset.target = h.target;
+    btn.style.left = h.left;
+    btn.style.top = h.top;
+    btn.innerHTML = h.icon + '<span class="hotspot-label">' + h.label + '</span>';
+    wrapper.appendChild(btn);
+  });
+})();
+</script>
+</body>
+</html>
