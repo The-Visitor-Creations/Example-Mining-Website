@@ -283,20 +283,22 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 .hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .desktop-nav { display: none; }
   .hamburger { display: block; }
   .header { padding: 0 24px; }
   .logo-img { height: auto; max-width: 240px; }
 }
 @media (max-width: 480px) {
-  .header { padding: 0 16px; --header-h: 64px; }
+  :root { --header-h: 64px; }
+  .header { padding: 0 16px; }
   .logo-img { max-width: 180px; }
 }
 
 /* ================================================================ */
 /* TICKER STRIP                                                      */
 /* ================================================================ */
+.page-content { position: relative; z-index: 1; }
 .ticker-strip {
   position: fixed;
   top: var(--header-h);
@@ -312,7 +314,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 1px;
-  transition: background 0.5s ease, border-color 0.5s ease;
+  transition: border-color 0.5s ease;
 }
 .ticker-strip .ticker-label { color: #6b5f52; font-weight: 600; transition: color 0.5s ease; }
 .ticker-strip .ticker-symbol { color: var(--accent); font-weight: 700; transition: color 0.5s ease; }
@@ -321,8 +323,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 
 /* Ticker scroll states */
 .ticker-strip.ticker-cream {
-  background: rgba(247, 242, 236, 0.92);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom-color: rgba(0,0,0,0.06);
 }
 .ticker-strip.ticker-cream .ticker-label { color: #6b5f52; }
 .ticker-strip.ticker-cream .ticker-symbol { color: var(--accent); }
@@ -330,13 +331,25 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .ticker-strip.ticker-cream .ticker-price { color: #5a5046; }
 
 .ticker-strip.ticker-dark {
-  background: var(--dark-deep);
-  border-bottom: 1px solid var(--border-card);
+  border-bottom-color: var(--border-card);
 }
 .ticker-strip.ticker-dark .ticker-label { color: var(--text-label); }
 .ticker-strip.ticker-dark .ticker-symbol { color: var(--gold); }
 .ticker-strip.ticker-dark .ticker-sep { color: rgba(255,255,255,0.15); }
 .ticker-strip.ticker-dark .ticker-price { color: rgba(255,255,255,0.45); }
+
+/* Ticker items stay on one line */
+.ticker-strip > span { white-space: nowrap; }
+
+/* Ticker responsive */
+@media (max-width: 600px) {
+  .ticker-strip { gap: 20px; padding: 0 16px; font-size: 10px; }
+  .ticker-strip .ticker-label { display: none; }
+}
+@media (max-width: 380px) {
+  .ticker-strip { gap: 12px; padding: 0 12px; }
+  .ticker-strip .ticker-sep { display: none; }
+}
 
 /* ================================================================ */
 /* MOBILE NAV OVERLAY                                                */
@@ -1238,6 +1251,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   .footer { padding: 40px 24px 32px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
+  .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
 }
 </style>
 </head>
@@ -1316,6 +1330,8 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
     </ul>
   </div>
 </nav>
+
+<div class="page-content">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- MAIN CONTENT                                            -->
@@ -1542,6 +1558,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 </footer>
 
 </div><!-- /main-content -->
+</div><!-- /.page-content -->
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SCRIPTS                                                 -->
@@ -1975,9 +1992,11 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       if (newState === 'cream') {
         header.classList.add('header-cream');
         ticker.classList.add('ticker-cream');
+        gsap.to(ticker, { backgroundColor: 'rgba(247, 242, 236, 0.92)', duration: 0.4, ease: 'power2.out' });
       } else if (newState === 'dark') {
         header.classList.add('header-dark');
         ticker.classList.add('ticker-dark');
+        gsap.to(ticker, { backgroundColor: '#080706', duration: 0.4, ease: 'power2.out' });
       }
       currentState = newState;
     }

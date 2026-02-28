@@ -268,20 +268,22 @@ ul { list-style: none; }
 .hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 .hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .desktop-nav { display: none; }
   .hamburger { display: block; }
   .header { padding: 0 24px; }
   .logo-img { height: auto; max-width: 240px; }
 }
 @media (max-width: 480px) {
-  .header { padding: 0 16px; --header-h: 64px; }
+  :root { --header-h: 64px; }
+  .header { padding: 0 16px; }
   .logo-img { max-width: 180px; }
 }
 
 /* ================================================================ */
 /* TICKER STRIP — identical to home page                              */
 /* ================================================================ */
+.page-content { position: relative; z-index: 1; }
 .ticker-strip {
   position: fixed;
   top: var(--header-h);
@@ -298,11 +300,10 @@ ul { list-style: none; }
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 1px;
-  transition: background 0.4s ease, border-color 0.4s ease;
+  transition: border-color 0.4s ease;
 }
 .ticker-strip.scrolled {
-  background: var(--dark-deep);
-  border-bottom: 1px solid var(--border-card);
+  border-bottom-color: var(--border-card);
 }
 
 /* Transparent state — hero-matching colours */
@@ -316,6 +317,19 @@ ul { list-style: none; }
 .ticker-strip.scrolled .ticker-symbol { color: var(--gold); }
 .ticker-strip.scrolled .ticker-sep { color: rgba(255,255,255,0.15); }
 .ticker-strip.scrolled .ticker-price { color: rgba(255,255,255,0.45); }
+
+/* Ticker items stay on one line */
+.ticker-strip > span { white-space: nowrap; }
+
+/* Ticker responsive */
+@media (max-width: 600px) {
+  .ticker-strip { gap: 20px; padding: 0 16px; font-size: 10px; }
+  .ticker-strip .ticker-label { display: none; }
+}
+@media (max-width: 380px) {
+  .ticker-strip { gap: 12px; padding: 0 12px; }
+  .ticker-strip .ticker-sep { display: none; }
+}
 
 /* ================================================================ */
 /* NAV OVERLAY (MOBILE) — identical to home page                      */
@@ -731,9 +745,9 @@ ul { list-style: none; }
 }
 .location-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 48px;
-  align-items: start;
+  align-items: stretch;
 }
 .location-map {
   position: relative;
@@ -743,6 +757,8 @@ ul { list-style: none; }
 }
 .elevation-img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
@@ -814,6 +830,9 @@ ul { list-style: none; }
   background-position: center;
   overflow: hidden;
   transition: background-image 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 .location-info::before {
   content: '';
@@ -851,6 +870,7 @@ ul { list-style: none; }
   line-height: 1.7;
   color: var(--text-muted);
   margin-bottom: 28px;
+  flex: 1;
 }
 .loc-stats {
   display: flex;
@@ -877,10 +897,74 @@ ul { list-style: none; }
   color: var(--text-muted);
 }
 
+/* Close button for mobile popup */
+.loc-popup-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 5;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--white);
+  transition: background 0.2s ease;
+  padding: 0;
+}
+.loc-popup-close:hover { background: rgba(255,255,255,0.25); }
+
 @media (max-width: 768px) {
   .location-section { padding: 80px 24px; }
-  .location-grid { grid-template-columns: 1fr; }
+  .location-grid { grid-template-columns: 1fr; position: relative; }
   .loc-stats { flex-wrap: wrap; }
+
+  /* Mobile popup overlay — bottom sheet */
+  .location-info {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    z-index: 9999;
+    border-radius: 20px 20px 0 0;
+    max-height: 60vh;
+    padding: 32px 24px calc(28px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.3);
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.3s ease;
+  }
+  .location-info.popup-active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .loc-popup-close { display: flex; }
+
+  /* Backdrop overlay on the map area */
+  .location-map::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .location-map.backdrop-active::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 
@@ -1091,6 +1175,7 @@ ul { list-style: none; }
   .footer { padding: 40px 24px 32px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
+  .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
 }
 
 /* ================================================================ */
@@ -1182,6 +1267,8 @@ ul { list-style: none; }
     </ul>
   </div>
 </nav>
+
+<div class="page-content">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- HERO SECTION                                            -->
@@ -1282,6 +1369,7 @@ ul { list-style: none; }
         <div class="map-label" data-site="2" style="top:63%;left:76%;">Clearwater Basin</div>
       </div>
       <div class="location-info" id="locationInfo">
+        <button class="loc-popup-close" id="locPopupClose" aria-label="Close">&times;</button>
         <div class="loc-eyebrow" id="locEyebrow">Select a Site</div>
         <h3 class="loc-title" id="locTitle">Explore Our Operations</h3>
         <p class="loc-desc" id="locDesc">Click on a map marker to learn more about each of our three flagship mining sites and their operational capabilities.</p>
@@ -1350,8 +1438,10 @@ ul { list-style: none; }
     <div class="footer-credit">Website Created By <a href="https://www.thevisitor.ca/" target="_blank" rel="noopener">THE VISITOR</a></div>
   </div>
 </footer>
+</div><!-- /.page-content -->
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════ */
@@ -1399,10 +1489,24 @@ window.__lenis = lenis;
   var hero   = document.getElementById('hero-top');
   var threshold = hero ? hero.offsetHeight - header.offsetHeight - ticker.offsetHeight : 80;
 
+  var isScrolled = false;
   function onScroll() {
     var past = window.scrollY > threshold;
-    header.classList.toggle('scrolled', past);
-    ticker.classList.toggle('scrolled', past);
+    if (past && !isScrolled) {
+      isScrolled = true;
+      header.classList.add('scrolled');
+      if (ticker) {
+        ticker.classList.add('scrolled');
+        gsap.to(ticker, { backgroundColor: '#080706', duration: 0.4, ease: 'power2.out' });
+      }
+    } else if (!past && isScrolled) {
+      isScrolled = false;
+      header.classList.remove('scrolled');
+      if (ticker) {
+        ticker.classList.remove('scrolled');
+        gsap.to(ticker, { backgroundColor: 'transparent', duration: 0.4, ease: 'power2.out' });
+      }
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -1545,6 +1649,8 @@ window.__lenis = lenis;
   if (!dots.length || !locTitle) return;
 
   var infoCard = document.getElementById('locationInfo');
+  var locMap = document.querySelector('.location-map');
+  var closeBtn = document.getElementById('locPopupClose');
 
   var overview = {
     eyebrow: 'Project Portfolio',
@@ -1562,6 +1668,8 @@ window.__lenis = lenis;
 
   var active = -1;
 
+  function isMobile() { return window.innerWidth <= 768; }
+
   function renderCard(data) {
     locEyebrow.textContent = data.eyebrow;
     locTitle.textContent = data.title;
@@ -1572,16 +1680,59 @@ window.__lenis = lenis;
     }).join('');
   }
 
+  function showPopup() {
+    infoCard.classList.add('popup-active');
+    if (locMap) locMap.classList.add('backdrop-active');
+  }
+
+  function hidePopup() {
+    infoCard.classList.remove('popup-active');
+    if (locMap) locMap.classList.remove('backdrop-active');
+  }
+
   function selectSite(idx) {
-    if (idx === active) return;
+    /* Toggle off if same dot tapped again on mobile */
+    if (idx === active) {
+      if (isMobile()) {
+        active = -1;
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        hidePopup();
+        renderCard(overview);
+      }
+      return;
+    }
     active = idx;
     dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
     renderCard(sites[idx]);
+    if (isMobile()) showPopup();
   }
 
   dots.forEach(function(dot, i) {
     dot.addEventListener('click', function() { selectSite(i); });
   });
+
+  /* Close button */
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      active = -1;
+      dots.forEach(function(d) { d.classList.remove('active'); });
+      hidePopup();
+      renderCard(overview);
+    });
+  }
+
+  /* Backdrop tap to dismiss */
+  if (locMap) {
+    locMap.addEventListener('click', function(e) {
+      if (e.target === locMap && isMobile() && active >= 0) {
+        active = -1;
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        hidePopup();
+        renderCard(overview);
+      }
+    });
+  }
 
   /* Show overview by default */
   renderCard(overview);

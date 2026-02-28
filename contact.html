@@ -232,20 +232,22 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .hamburger span:nth-child(2) { bottom: 4px; }
 .hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 .hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .desktop-nav { display: none; }
   .hamburger { display: block; }
   .header { padding: 0 24px; }
   .logo-img { height: auto; max-width: 240px; }
 }
 @media (max-width: 480px) {
-  .header { padding: 0 16px; --header-h: 64px; }
+  :root { --header-h: 64px; }
+  .header { padding: 0 16px; }
   .logo-img { max-width: 180px; }
 }
 
 /* ================================================================ */
 /* TICKER STRIP                                                      */
 /* ================================================================ */
+.page-content { position: relative; z-index: 1; }
 .ticker-strip {
   position: fixed;
   top: var(--header-h);
@@ -261,11 +263,26 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 1px;
+  transition: border-color 0.4s ease;
 }
+.ticker-strip.ticker-scrolled { border-bottom-color: var(--border-card); }
 .ticker-strip .ticker-label { color: #6b5f52; font-weight: 600; }
 .ticker-strip .ticker-symbol { color: var(--accent); font-weight: 700; }
 .ticker-strip .ticker-sep { color: rgba(0,0,0,0.15); margin: 0 4px; }
 .ticker-strip .ticker-price { color: #5a5046; font-weight: 600; margin-left: 4px; }
+
+/* Ticker items stay on one line */
+.ticker-strip > span { white-space: nowrap; }
+
+/* Ticker responsive */
+@media (max-width: 600px) {
+  .ticker-strip { gap: 20px; padding: 0 16px; font-size: 10px; }
+  .ticker-strip .ticker-label { display: none; }
+}
+@media (max-width: 380px) {
+  .ticker-strip { gap: 12px; padding: 0 12px; }
+  .ticker-strip .ticker-sep { display: none; }
+}
 
 /* ================================================================ */
 /* MOBILE NAV OVERLAY (cream — matches about page)                   */
@@ -839,6 +856,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   .footer { padding: 40px 24px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
+  .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
 }
 </style>
 </head>
@@ -918,6 +936,8 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
     </ul>
   </div>
 </nav>
+
+<div class="page-content">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- MAIN CONTENT                                            -->
@@ -1072,6 +1092,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 </footer>
 
 </div><!-- /main-content -->
+</div><!-- /.page-content -->
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SCRIPTS                                                 -->
@@ -1269,6 +1290,37 @@ window.__lenis = lenis;
     duration: 0.7, ease: 'power2.out',
     stagger: 0.15
   }, '-=0.5');
+})();
+
+/* ═══════════════════════════════════════════════════════ */
+/* SCROLL: TICKER / HEADER CLASS TOGGLE + GSAP BG          */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var header = document.getElementById('header');
+  var ticker = document.getElementById('ticker-strip');
+  var isScrolled = false;
+
+  function check() {
+    var past = window.scrollY > 10;
+    if (past && !isScrolled) {
+      isScrolled = true;
+      header.classList.add('header-scrolled');
+      if (ticker) {
+        ticker.classList.add('ticker-scrolled');
+        gsap.to(ticker, { backgroundColor: '#080706', duration: 0.4, ease: 'power2.out' });
+      }
+    } else if (!past && isScrolled) {
+      isScrolled = false;
+      header.classList.remove('header-scrolled');
+      if (ticker) {
+        ticker.classList.remove('ticker-scrolled');
+        gsap.to(ticker, { backgroundColor: 'transparent', duration: 0.4, ease: 'power2.out' });
+      }
+    }
+  }
+
+  window.addEventListener('scroll', check, { passive: true });
+  check();
 })();
 
 /* ═══════════════════════════════════════════════════════ */

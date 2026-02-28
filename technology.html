@@ -285,20 +285,22 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 .hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 .hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .desktop-nav { display: none; }
   .hamburger { display: block; }
   .header { padding: 0 24px; }
   .logo-img { height: auto; max-width: 240px; }
 }
 @media (max-width: 480px) {
-  .header { padding: 0 16px; --header-h: 64px; }
+  :root { --header-h: 64px; }
+  .header { padding: 0 16px; }
   .logo-img { max-width: 180px; }
 }
 
 /* ================================================================ */
 /* TICKER STRIP                                                      */
 /* ================================================================ */
+.page-content { position: relative; z-index: 1; }
 .ticker-strip {
   position: fixed;
   top: var(--header-h);
@@ -313,11 +315,10 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 1px;
-  transition: background 0.5s ease, border-color 0.5s ease;
+  transition: border-color 0.4s ease;
 }
 .ticker-strip.ticker-scrolled {
-  background: rgba(12, 10, 9, 0.9);
-  border-bottom: 1px solid var(--border-card);
+  border-bottom-color: var(--border-card);
 }
 .ticker-strip.ticker-cream {
   background: rgba(247, 242, 236, 0.92);
@@ -330,6 +331,19 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 .ticker-strip.ticker-cream .ticker-label { color: #6b5f52; }
 .ticker-strip.ticker-cream .ticker-sep { color: rgba(0,0,0,0.15); }
 .ticker-strip.ticker-cream .ticker-price { color: #5a5046; }
+
+/* Ticker items stay on one line */
+.ticker-strip > span { white-space: nowrap; }
+
+/* Ticker responsive */
+@media (max-width: 600px) {
+  .ticker-strip { gap: 20px; padding: 0 16px; font-size: 10px; }
+  .ticker-strip .ticker-label { display: none; }
+}
+@media (max-width: 380px) {
+  .ticker-strip { gap: 12px; padding: 0 12px; }
+  .ticker-strip .ticker-sep { display: none; }
+}
 
 /* ================================================================ */
 /* MOBILE NAV OVERLAY (cream)                                        */
@@ -833,22 +847,25 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 /* Layout: info panel + SVG */
 .tech-layout {
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 40px;
-  align-items: start;
+  align-items: stretch;
   margin-bottom: 60px;
 }
 
 .tech-info-col {
   position: sticky;
   top: 140px;
-  min-height: 380px;
 }
 
 .info-panel {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   background: rgba(255,255,255,0.7);
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 12px;
@@ -858,6 +875,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   transform: translateY(16px);
   pointer-events: none;
   transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+  overflow-y: auto;
 }
 .info-panel[data-state="visible"] {
   opacity: 1;
@@ -879,6 +897,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   color: #5a5046;
   line-height: 1.75;
   margin-bottom: 24px;
+  flex: 1;
 }
 .info-stats {
   display: flex;
@@ -905,6 +924,29 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   letter-spacing: 0.5px;
   color: #3d3830;
 }
+
+/* Mobile popup close button (hidden on desktop) */
+.popup-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0,0,0,0.08);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 5;
+  font-size: 18px;
+  line-height: 1;
+  color: #5a5046;
+  transition: background 0.2s ease;
+  padding: 0;
+}
+.popup-close:hover { background: rgba(0,0,0,0.15); }
 
 /* SVG scene */
 .tech-scene-wrapper {
@@ -1169,9 +1211,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 /* RESPONSIVE                                                        */
 /* ================================================================ */
 @media (max-width: 1100px) {
-  .tech-layout { grid-template-columns: 1fr; }
-  .tech-info-col { position: static; order: 2; min-height: auto; }
-  .tech-scene-wrapper { order: 1; }
+  .tech-layout { gap: 24px; }
   .tech-tabs { flex-wrap: wrap; }
   .tech-tab { flex: 1 1 calc(50% - 6px); }
 }
@@ -1182,10 +1222,55 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   .tech-tab { flex: 1 1 100%; }
   .interactive-header { padding: 0 24px; }
   .interactive-section { padding: 80px 0 0; }
+
+  /* Map popup overlay on mobile — bottom-sheet style */
+  .tech-layout {
+    grid-template-columns: 1fr;
+    position: relative;
+  }
+  .tech-scene-wrapper { order: 1; }
+  .tech-info-col {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .tech-info-col.popup-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .tech-info-col .info-panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    max-height: 55vh;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 32px 24px calc(28px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.15);
+    transform: translateY(100%);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .tech-info-col.popup-active .info-panel[data-state="visible"]:not(#panel-default) {
+    transform: translateY(0);
+  }
+  .tech-info-col #panel-default {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .popup-close { display: flex; }
   .cta-section { padding: 80px 24px; }
   .footer { padding: 40px 24px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
+  .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
 }
 
 /* ================================================================ */
@@ -1278,6 +1363,8 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
     </ul>
   </div>
 </nav>
+
+<div class="page-content">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- HERO — VIDEO                                            -->
@@ -1523,6 +1610,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
     <div class="footer-credit">Website Created By <a href="https://www.thevisitor.ca/" target="_blank" rel="noopener">THE VISITOR</a></div>
   </div>
 </footer>
+</div><!-- /.page-content -->
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SCRIPTS                                                 -->
@@ -1714,6 +1802,7 @@ window.__lenis = lenis;
   var interactiveSection = document.querySelector('.interactive-section');
   var ctaSection = document.querySelector('.cta-section');
   var currentState = '';
+  var isScrolled = false;
 
   function updateHeaderState() {
     var scrollY = window.scrollY;
@@ -1746,12 +1835,34 @@ window.__lenis = lenis;
 
     if (newState === 'hero') {
       /* transparent over video */
+      if (isScrolled) {
+        isScrolled = false;
+        if (ticker) {
+          gsap.to(ticker, { backgroundColor: 'transparent', duration: 0.4, ease: 'power2.out' });
+        }
+      }
     } else if (newState === 'cream') {
       header.classList.add('header-cream');
       ticker.classList.add('ticker-cream');
+      if (isScrolled) {
+        isScrolled = false;
+        if (ticker) {
+          gsap.to(ticker, { backgroundColor: 'transparent', duration: 0.4, ease: 'power2.out' });
+        }
+      }
     } else {
       header.classList.add('header-scrolled');
-      ticker.classList.add('ticker-scrolled');
+      if (!isScrolled) {
+        isScrolled = true;
+        if (ticker) {
+          ticker.classList.add('ticker-scrolled');
+          gsap.to(ticker, { backgroundColor: '#080706', duration: 0.4, ease: 'power2.out' });
+        }
+      } else {
+        if (ticker) {
+          ticker.classList.add('ticker-scrolled');
+        }
+      }
     }
   }
 
@@ -1912,7 +2023,25 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   var hotspots = document.querySelectorAll('.hotspot');
   var tabs = document.querySelectorAll('.tech-tab');
   var panels = document.querySelectorAll('.info-panel');
+  var infoCol = document.querySelector('.tech-info-col');
   var activeTarget = null;
+
+  /* Add close buttons to non-default panels (for mobile popup) */
+  panels.forEach(function(p) {
+    if (p.id !== 'panel-default') {
+      var closeBtn = document.createElement('button');
+      closeBtn.className = 'popup-close';
+      closeBtn.innerHTML = '\u00d7';
+      closeBtn.setAttribute('aria-label', 'Close');
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        deactivateAll();
+      });
+      p.appendChild(closeBtn);
+    }
+  });
+
+  function isMobile() { return window.innerWidth <= 768; }
 
   function activate(target) {
     if (activeTarget === target) {
@@ -1931,6 +2060,11 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       var id = p.id.replace('panel-', '');
       p.dataset.state = (id === target) ? 'visible' : 'hidden';
     });
+
+    /* Show popup overlay on mobile */
+    if (isMobile() && infoCol) {
+      infoCol.classList.add('popup-active');
+    }
   }
 
   function deactivateAll() {
@@ -1940,6 +2074,11 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     panels.forEach(function(p) {
       p.dataset.state = (p.id === 'panel-default') ? 'visible' : 'hidden';
     });
+
+    /* Hide popup overlay on mobile */
+    if (infoCol) {
+      infoCol.classList.remove('popup-active');
+    }
   }
 
   hotspots.forEach(function(h) {
@@ -1954,6 +2093,16 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       activate(t.dataset.target);
     });
   });
+
+  /* Close popup when tapping backdrop on mobile */
+  if (infoCol) {
+    infoCol.addEventListener('click', function(e) {
+      if (e.target === infoCol && isMobile()) {
+        deactivateAll();
+      }
+    });
+  }
+
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.hotspot') && !e.target.closest('.tech-tab') && !e.target.closest('.info-panel')) {
       deactivateAll();

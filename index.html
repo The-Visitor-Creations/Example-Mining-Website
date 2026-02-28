@@ -333,20 +333,22 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .hamburger.open span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
 .hamburger.open span:nth-child(2) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .desktop-nav { display: none; }
   .hamburger { display: block; }
   .header { padding: 0 24px; }
   .logo-img { height: auto; max-width: 240px; }
 }
 @media (max-width: 480px) {
-  .header { padding: 0 16px; --header-h: 64px; }
+  :root { --header-h: 64px; }
+  .header { padding: 0 16px; }
   .logo-img { max-width: 180px; }
 }
 
 /* ================================================================ */
 /* TICKER STRIP                                                      */
 /* ================================================================ */
+.page-content { position: relative; z-index: 1; }
 .ticker-strip {
   position: fixed;
   top: var(--header-h);
@@ -363,11 +365,11 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 1px;
-  transition: background 0.4s ease, border-color 0.4s ease;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s ease;
 }
 .ticker-strip.ticker-scrolled {
-  background: var(--dark-deep);
-  border-bottom: 1px solid var(--border-card);
+  border-bottom-color: var(--border-card);
 }
 .ticker-strip .ticker-label {
   color: rgba(255,255,255,0.7);
@@ -392,6 +394,19 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   margin-left: 4px;
 }
 .ticker-strip.ticker-scrolled .ticker-price { color: rgba(255,255,255,0.45); }
+
+/* Ticker items stay on one line */
+.ticker-strip > span { white-space: nowrap; }
+
+/* Ticker responsive — must come AFTER base rules */
+@media (max-width: 600px) {
+  .ticker-strip { gap: 20px; padding: 0 16px; font-size: 10px; }
+  .ticker-strip .ticker-label { display: none; }
+}
+@media (max-width: 380px) {
+  .ticker-strip { gap: 12px; padding: 0 12px; }
+  .ticker-strip .ticker-sep { display: none; }
+}
 
 /* ================================================================ */
 /* NAV OVERLAY (MOBILE)                                              */
@@ -1649,6 +1664,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   .footer { padding: 40px 24px 32px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
+  .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
 }
 
 /* ================================================================ */
@@ -1915,6 +1931,9 @@ sup.ast {
     </ul>
   </div>
 </nav>
+
+<!-- Page content wrapper – creates stacking context below fixed header & ticker -->
+<div class="page-content">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- HERO SECTION                                            -->
@@ -2275,6 +2294,8 @@ sup.ast {
   </div>
 </footer>
 
+</div><!-- /.page-content -->
+
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SCRIPTS: GSAP + ScrollTrigger + Lenis                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
@@ -2634,13 +2655,23 @@ ScrollTrigger.create({
   var ticker = document.getElementById('ticker-strip');
   var hero = document.getElementById('hero');
   if (!header || !hero) return;
+  var isScrolled = false;
   function check() {
-    if (window.scrollY > hero.offsetHeight - 80) {
+    var past = window.scrollY > hero.offsetHeight - 80;
+    if (past && !isScrolled) {
+      isScrolled = true;
       header.classList.add('header-scrolled');
-      if (ticker) ticker.classList.add('ticker-scrolled');
-    } else {
+      if (ticker) {
+        ticker.classList.add('ticker-scrolled');
+        gsap.to(ticker, { backgroundColor: '#080706', duration: 0.4, ease: 'power2.out' });
+      }
+    } else if (!past && isScrolled) {
+      isScrolled = false;
       header.classList.remove('header-scrolled');
-      if (ticker) ticker.classList.remove('ticker-scrolled');
+      if (ticker) {
+        ticker.classList.remove('ticker-scrolled');
+        gsap.to(ticker, { backgroundColor: 'transparent', duration: 0.4, ease: 'power2.out' });
+      }
     }
   }
   window.addEventListener('scroll', check, { passive: true });
