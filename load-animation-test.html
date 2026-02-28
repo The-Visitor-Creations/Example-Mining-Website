@@ -93,20 +93,58 @@ body {
 }
 .overlay-text.fading { opacity: 0; }
 
-/* ── Company name ── */
-.company-name {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: clamp(36px, 6vw, 76px);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  color: var(--text-name);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.45s cubic-bezier(0.25,0.1,0.25,1), transform 0.45s cubic-bezier(0.25,0.1,0.25,1);
+/* ── Logo container ── */
+.logo-container {
+  position: relative;
+  width: clamp(280px, 50vw, 520px);
+  margin: 0 auto 0;
 }
-.company-name.visible { opacity: 1; transform: translateY(0); }
+.logo-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── B letter pieces ── */
+.b-piece {
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.25,0.1,0.25,1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.b-bar    { transform: translateY(20px); }
+.b-top    { transform: translateX(30px) translateY(-10px); opacity: 0; }
+.b-bottom { transform: translateX(30px) translateY(10px); opacity: 0; }
+
+.b-piece.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* ── OET letters ── */
+.logo-oet {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+.logo-oet.visible {
+  opacity: 1;
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ── MATERIALS letters ── */
+.logo-materials {
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.3s ease 0.1s;
+}
+.logo-materials.visible {
+  opacity: 1;
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ── B centered phase ── */
+.logo-b-group {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 /* ── Accent line ── */
 .accent-line {
@@ -231,8 +269,8 @@ body {
 .replay-btn:hover { background: #b42240; }
 
 @media (prefers-reduced-motion: reduce) {
-  .overlay-text, .company-name, .accent-line, .exchange-label,
-  .day-change, .odo-strip, .grid-block {
+  .overlay-text, .b-piece, .logo-oet, .logo-materials, .logo-b-group,
+  .accent-line, .exchange-label, .day-change, .odo-strip, .grid-block {
     transition-duration: 0.01ms !important;
   }
 }
@@ -255,7 +293,39 @@ body {
 <!-- Overlay: text layer -->
 <div class="overlay-text" id="overlayText">
   <div style="text-align:center; padding: 24px;">
-    <div class="company-name" id="companyName">Boet Materials</div>
+
+    <!-- ── SVG Logo with animated groups ── -->
+    <div class="logo-container" id="logoContainer">
+      <svg class="logo-svg" id="logoSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 647.28 45.33">
+        <!-- B letter — 3 geometric pieces -->
+        <g class="logo-b-group" id="bGroup">
+          <polygon class="b-piece b-bar" id="bBar" points="0 .8 0 44.53 11.32 44.53 11.32 9.46 32.96 9.68 22.19 .8 0 .8" fill="#9f1c34"/>
+          <polygon class="b-piece b-top" id="bTop" points="43.62 18.23 32.96 27.11 11.32 27.11 32.96 9.68 43.62 18.23" fill="#9f1c34"/>
+          <polygon class="b-piece b-bottom" id="bBottom" points="43.62 35.65 32.96 44.53 11.32 44.53 32.96 27.11 43.62 35.65" fill="#9f1c34"/>
+        </g>
+
+        <!-- OET letters -->
+        <g class="logo-oet" id="logoOet">
+          <path d="M75.47,35.49c2.46,0,4.59-.53,6.41-1.6,1.81-1.07,3.22-2.57,4.21-4.51.99-1.94,1.49-4.2,1.49-6.78,0-1.92-.28-3.66-.85-5.23-.57-1.56-1.38-2.91-2.45-4.04-1.07-1.13-2.34-2-3.82-2.6-1.48-.6-3.14-.9-4.98-.9-2.45,0-4.58.52-6.39,1.57-1.81,1.05-3.22,2.53-4.21,4.45-.99,1.92-1.49,4.17-1.49,6.75,0,1.95.28,3.72.85,5.31.57,1.59,1.38,2.95,2.44,4.07,1.06,1.13,2.34,1.99,3.82,2.6,1.49.61,3.14.91,4.97.91ZM75.59,45.33c-3.36,0-6.46-.58-9.31-1.73-2.84-1.15-5.32-2.75-7.45-4.8-2.12-2.05-3.77-4.46-4.95-7.23-1.18-2.77-1.77-5.76-1.77-8.97s.58-6.22,1.74-8.96c1.16-2.73,2.79-5.13,4.9-7.18,2.1-2.05,4.57-3.64,7.41-4.77,2.84-1.13,5.94-1.7,9.3-1.7s6.46.57,9.3,1.7c2.84,1.13,5.31,2.72,7.42,4.77,2.11,2.05,3.74,4.45,4.9,7.21,1.16,2.75,1.74,5.75,1.74,8.99s-.58,6.19-1.74,8.94c-1.16,2.75-2.79,5.16-4.9,7.22-2.1,2.06-4.56,3.66-7.39,4.8s-5.89,1.7-9.21,1.7Z" fill="#1a1714"/>
+          <path d="M122.62,10.1V.8h23.36v9.3h-23.36ZM122.62,26.75v-9.05h21.48v9.05h-21.48ZM122.62,44.53v-9.3h23.71v9.3h-23.71ZM113.91,44.53V.8h11.02v43.73h-11.02Z" fill="#1a1714"/>
+          <path d="M158.08,10.28V.8h37.81v9.48h-37.81ZM171.45,44.53V1.11h11.02v43.42h-11.02Z" fill="#1a1714"/>
+        </g>
+
+        <!-- MATERIALS letters -->
+        <g class="logo-materials" id="logoMaterials">
+          <polygon points="230.34 44.53 230.34 .8 238.28 .8 255.03 26.13 251.31 26.13 268.01 .8 275.95 .8 275.95 44.53 265.02 44.53 265.02 19.09 266.76 19.57 256.73 34.66 249.57 34.66 239.58 19.57 241.28 19.09 241.28 44.53 230.34 44.53" fill="#9f1c34"/>
+          <path d="M300.32,36.9v-8.76h24.13v8.76h-24.13ZM289.99,44.53L306.97.8h10.67l16.81,43.73h-11.53l-12.66-36.73h3.98l-12.92,36.73h-11.32Z" fill="#9f1c34"/>
+          <path d="M340.62,10.28V.8h37.81v9.48h-37.81ZM353.99,44.53V1.11h11.02v43.42h-11.02Z" fill="#9f1c34"/>
+          <path d="M401.64,10.1V.8h23.36v9.3h-23.36ZM401.64,26.75v-9.05h21.48v9.05h-21.48ZM401.64,44.53v-9.3h23.71v9.3h-23.71ZM392.93,44.53V.8h11.02v43.73h-11.02Z" fill="#9f1c34"/>
+          <path d="M464.77,44.53l-12.75-18.75,9.98-2.41,15.51,21.16h-12.74ZM441.08,44.53V.8h11.02v43.73h-11.02ZM449.8,26.81v-7.85h8.33c1.81,0,3.2-.45,4.16-1.35.97-.9,1.45-2.11,1.45-3.63s-.48-2.67-1.44-3.59c-.96-.93-2.35-1.39-4.16-1.39h-8.34V.8h9.9c2.96,0,5.56.55,7.8,1.66,2.24,1.11,4,2.63,5.27,4.58,1.27,1.95,1.9,4.21,1.9,6.78s-.64,4.87-1.93,6.82c-1.28,1.94-3.08,3.46-5.38,4.55-2.3,1.09-5.01,1.63-8.13,1.63h-9.44Z" fill="#9f1c34"/>
+          <rect x="490.6" y=".8" width="11.02" height="43.73" fill="#9f1c34"/>
+          <path d="M525.98,36.9v-8.76h24.13v8.76h-24.13ZM515.65,44.53L532.62.8h10.67l16.81,43.73h-11.53l-12.66-36.73h3.98l-12.92,36.73h-11.32Z" fill="#9f1c34"/>
+          <path d="M582.42,44.53v-9.48h21.05v9.48h-21.05ZM573.66,44.53V.8h11.02v43.73h-11.02Z" fill="#9f1c34"/>
+          <path d="M629.79,45.24c-3.66,0-6.83-.56-9.51-1.69-2.68-1.13-5.13-2.88-7.36-5.27l6.98-6.99c1.5,1.57,3.12,2.78,4.86,3.62,1.74.84,3.68,1.26,5.83,1.26,1.86,0,3.29-.32,4.29-.95,1-.63,1.5-1.5,1.5-2.61,0-1.04-.37-1.89-1.11-2.57-.74-.67-1.72-1.26-2.93-1.77-1.21-.5-2.55-1-4.01-1.49-1.46-.49-2.91-1.07-4.36-1.74-1.44-.67-2.77-1.5-3.99-2.48-1.21-.98-2.19-2.21-2.93-3.7-.74-1.49-1.11-3.32-1.11-5.51,0-2.76.67-5.14,2-7.13,1.33-1.99,3.19-3.51,5.57-4.56,2.38-1.05,5.16-1.58,8.31-1.58s6.1.53,8.77,1.6c2.67,1.06,4.88,2.54,6.61,4.42l-7.03,6.98c-1.33-1.34-2.66-2.33-4.02-2.98-1.35-.65-2.84-.97-4.48-.97-1.49,0-2.67.26-3.55.79-.87.52-1.31,1.29-1.31,2.3s.37,1.77,1.11,2.39c.74.62,1.72,1.16,2.93,1.64,1.21.48,2.55.96,4.01,1.46,1.46.49,2.91,1.07,4.36,1.73,1.44.66,2.77,1.51,3.99,2.54,1.21,1.03,2.19,2.32,2.93,3.87.74,1.55,1.11,3.45,1.11,5.69,0,4.33-1.54,7.69-4.61,10.09-3.07,2.4-7.37,3.6-12.87,3.6Z" fill="#9f1c34"/>
+        </g>
+      </svg>
+    </div>
+
     <div class="accent-line" id="accentLine"></div>
     <div class="exchange-label" id="exchangeLabel">TSXV: AUM</div>
     <div class="stock-price" id="stockPrice"></div>
@@ -278,39 +348,55 @@ body {
   /* Configuration                                       */
   /* ═══════════════════════════════════════════════════ */
   const STOCK_PRICE    = '$3.42';
-  const DAY_CHANGE_ABS = '+$0.18';
-  const DAY_CHANGE_PCT = '(+5.56%)';
   const BG_COLOR       = '#f5f2ee';
 
   /* Odometer settings */
   const DIGIT_POOL     = '0123456789';
-  const STRIP_LENGTH   = 8;          // random digits before the real one
-  const CHAR_HEIGHT    = 1.15;       // em
+  const STRIP_LENGTH   = 8;
+  const CHAR_HEIGHT    = 1.15;
 
   /* ═══════════════════════════════════════════════════ */
   /* Timing (ms)                                         */
   /* ═══════════════════════════════════════════════════ */
-  const INTRO_HOLD       = 400;      // pause before price rolls
-  const ODO_STAGGER      = 70;       // delay between each digit
-  const ODO_DURATION     = 600;      // roll duration per digit
-  const POST_PRICE_HOLD  = 150;      // pause after price lands
-  const DAY_CHANGE_HOLD  = 600;      // how long day change is visible
-  const TEXT_FADE         = 200;
-  const BLOCK_STAGGER    = 30;
-  const BLOCK_DURATION   = 450;
+  const B_ASSEMBLE_START  = 200;   // when B pieces start appearing
+  const B_PIECE_STAGGER   = 120;   // delay between each B piece
+  const B_SETTLE_HOLD     = 400;   // pause after B is assembled
+  const LOGO_REVEAL_DUR   = 600;   // OET + MATERIALS reveal
+  const POST_LOGO_HOLD    = 300;   // pause after full logo is visible
+  const ODO_STAGGER       = 70;
+  const ODO_DURATION      = 600;
+  const POST_PRICE_HOLD   = 150;
+  const DAY_CHANGE_HOLD   = 600;
+  const TEXT_FADE          = 200;
+  const BLOCK_STAGGER     = 30;
+  const BLOCK_DURATION    = 450;
 
   /* ═══════════════════════════════════════════════════ */
   /* DOM refs                                            */
   /* ═══════════════════════════════════════════════════ */
   const overlayBg      = document.getElementById('overlayBg');
   const overlayText    = document.getElementById('overlayText');
-  const companyName    = document.getElementById('companyName');
+  const bGroup         = document.getElementById('bGroup');
+  const bBar           = document.getElementById('bBar');
+  const bTop           = document.getElementById('bTop');
+  const bBottom        = document.getElementById('bBottom');
+  const logoOet        = document.getElementById('logoOet');
+  const logoMaterials  = document.getElementById('logoMaterials');
   const accentLine     = document.getElementById('accentLine');
   const exchangeLabel  = document.getElementById('exchangeLabel');
   const stockPrice     = document.getElementById('stockPrice');
   const dayChange      = document.getElementById('dayChange');
   const blockContainer = document.getElementById('blockContainer');
   const replayBtn      = document.getElementById('replayBtn');
+  const logoSvg        = document.getElementById('logoSvg');
+
+  /* ═══════════════════════════════════════════════════ */
+  /* B centering math                                    */
+  /* ═══════════════════════════════════════════════════ */
+  // The B occupies roughly x: 0–43.62 in the 647.28-wide viewBox
+  // Center of the full SVG is 323.64, center of B is ~21.81
+  // Offset to center B: 323.64 - 21.81 = 301.83
+  const B_CENTER_OFFSET = 301.83;
 
   /* ═══════════════════════════════════════════════════ */
   /* Grid helpers                                        */
@@ -332,39 +418,30 @@ body {
 
     chars.forEach((char) => {
       const isDigit = /[0-9]/.test(char);
-
       if (!isDigit) {
-        // Static character ($ . etc) — just place it
         const el = document.createElement('span');
         el.className = 'odo-char-static';
         el.textContent = char;
         stockPrice.appendChild(el);
       } else {
-        // Digit — build odometer strip
         const wrapper = document.createElement('span');
         wrapper.className = 'odo-char';
-
         const strip = document.createElement('span');
         strip.className = 'odo-strip';
-
-        // Random digits before the real one
         for (let j = 0; j < STRIP_LENGTH; j++) {
           const s = document.createElement('span');
           s.textContent = DIGIT_POOL[Math.floor(Math.random() * 10)];
           strip.appendChild(s);
         }
-        // Target digit
         const target = document.createElement('span');
         target.textContent = char;
         strip.appendChild(target);
-
         wrapper.appendChild(strip);
         stockPrice.appendChild(wrapper);
         odoElements.push({ strip, digitIndex });
         digitIndex++;
       }
     });
-
     return odoElements;
   }
 
@@ -414,7 +491,25 @@ body {
     overlayText.style.display = '';
     overlayText.style.opacity = '';
     overlayText.classList.remove('fading');
-    companyName.classList.remove('visible');
+
+    // Reset B pieces
+    bBar.classList.remove('visible');
+    bTop.classList.remove('visible');
+    bBottom.classList.remove('visible');
+    bBar.style.opacity = '0';
+    bTop.style.opacity = '0';
+    bBottom.style.opacity = '0';
+
+    // Start B centered
+    bGroup.style.transition = 'none';
+    bGroup.style.transform = 'translate(' + B_CENTER_OFFSET + 'px, 0)';
+
+    // Hide rest of logo
+    logoOet.classList.remove('visible');
+    logoOet.style.opacity = '0';
+    logoMaterials.classList.remove('visible');
+    logoMaterials.style.opacity = '0';
+
     accentLine.classList.remove('visible');
     exchangeLabel.classList.remove('visible');
     stockPrice.innerHTML = '';
@@ -424,21 +519,61 @@ body {
     replayBtn.style.display      = 'none';
     document.body.style.overflow = 'hidden';
 
-    /* ── Phase 1: Reveal company name + exchange label ── */
-    requestAnimationFrame(() => {
-      companyName.classList.add('visible');
-      accentLine.classList.add('visible');
-      exchangeLabel.classList.add('visible');
-    });
+    /* ── Phase 1: B assembles (centered) ── */
+    setTimeout(() => {
+      // Vertical bar drops in
+      bBar.style.opacity = '';
+      bBar.classList.add('visible');
 
-    /* ── Phase 2: Stock price odometer roll ── */
+      // Top chevron snaps in
+      setTimeout(() => {
+        bTop.style.opacity = '';
+        bTop.classList.add('visible');
+      }, B_PIECE_STAGGER);
+
+      // Bottom chevron snaps in
+      setTimeout(() => {
+        bBottom.style.opacity = '';
+        bBottom.classList.add('visible');
+      }, B_PIECE_STAGGER * 2);
+
+    }, B_ASSEMBLE_START);
+
+    /* ── Phase 2: B slides left, rest of logo reveals ── */
+    const slideStart = B_ASSEMBLE_START + (B_PIECE_STAGGER * 2) + B_SETTLE_HOLD;
+
+    setTimeout(() => {
+      // Slide B to its home position
+      bGroup.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+      bGroup.style.transform = 'translate(0, 0)';
+
+      // Reveal OET
+      setTimeout(() => {
+        logoOet.style.opacity = '';
+        logoOet.classList.add('visible');
+      }, 150);
+
+      // Reveal MATERIALS
+      setTimeout(() => {
+        logoMaterials.style.opacity = '';
+        logoMaterials.classList.add('visible');
+      }, 250);
+
+      // Show accent line + exchange label
+      setTimeout(() => {
+        accentLine.classList.add('visible');
+        exchangeLabel.classList.add('visible');
+      }, 400);
+
+    }, slideStart);
+
+    /* ── Phase 3: Stock price odometer roll ── */
+    const odoStart = slideStart + LOGO_REVEAL_DUR + POST_LOGO_HOLD;
+
     setTimeout(() => {
       const odoElements = buildPriceOdometer();
-
-      // Force layout so initial position is painted
       stockPrice.offsetHeight;
 
-      // Stagger each digit's roll
       odoElements.forEach(({ strip, digitIndex }) => {
         setTimeout(() => {
           const scrollY = -(STRIP_LENGTH * CHAR_HEIGHT);
@@ -446,14 +581,13 @@ body {
         }, digitIndex * ODO_STAGGER);
       });
 
-      // Total time for all digits to finish rolling
       const allDigitsDone = (odoElements.length - 1) * ODO_STAGGER + ODO_DURATION;
 
-      /* ── Phase 3: Show day change in green ── */
+      /* ── Phase 4: Show day change ── */
       setTimeout(() => {
         dayChange.classList.add('visible');
 
-        /* ── Phase 4: Hold, then fade out and drop blocks ── */
+        /* ── Phase 5: Fade out + drop blocks ── */
         setTimeout(() => {
           overlayText.classList.add('fading');
 
@@ -463,7 +597,7 @@ body {
 
             blockContainer.style.display = '';
             const { blocks, maxDelay, vh, blockH } = buildBlocks();
-            blockContainer.offsetHeight; // force layout
+            blockContainer.offsetHeight;
 
             blocks.forEach(({ el, delay }) => {
               setTimeout(() => {
@@ -482,7 +616,7 @@ body {
         }, DAY_CHANGE_HOLD);
       }, allDigitsDone + POST_PRICE_HOLD);
 
-    }, INTRO_HOLD);
+    }, odoStart);
   }
 
   /* ═══════════════════════════════════════════════════ */
