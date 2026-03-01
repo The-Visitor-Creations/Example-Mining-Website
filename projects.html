@@ -1613,8 +1613,8 @@ if (!isMobileDevice) {
     isOpen = !isOpen;
     hamburger.classList.toggle('open', isOpen);
     overlay.classList.toggle('open', isOpen);
-    if (isOpen) { lenis.stop(); }
-    else { lenis.start(); }
+    if (isOpen) { if (lenis) lenis.stop(); }
+    else { if (lenis) lenis.start(); }
   });
 
   /* Close nav on link click */
@@ -1624,7 +1624,7 @@ if (!isMobileDevice) {
         isOpen = false;
         hamburger.classList.remove('open');
         overlay.classList.remove('open');
-        lenis.start();
+        if (lenis) lenis.start();
       }
     });
   });

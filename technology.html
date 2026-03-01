@@ -610,7 +610,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 }
 
 @media (max-width: 768px) {
-  .hero { padding: 0 24px 60px; }
+  .hero { padding: calc(var(--header-h) + 36px + 40px) 24px 60px; min-height: 100svh; }
 }
 
 /* ================================================================ */
@@ -2018,7 +2018,7 @@ if (!isMobileDevice) {
     isOpen = !isOpen;
     hamburger.classList.toggle('open', isOpen);
     if (isOpen) {
-      lenis.stop();
+      if (lenis) lenis.stop();
       overlay.style.transition = 'clip-path 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
       overlay.style.clipPath = 'inset(0 0 0% 0)';
       navItems.forEach(function(item, i) {
@@ -2034,7 +2034,7 @@ if (!isMobileDevice) {
         item.style.transform = 'translateX(-30px)';
       });
       overlay.style.clipPath = 'inset(0 0 100% 0)';
-      setTimeout(function() { lenis.start(); }, 600);
+      setTimeout(function() { if (lenis) lenis.start(); }, 600);
     }
   });
 
@@ -2048,7 +2048,7 @@ if (!isMobileDevice) {
           item.style.transform = 'translateX(-30px)';
         });
         overlay.style.clipPath = 'inset(0 0 100% 0)';
-        setTimeout(function() { lenis.start(); }, 600);
+        setTimeout(function() { if (lenis) lenis.start(); }, 600);
       }
     });
   });
