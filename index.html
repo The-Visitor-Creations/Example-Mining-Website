@@ -2517,77 +2517,74 @@ ScrollTrigger.create({
   gsap.set(spans, { y: 80, opacity: 0 });
 
   /* Build the full entrance timeline */
-  var tl = gsap.timeline({ delay: 0.3 });
+  var tl = gsap.timeline({ delay: 0.1 });
 
-  /* 1. Header slides down into view */
-  tl.to(header, {
-    y: 0,
-    duration: 0.6,
+  /* 1. Hero clip-path + header + ticker all hit together */
+  tl.to(hero, {
+    clipPath: 'inset(0% 0 0 0)',
+    duration: 0.7,
     ease: 'power2.out'
   });
 
-  /* 2. Ticker slides down + fades in */
+  tl.to(header, {
+    y: 0,
+    duration: 0.5,
+    ease: 'power2.out'
+  }, 0);
+
   tl.to(ticker, {
     y: 0,
     opacity: 1,
-    duration: 0.5,
+    duration: 0.4,
     ease: 'power2.out'
-  }, '-=0.3');
+  }, 0.1);
 
-  /* 2b. Ticker items stagger in one by one */
   var tickerItems = ticker.querySelectorAll(':scope > span');
   tl.to(tickerItems, {
     opacity: 1,
     y: 0,
-    duration: 0.4,
+    duration: 0.3,
     ease: 'power2.out',
-    stagger: 0.12
-  }, '-=0.2');
+    stagger: 0.08
+  }, 0.15);
 
-  /* 3. Hero drops down — clip-path reveals the video */
-  tl.to(hero, {
-    clipPath: 'inset(0% 0 0 0)',
-    duration: 1.0,
-    ease: 'power3.inOut'
-  }, '-=0.2');
-
-  /* 4. Eyebrow fades up */
+  /* 2. Eyebrow fades up */
   tl.to(eyebrow, {
     opacity: 1,
     y: 0,
-    duration: 0.6,
+    duration: 0.5,
     ease: 'power2.out'
-  }, '-=0.3');
+  }, 0.2);
 
-  /* 5. H1 words reveal (staggered) */
+  /* 3. H1 words reveal (staggered) */
   tl.to(h1, {
     opacity: 1,
     y: 0,
     duration: 0.01
-  }, '-=0.3');
+  }, 0.25);
   tl.to(spans, {
     y: 0,
     opacity: 1,
-    duration: 0.9,
+    duration: 0.7,
     ease: 'power3.out',
-    stagger: 0.08
-  }, '-=0.25');
+    stagger: 0.06
+  }, 0.25);
 
-  /* 6. Subtitle fades up */
+  /* 4. Subtitle fades up */
   tl.to(heroSub, {
     opacity: 1,
     y: 0,
-    duration: 0.7,
+    duration: 0.5,
     ease: 'power2.out'
-  }, '-=0.4');
+  }, '-=0.3');
 
-  /* 7. CTA buttons fade up */
+  /* 5. CTA buttons fade up */
   tl.to(heroCtas, {
     opacity: 1,
     y: 0,
-    duration: 0.7,
+    duration: 0.5,
     ease: 'power2.out'
-  }, '-=0.35');
+  }, '-=0.25');
 })();
 
 /* ═══════════════════════════════════════════════════════ */
@@ -2614,11 +2611,8 @@ ScrollTrigger.create({
   video.addEventListener('playing', reveal, { once: true });
   video.addEventListener('canplay', function() { tryPlay(); setTimeout(reveal, 200); }, { once: true });
   video.addEventListener('loadeddata', function() { tryPlay(); setTimeout(reveal, 200); }, { once: true });
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(function() { video.src = 'home-hero.mp4'; });
-  } else {
-    setTimeout(function() { video.src = 'home-hero.mp4'; }, 100);
-  }
+  /* Start loading video immediately — it'll buffer during the load overlay */
+  video.src = 'home-hero.mp4';
   /* iOS Low Power Mode: force-play on first user gesture */
   var gestures = ['touchstart', 'click', 'scroll'];
   function onGesture() {
@@ -2629,7 +2623,7 @@ ScrollTrigger.create({
     document.addEventListener(e, onGesture, { passive: true });
   });
 
-  setTimeout(reveal, 4000);
+  setTimeout(reveal, 2000);
 })();
 
 /* ═══════════════════════════════════════════════════════ */
