@@ -1292,6 +1292,15 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 
 @media (max-width: 768px) {
   .map-feature { display: none; }
+  .hotspot::before { display: none; }
+  .hotspot.active {
+    box-shadow: none;
+    transform: translate(-50%, -50%);
+  }
+  .hotspot:hover {
+    box-shadow: none;
+    transform: translate(-50%, -50%);
+  }
   .interactive-inner { padding: 0 24px; }
   .tech-tabs { padding: 0 24px 60px; grid-template-columns: 1fr 1fr; z-index: 0; }
   .tech-tab { min-width: 0; }
