@@ -827,19 +827,20 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   .process-step {
     grid-template-columns: 48px 1fr;
     gap: 20px;
+    align-items: start;
   }
   .process-timeline::before { left: 24px; }
-  .step-marker { width: 48px; height: 48px; }
+  .step-marker { width: 48px; height: 48px; grid-column: 1; grid-row: 1; }
   .step-content,
   .process-step:nth-child(even) .step-content {
     grid-column: 2;
-    grid-row: auto;
+    grid-row: 1;
     transform: translateY(20px);
   }
   .step-image,
   .process-step:nth-child(even) .step-image {
     grid-column: 2;
-    grid-row: auto;
+    grid-row: 2;
     transform: translateY(20px);
   }
   .process-step.step-visible .step-content,
@@ -1335,7 +1336,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
     left: 0;
     right: 0;
     width: auto;
-    max-height: 55vh;
+    max-height: 70vh;
     background: #fff;
     border-radius: 20px 20px 0 0;
     padding: 32px 24px calc(28px + env(safe-area-inset-bottom, 0px));
