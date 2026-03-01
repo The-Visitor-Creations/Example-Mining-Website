@@ -361,7 +361,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* MOBILE NAV OVERLAY                                                */
+/* NAV OVERLAY (MOBILE)                                              */
 /* ================================================================ */
 .nav-overlay {
   position: fixed;
@@ -369,14 +369,12 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   left: 0;
   width: 100%;
   height: 100vh;
-  background: var(--cream);
+  background: var(--dark);
   z-index: 999;
   display: flex;
   clip-path: inset(0 0 100% 0);
   overflow: hidden;
 }
-
-/* Topographic pattern background layer */
 .nav-overlay::before {
   content: '';
   position: absolute;
@@ -384,12 +382,10 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   background-image: url('mining-pattern.webp');
   background-size: cover;
   background-position: center;
-  opacity: 0.06;
+  opacity: 0.08;
   z-index: 0;
   pointer-events: none;
 }
-
-/* Animated gold light sweep */
 .nav-overlay::after {
   content: '';
   position: absolute;
@@ -400,21 +396,19 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
     115deg,
     transparent 0%,
     transparent 35%,
-    rgba(158, 27, 50, 0.04) 42%,
-    rgba(158, 27, 50, 0.08) 50%,
-    rgba(158, 27, 50, 0.04) 58%,
+    rgba(205, 170, 136, 0.06) 42%,
+    rgba(205, 170, 136, 0.12) 50%,
+    rgba(205, 170, 136, 0.06) 58%,
     transparent 65%,
     transparent 100%
   );
   background-size: 250% 100%;
   animation: goldSweep 6s ease-in-out infinite;
 }
-
 @keyframes goldSweep {
   0%   { background-position: 150% 0; }
   100% { background-position: -50% 0; }
 }
-
 .nav-overlay-content {
   display: flex;
   flex-direction: column;
@@ -435,7 +429,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   font-weight: 900;
   font-size: clamp(32px, 5vw, 48px);
   text-transform: uppercase;
-  color: var(--dark);
+  color: var(--white);
   opacity: 0;
   transform: translateX(-30px);
   transition: color 0.3s ease;
@@ -444,8 +438,6 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 .nav-links a:hover,
 .nav-links .nav-sub-trigger:hover { color: var(--accent); }
-
-/* Investors sub-dropdown (mobile) */
 .nav-sub-trigger {
   display: flex;
   align-items: center;
@@ -457,7 +449,6 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   display: inline-block;
 }
 .nav-sub-trigger.open .sub-chevron { transform: rotate(180deg); }
-
 .nav-sub-links {
   max-height: 0;
   overflow: hidden;
@@ -471,7 +462,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   font-size: clamp(14px, 2.2vw, 18px) !important;
   font-weight: 600 !important;
   text-transform: none !important;
-  color: #5a5046 !important;
+  color: var(--text-muted) !important;
   line-height: 1.6 !important;
   padding: 4px 0;
   letter-spacing: 0.5px;
@@ -479,7 +470,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   opacity: 1 !important;
   transform: none !important;
 }
-.nav-sub-links a:hover { color: var(--accent) !important; }
+.nav-sub-links a:hover { color: var(--gold) !important; }
 
 /* ================================================================ */
 /* LOAD-IN: start elements off-screen                                */
