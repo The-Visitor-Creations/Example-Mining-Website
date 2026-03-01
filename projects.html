@@ -493,8 +493,10 @@ ul { list-style: none; }
   height: 100%;
   object-fit: cover;
   z-index: 1;
-  transition: transform 0.1s linear;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.1s linear;
 }
+.hero-video.vid-ready { opacity: 1; }
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -1285,7 +1287,7 @@ ul { list-style: none; }
 <!-- HERO SECTION                                            -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section class="hero" id="hero-top">
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none" poster="boet-icon-logo.png"></video>
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none"></video>
   <div class="hero-overlay"></div>
   <div class="hero-grain"></div>
   <div class="hero-gradient"></div>

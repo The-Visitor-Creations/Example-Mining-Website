@@ -559,7 +559,10 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   object-fit: cover;
   object-position: left bottom;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
+.hero-video.vid-ready { opacity: 1; }
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -1402,7 +1405,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 <!-- HERO — VIDEO                                            -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section class="hero" id="hero">
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="boet-icon-logo.png"></video>
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata"></video>
   <div class="hero-overlay"></div>
   <div class="hero-grain"></div>
   <div class="hero-content" id="heroContent">
