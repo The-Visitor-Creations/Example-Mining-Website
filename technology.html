@@ -635,7 +635,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 }
 
 @media (max-width: 768px) {
-  .hero { padding: calc(var(--header-h) + 36px + 40px) 24px 60px; min-height: 100svh; }
+  .hero { padding: 0 24px 60px; min-height: 100svh; }
 }
 
 /* ================================================================ */
@@ -1682,7 +1682,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 /* LOAD-IN OVERLAY                                         */
 /* ═══════════════════════════════════════════════════════ */
 (function() {
-  var HOLD = 1200, BLOCK_STAGGER = 18, BLOCK_DURATION = 600;
+  var HOLD = 600, BLOCK_STAGGER = 12, BLOCK_DURATION = 400;
   var overlayBg     = document.getElementById('loadOverlayBg');
   var overlayText   = document.getElementById('loadOverlayText');
   var companyName   = document.getElementById('loadCompanyName');
@@ -1849,7 +1849,7 @@ if (!isMobileDevice) {
   }
   var isMobileDev = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   if (isMobileDev) {
-    setTimeout(loadVid, 2000);
+    setTimeout(loadVid, 300);
   } else if ('requestIdleCallback' in window) {
     requestIdleCallback(loadVid);
   } else {
@@ -1871,9 +1871,12 @@ if (!isMobileDevice) {
     tl.to(ctas, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
   }
 
+  /* Show text immediately — don't wait for video */
+  reveal();
+
+  /* Fade video in when ready */
   video.addEventListener('playing', function() {
     video.classList.add('vid-ready');
-    setTimeout(reveal, 300);
   }, { once: true });
 
   /* iOS Low Power Mode: force-play on first user gesture */
@@ -1885,8 +1888,6 @@ if (!isMobileDevice) {
   gestures.forEach(function(e) {
     document.addEventListener(e, onGesture, { passive: true });
   });
-
-  setTimeout(reveal, 4000);
 })();
 
 /* ═══════════════════════════════════════════════════════ */
