@@ -563,11 +563,8 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.8s ease;
+  z-index: 1;
 }
-.hero-video.vid-ready { opacity: 1; z-index: 1; }
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -2529,25 +2526,26 @@ ScrollTrigger.create({
   /* Build the full entrance timeline */
   var tl = gsap.timeline({ delay: 0.1 });
 
-  /* 1. Hero clip-path + header + ticker all hit together */
+  /* 1. Hero clip-path reveals video first */
   tl.to(hero, {
     clipPath: 'inset(0% 0 0 0)',
     duration: 0.7,
     ease: 'power2.out'
   });
 
+  /* 2. Header + ticker come in during reveal */
   tl.to(header, {
     y: 0,
     duration: 0.5,
     ease: 'power2.out'
-  }, 0);
+  }, 0.1);
 
   tl.to(ticker, {
     y: 0,
     opacity: 1,
     duration: 0.4,
     ease: 'power2.out'
-  }, 0.1);
+  }, 0.2);
 
   var tickerItems = ticker.querySelectorAll(':scope > span');
   tl.to(tickerItems, {
@@ -2556,29 +2554,28 @@ ScrollTrigger.create({
     duration: 0.3,
     ease: 'power2.out',
     stagger: 0.08
-  }, 0.15);
+  }, 0.25);
 
-  /* 2. Eyebrow fades up */
+  /* 3. Text layers on AFTER video is visible (~0.5s in) */
   tl.to(eyebrow, {
     opacity: 1,
     y: 0,
     duration: 0.5,
     ease: 'power2.out'
-  }, 0.2);
+  }, 0.5);
 
-  /* 3. H1 words reveal (staggered) */
   tl.to(h1, {
     opacity: 1,
     y: 0,
     duration: 0.01
-  }, 0.25);
+  }, 0.55);
   tl.to(spans, {
     y: 0,
     opacity: 1,
     duration: 0.7,
     ease: 'power3.out',
     stagger: 0.06
-  }, 0.25);
+  }, 0.55);
 
   /* 4. Subtitle fades up */
   tl.to(heroSub, {
