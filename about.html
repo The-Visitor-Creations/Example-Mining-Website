@@ -1597,6 +1597,8 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
+/* ── Guard: wait for deferred GSAP/Lenis before running ── */
+function _bootAbout() {
 gsap.registerPlugin(ScrollTrigger);
 
 /* ═══════════════════════════════════════════════════════ */
@@ -2041,6 +2043,19 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 })();
 
 } /* end initPageAnimations */
+
+} /* end _bootAbout */
+
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+  _bootAbout();
+} else {
+  var _bi = setInterval(function() {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+      clearInterval(_bi);
+      _bootAbout();
+    }
+  }, 16);
+}
 </script>
 </body>
 </html>

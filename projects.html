@@ -1458,6 +1458,8 @@ ul { list-style: none; }
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
+/* ── Guard: wait for deferred GSAP/Lenis before running ── */
+function initProjectsPage() {
 /* ═══════════════════════════════════════════════════════ */
 /* LENIS SMOOTH SCROLL                                     */
 /* ═══════════════════════════════════════════════════════ */
@@ -1827,6 +1829,19 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 
   metrics.forEach(function(el) { countObserver.observe(el); });
 })();
+
+} /* end initProjectsPage */
+
+if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined') {
+  initProjectsPage();
+} else {
+  var _pi = setInterval(function() {
+    if (typeof gsap !== 'undefined' && typeof Lenis !== 'undefined') {
+      clearInterval(_pi);
+      initProjectsPage();
+    }
+  }, 16);
+}
 </script>
 </body>
 </html>

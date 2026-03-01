@@ -1670,10 +1670,23 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   var sameOriginReferrer = document.referrer && document.referrer.indexOf(window.location.origin) === 0;
   var isInternalNav = sameOriginReferrer && (navType === 'navigate' || navType === 'back_forward');
 
+  function safeInitPageAnimations() {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+      initPageAnimations();
+    } else {
+      var id = setInterval(function() {
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+          clearInterval(id);
+          initPageAnimations();
+        }
+      }, 16);
+    }
+  }
+
   if (isInternalNav) {
     overlayText.style.display = 'none';
     overlayBg.style.display = 'none';
-    initPageAnimations();
+    safeInitPageAnimations();
     return;
   }
 
@@ -1719,7 +1732,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
         overlayBg.style.display = 'none';
         overlayText.style.display = 'none';
         document.body.style.overflow = '';
-        initPageAnimations();
+        safeInitPageAnimations();
       }, 400);
     }, 300);
     return;
@@ -1752,7 +1765,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
       setTimeout(function() {
         blockContainer.style.display = 'none';
         document.body.style.overflow = '';
-        initPageAnimations();
+        safeInitPageAnimations();
       }, grid.maxDelay + BLOCK_DURATION + 100);
     }, 200);
   }, HOLD);
