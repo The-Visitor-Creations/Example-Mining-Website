@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Projects — Boet Materials Corp.</title>
+<meta name="description" content="Discover Boet Materials' mining projects — strategic locations, proven reserves, and world-class operational capabilities.">
+<meta property="og:title" content="Projects — Boet Materials Corp.">
+<meta property="og:description" content="Discover Boet Materials' mining projects — strategic locations, proven reserves, and world-class operational capabilities.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="boet-full-logo.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="boet-icon-logo.png">
 <link rel="apple-touch-icon" href="boet-icon-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -359,7 +365,7 @@ ul { list-style: none; }
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('mining-pattern.jpg');
+  background-image: url('mining-pattern.webp');
   background-size: cover;
   background-position: center;
   opacity: 0.08;
@@ -1273,7 +1279,7 @@ ul { list-style: none; }
 <!-- HERO SECTION                                            -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section class="hero" id="hero-top">
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none"></video>
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none" poster="boet-icon-logo.png"></video>
   <div class="hero-overlay"></div>
   <div class="hero-grain"></div>
   <div class="hero-gradient"></div>
@@ -1352,7 +1358,10 @@ ul { list-style: none; }
     <h2 class="slide-up">Strategic Mine Locations</h2>
     <div class="location-grid">
       <div class="location-map op">
-        <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img" loading="lazy">
+        <picture>
+          <source srcset="elevation-map.webp" type="image/webp">
+          <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img" loading="lazy">
+        </picture>
         <button class="map-dot" data-site="0" style="top:28%;left:32%;" aria-label="Highland Ridge">
           <span class="map-dot-pulse"></span>
         </button>
