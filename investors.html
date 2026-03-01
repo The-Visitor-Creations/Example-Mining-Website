@@ -386,9 +386,11 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   left: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background: var(--cream);
   z-index: 999;
   display: flex;
+  -webkit-clip-path: inset(0 0 100% 0);
   clip-path: inset(0 0 100% 0);
   overflow: hidden;
 }
@@ -573,15 +575,19 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   .header { transform: none; }
   .ticker-strip { transform: none; opacity: 1; }
   .ticker-strip > span { opacity: 1; transform: none; }
-  .investor-hero { clip-path: none; }
+  .investor-hero { -webkit-clip-path: none; clip-path: none; }
   .investor-hero-content .eyebrow,
   .investor-hero-content h1,
   .investor-hero-content .hero-sub,
   .investor-hero-content .hero-buttons { opacity: 1; transform: none; }
+  .fade-up { opacity: 1; transform: none; }
+  .invest-stat { opacity: 1; transform: none; }
+  .resource-card { opacity: 1; transform: none; }
   .load-overlay-text, .load-company-name, .load-accent-line,
   .load-page-label {
     transition-duration: 0.01ms !important;
   }
+  .nav-overlay { -webkit-clip-path: none; clip-path: none; display: none; }
 }
 
 /* ================================================================ */
@@ -604,9 +610,11 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   align-items: flex-end;
   overflow: hidden;
   background: var(--cream);
+  -webkit-clip-path: inset(100% 0 0 0);
   clip-path: inset(100% 0 0 0);
 }
 .investor-hero.hero-entered {
+  -webkit-clip-path: inset(0 0 0 0);
   clip-path: inset(0 0 0 0);
 }
 .investor-hero-bg {
@@ -617,6 +625,8 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   opacity: 0.06;
   z-index: 0;
 }
+/* Gold accent text (used in headings) */
+.gold-word { color: var(--gold); }
 .investor-hero-content {
   position: relative;
   z-index: 1;
@@ -932,28 +942,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   justify-content: center;
   flex-wrap: wrap;
 }
-.cta-section .btn-outline {
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-.cta-section .btn-outline::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--dark);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: -1;
-}
-.cta-section .btn-outline:hover::before {
-  transform: translateX(0);
-}
-.cta-section .btn-outline:hover {
-  color: var(--cream);
-  border-color: var(--dark);
-  background: transparent;
-}
+/* CTA outline buttons inherit .btn-outline-fill for hover effect */
 
 /* ================================================================ */
 /* FOOTER                                                             */
@@ -1047,33 +1036,130 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 /* ================================================================ */
 /* RESPONSIVE                                                         */
 /* ================================================================ */
+
+/* ── Large tablets / small laptops ── */
 @media (max-width: 1024px) {
-  .resources-grid { grid-template-columns: repeat(2, 1fr); }
+  .investor-hero { padding: 100px 48px 80px; }
+  .invest-highlights { padding: 64px 48px; }
+  .news-section { padding: 80px 48px; }
+  .resources-section { padding: 80px 48px; }
+  .cta-section { padding: 80px 48px; }
+  .footer { padding: 48px 48px 32px; }
 }
 
+/* ── Tablets / landscape phones ── */
 @media (max-width: 768px) {
   .investor-hero { padding: 80px 24px 60px; min-height: 60vh; }
+  .investor-hero-content h1 { font-size: clamp(36px, 8vw, 56px); }
+  .investor-hero-content .hero-sub { font-size: 16px; }
+  .hero-buttons { gap: 12px; }
+
   .invest-highlights { padding: 48px 24px; }
   .invest-highlights-inner { grid-template-columns: 1fr 1fr; gap: 0; }
   .invest-stat { border-right: none; padding: 24px 16px; }
   .invest-stat:nth-child(1),
   .invest-stat:nth-child(2) { border-bottom: 1px solid var(--border-card); }
   .invest-stat:nth-child(odd) { border-right: 1px solid var(--border-card); }
+
   .news-section { padding: 60px 24px; }
+  .news-header { margin-bottom: 36px; }
   .news-card { grid-template-columns: 1fr; gap: 8px; }
+  .news-title { font-size: 19px; }
+  .news-excerpt { font-size: 14px; }
+
   .resources-section { padding: 60px 24px; }
   .resources-grid { grid-template-columns: 1fr; }
+  .resource-card { padding: 32px 24px; }
+
   .cta-section { padding: 60px 24px; }
+  .cta-section .cta-sub { font-size: 15px; }
+
   .footer { padding: 40px 24px 32px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
+  .footer-nav { gap: 24px; }
   .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
+
+  /* iOS Safari: disable fixed attachment (not supported) */
+  .investor-hero-bg,
+  .news-section::before,
+  .cta-section::before,
+  .load-overlay-bg::before { background-attachment: scroll; }
 }
 
+/* ── Small phones ── */
 @media (max-width: 480px) {
+  .investor-hero { padding: 70px 20px 48px; min-height: 55vh; }
+  .investor-hero-content h1 { font-size: clamp(32px, 9vw, 44px); margin-bottom: 20px; }
+  .investor-hero-content .hero-sub { font-size: 15px; margin-bottom: 28px; }
+  .hero-buttons { flex-direction: column; gap: 10px; }
+  .hero-buttons .btn-primary,
+  .hero-buttons .btn-outline { width: 100%; justify-content: center; }
+
+  .invest-highlights { padding: 36px 20px; }
   .invest-highlights-inner { grid-template-columns: 1fr; }
-  .invest-stat { border-right: none !important; border-bottom: 1px solid var(--border-card); }
+  .invest-stat { border-right: none !important; border-bottom: 1px solid var(--border-card); padding: 20px 12px; }
   .invest-stat:last-child { border-bottom: none; }
+  .invest-stat-number { font-size: clamp(32px, 8vw, 44px); }
+
+  .news-section { padding: 48px 20px; }
+  .news-header { margin-bottom: 28px; }
+  .news-title { font-size: 17px; }
+  .news-excerpt { font-size: 14px; line-height: 1.6; }
+  .news-date-col { font-size: 10px; }
+
+  .resources-section { padding: 48px 20px; }
+  .resources-header { margin-bottom: 36px; }
+  .resource-card { padding: 28px 20px; }
+  .resource-card h3 { font-size: 16px; letter-spacing: 1px; }
+  .resource-card p { font-size: 14px; }
+
+  .cta-section { padding: 48px 20px; }
+  .cta-section .cta-sub { font-size: 14px; }
+  .cta-buttons { flex-direction: column; gap: 10px; }
+  .cta-buttons .btn-primary,
+  .cta-buttons .btn-outline { width: 100%; justify-content: center; }
+
+  .footer { padding: 32px 20px 24px; }
+  .footer-nav { gap: 16px 24px; }
+  .footer-disclaimer { font-size: 9px; }
+}
+
+/* ── Very small phones (320px, iPhone SE, Galaxy Fold) ── */
+@media (max-width: 360px) {
+  .investor-hero { padding: 64px 16px 40px; }
+  .investor-hero-content h1 { font-size: 30px; }
+  .investor-hero-content .hero-sub { font-size: 14px; }
+  .eyebrow { font-size: 10px; letter-spacing: 2px; }
+
+  .invest-stat-number { font-size: 30px; }
+  .invest-stat-label { font-size: 9px; letter-spacing: 1.5px; }
+
+  .news-title { font-size: 16px; }
+
+  .cta-section h2 { font-size: 28px; }
+
+  .btn-primary, .btn-outline { font-size: 12px; padding: 13px 24px; }
+}
+
+/* ── Touch devices: prevent hover stuck states ── */
+@media (hover: none) {
+  .resource-card:hover { transform: none; }
+  .btn-primary:hover { transform: none; }
+  .btn-outline:hover { transform: none; }
+}
+
+/* ── High-DPI / Retina: ensure crisp text ── */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body { -moz-osx-font-smoothing: grayscale; }
+}
+
+/* ── Landscape phones ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .investor-hero { min-height: auto; padding-top: 100px; padding-bottom: 40px; }
+  .nav-overlay-content { padding-top: 80px; }
+  .nav-links a,
+  .nav-links .nav-sub-trigger { font-size: clamp(24px, 4vw, 36px); }
 }
 </style>
 </head>
@@ -1471,7 +1557,7 @@ window.__lenis = lenis;
   tl.to(tickerItems, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.12 }, '-=0.2');
 
   /* 3. Hero background reveals via clip-path */
-  tl.to(hero, { clipPath: 'inset(0% 0 0 0)', duration: 1.0, ease: 'power3.inOut',
+  tl.to(hero, { clipPath: 'inset(0% 0 0 0)', webkitClipPath: 'inset(0% 0 0 0)', duration: 1.0, ease: 'power3.inOut',
     onComplete: function() {
       var bg = document.getElementById('loadOverlayBg');
       if (bg) bg.style.display = 'none';
@@ -1628,6 +1714,7 @@ document.querySelectorAll('.news-header h2, .resources-header h2, .cta-section h
   var tl = gsap.timeline({ paused: true });
   tl.to(overlay, {
     clipPath: 'inset(0 0 0% 0)',
+    webkitClipPath: 'inset(0 0 0% 0)',
     duration: 0.6,
     ease: 'power4.inOut'
   })
