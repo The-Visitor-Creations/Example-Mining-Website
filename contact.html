@@ -468,6 +468,14 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   will-change: transform;
 }
 
+/* ================================================================ */
+/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
+/* ================================================================ */
+.cv-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header { transform: none; }
   .ticker-strip { transform: none; opacity: 1; }
@@ -961,7 +969,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- CONTACT FORM + SIDEBAR                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="contact-section">
+<section class="contact-section cv-defer">
   <div class="contact-grid">
 
     <!-- Left: Contact Form -->
@@ -1226,15 +1234,19 @@ function initPageAnimations() {
 /* ═══════════════════════════════════════════════════════ */
 /* LENIS SMOOTH SCROLL                                     */
 /* ═══════════════════════════════════════════════════════ */
-var lenis = new Lenis({
-  duration: 1.2,
-  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-  smoothWheel: true,
-});
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
-window.__lenis = lenis;
+var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var lenis;
+if (!isMobileDevice) {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+  window.__lenis = lenis;
+}
 
 /* ═══════════════════════════════════════════════════════ */
 /* HEADER + TICKER + HERO ENTRANCE SEQUENCE                */
@@ -1341,7 +1353,7 @@ window.__lenis = lenis;
     isOpen = !isOpen;
     hamburger.classList.toggle('open', isOpen);
     if (isOpen) {
-      lenis.stop();
+      if (lenis) lenis.stop();
       overlay.style.transition = 'clip-path 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
       overlay.style.clipPath = 'inset(0 0 0% 0)';
       navItems.forEach(function(item, i) {
@@ -1357,7 +1369,7 @@ window.__lenis = lenis;
         item.style.transform = 'translateX(-30px)';
       });
       overlay.style.clipPath = 'inset(0 0 100% 0)';
-      setTimeout(function() { lenis.start(); }, 600);
+      setTimeout(function() { if (lenis) lenis.start(); }, 600);
     }
   });
 
@@ -1371,7 +1383,7 @@ window.__lenis = lenis;
           item.style.transform = 'translateX(-30px)';
         });
         overlay.style.clipPath = 'inset(0 0 100% 0)';
-        setTimeout(function() { lenis.start(); }, 600);
+        setTimeout(function() { if (lenis) lenis.start(); }, 600);
       }
     });
   });

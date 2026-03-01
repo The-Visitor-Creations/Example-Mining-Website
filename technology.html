@@ -520,6 +520,14 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   will-change: transform;
 }
 
+/* ================================================================ */
+/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
+/* ================================================================ */
+.cv-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header { transform: none; }
   .ticker-strip { transform: none; opacity: 1; }
@@ -1413,7 +1421,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- PROCESS STEPS — SCROLL DRIVEN                           -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="process-section" id="process">
+<section class="process-section cv-defer" id="process">
   <div class="process-header">
     <div class="eyebrow">Our Process</div>
     <h2>From Ground to Product</h2>
@@ -1496,7 +1504,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- INTERACTIVE SVG SECTION                                 -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="interactive-section" id="interactive">
+<section class="interactive-section cv-defer" id="interactive">
   <div class="interactive-inner">
     <div class="interactive-header">
       <div class="eyebrow">Operations</div>
@@ -1594,7 +1602,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- CTA                                                     -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="cta-section">
+<section class="cta-section cv-defer">
   <div class="eyebrow">Get In Touch</div>
   <h2>Ready to Partner<br>With Us?</h2>
   <p class="cta-sub">Learn how Boet Materials Corp. is pioneering the future of responsible resource development and advancing the global energy transition.</p>
@@ -1607,7 +1615,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- FOOTER                                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<footer class="footer">
+<footer class="footer cv-defer">
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
@@ -1755,15 +1763,19 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 function initPageAnimations() {
 
 /* Lenis smooth scroll */
-var lenis = new Lenis({
-  duration: 1.2,
-  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-  smoothWheel: true,
-});
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
-window.__lenis = lenis;
+var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var lenis;
+if (!isMobileDevice) {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+  window.__lenis = lenis;
+}
 
 /* ═══════════════════════════════════════════════════════ */
 /* HERO ENTRANCE                                           */
@@ -1785,17 +1797,25 @@ window.__lenis = lenis;
   /* Load video */
   function loadVid() {
     var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g');
-    if (!slow) {
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g');
+    var weakSignal = conn && ((conn.downlink && conn.downlink < 2) || (conn.rtt && conn.rtt > 300));
+    if (!slow && !weakSignal) {
       video.src = 'technology-hero.mp4';
       var playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(function() { /* autoplay blocked — rely on safety timeout */ });
+        playPromise.catch(function() {});
       }
     }
   }
-  if ('requestIdleCallback' in window) { requestIdleCallback(loadVid); }
-  else { setTimeout(loadVid, 100); }
+  var isMobileDev = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobileDev) {
+    setTimeout(loadVid, 2000);
+  } else if ('requestIdleCallback' in window) {
+    requestIdleCallback(loadVid);
+  } else {
+    setTimeout(loadVid, 100);
+  }
 
   var revealed = false;
   function reveal() {

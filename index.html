@@ -1589,6 +1589,14 @@ sup.ast {
 }
 
 /* ================================================================ */
+/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
+/* ================================================================ */
+.cv-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* ================================================================ */
 /* REDUCED MOTION                                                    */
 /* ================================================================ */
 @media (prefers-reduced-motion: reduce) {
@@ -1946,7 +1954,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 2 — WHO WE ARE                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="who-we-are" id="about">
+<section class="who-we-are cv-defer" id="about">
   <div class="who-we-are-grid">
     <div class="who-we-are-copy fade-up">
       <div class="eyebrow">Who We Are</div>
@@ -1983,7 +1991,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 3 — TECHNOLOGY TEASER                           -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="tech-teaser" id="technology">
+<section class="tech-teaser cv-defer" id="technology">
   <div class="tech-teaser-bg" id="tech-bg"></div>
   <div class="tech-teaser-overlay"></div>
   <div class="tech-teaser-content fade-up">
@@ -1997,7 +2005,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 4 — THE OPPORTUNITY                             -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="opportunity" id="opportunity">
+<section class="opportunity cv-defer" id="opportunity">
   <div class="opportunity-inner">
     <div class="opportunity-header fade-up">
       <div class="eyebrow">The Opportunity</div>
@@ -2025,7 +2033,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 5 — FLAGSHIP PROJECT                            -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="flagship" id="flagship">
+<section class="flagship cv-defer" id="flagship">
   <div class="eyebrow">Flagship Project</div>
   <h2 class="fade-up">Clearwater Basin</h2>
 
@@ -2069,7 +2077,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION — STOCK PERFORMANCE                               -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="stock-section" id="stock">
+<section class="stock-section cv-defer" id="stock">
   <div class="stock-section-inner">
 
     <div class="stock-header fade-up">
@@ -2146,7 +2154,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 8 — INVESTORS CTA                               -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="investors-cta" id="investors">
+<section class="investors-cta cv-defer" id="investors">
   <div class="investors-cta-inner fade-up">
     <div class="eyebrow" style="color: var(--gold);">Investor Relations</div>
     <h2>Building a Generational Critical Minerals Asset</h2>
@@ -2471,17 +2479,19 @@ function initPageAnimations() {
 /* ═══════════════════════════════════════════════════════ */
 /* 1. LENIS SMOOTH SCROLL                                  */
 /* ═══════════════════════════════════════════════════════ */
-var lenis = new Lenis({
-  duration: 1.2,
-  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-  smoothWheel: true,
-});
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
-
-/* Store lenis globally for mobile nav toggle */
-window.__lenis = lenis;
+var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var lenis;
+if (!isMobileDevice) {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+  window.__lenis = lenis;
+}
 
 /* ═══════════════════════════════════════════════════════ */
 /* 2. HEADER SCROLL STATE                                  */
@@ -2594,11 +2604,14 @@ ScrollTrigger.create({
   var video = document.getElementById('heroVideo');
   if (!video) return;
 
-  // Skip video entirely on slow connections to save ~35 MB
+  // Connection + device detection
   var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g');
-  if (slow) {
-    // Leave video element empty; background color shows through
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g');
+  var mediumSlow = conn && conn.downlink && conn.downlink < 2;
+
+  // Skip video on slow connections OR weak signal (saves 35MB)
+  if (slow || mediumSlow) {
     return;
   }
 
@@ -2611,8 +2624,15 @@ ScrollTrigger.create({
   video.addEventListener('playing', reveal, { once: true });
   video.addEventListener('canplay', function() { tryPlay(); setTimeout(reveal, 200); }, { once: true });
   video.addEventListener('loadeddata', function() { tryPlay(); setTimeout(reveal, 200); }, { once: true });
-  /* Start loading video immediately — it'll buffer during the load overlay */
-  video.src = 'home-hero.mp4';
+
+  // Mobile: defer video load until after page renders (don't compete for bandwidth)
+  // Desktop: start loading immediately so it's ready when overlay finishes
+  if (isMobile) {
+    setTimeout(function() { video.src = 'home-hero.mp4'; }, 2000);
+  } else {
+    video.src = 'home-hero.mp4';
+  }
+
   /* iOS Low Power Mode: force-play on first user gesture */
   var gestures = ['touchstart', 'click', 'scroll'];
   function onGesture() {
@@ -2623,7 +2643,7 @@ ScrollTrigger.create({
     document.addEventListener(e, onGesture, { passive: true });
   });
 
-  setTimeout(reveal, 2000);
+  setTimeout(reveal, 3000);
 })();
 
 /* ═══════════════════════════════════════════════════════ */
@@ -2791,8 +2811,8 @@ document.querySelectorAll('.who-we-are-copy h2, .opportunity-header h2, .leaders
   hamburger.addEventListener('click', function() {
     isOpen = !isOpen;
     hamburger.classList.toggle('open', isOpen);
-    if (isOpen) { lenis.stop(); tl.play(); }
-    else { tl.reverse().then(function() { lenis.start(); }); }
+    if (isOpen) { if (lenis) lenis.stop(); tl.play(); }
+    else { tl.reverse().then(function() { if (lenis) lenis.start(); }); }
   });
 
   /* Close nav on link click (except sub-trigger) */
@@ -2801,7 +2821,7 @@ document.querySelectorAll('.who-we-are-copy h2, .opportunity-header h2, .leaders
       if (isOpen) {
         isOpen = false;
         hamburger.classList.remove('open');
-        tl.reverse().then(function() { lenis.start(); });
+        tl.reverse().then(function() { if (lenis) lenis.start(); });
       }
     });
   });
@@ -2827,7 +2847,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     var target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -120 });
+      if (lenis) lenis.scrollTo(target, { offset: -120 });
+      else target.scrollIntoView({ behavior: 'smooth' });
     }
   });
 });

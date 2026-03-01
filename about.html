@@ -552,6 +552,14 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 .load-page-label.visible { opacity: 1; }
 
+/* ================================================================ */
+/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
+/* ================================================================ */
+.cv-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header { transform: none; }
   .ticker-strip { transform: none; opacity: 1; }
@@ -1358,7 +1366,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- GLOBAL STATS — Count-up strip                           -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="stats-section">
+<section class="stats-section cv-defer">
   <div class="stats-inner">
     <div class="stat-item">
       <div class="stat-number" data-count="15" data-suffix="+">0+</div>
@@ -1378,7 +1386,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 2. WHO WE ARE — Two-column split                        -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="who-split">
+<section class="who-split cv-defer">
   <div class="who-split-grid">
     <div class="who-split-left fade-up">
       <h2>Built on <span class="gold-word">Expertise.</span> Driven by Purpose.</h2>
@@ -1397,7 +1405,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 6. LEADERSHIP TEAM                                      -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="team-section" id="team">
+<section class="team-section cv-defer" id="team">
   <div class="team-inner">
     <div class="team-header fade-up">
       <div class="eyebrow">Leadership</div>
@@ -1537,7 +1545,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 7. CTA SECTION                                          -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="cta-section">
+<section class="cta-section cv-defer">
   <div class="eyebrow fade-up">Get In Touch</div>
   <h2 class="fade-up">Ready to Partner With Us?</h2>
   <p class="cta-sub fade-up">Learn how Boet Materials Corp. is pioneering the future of responsible resource development and advancing the global energy transition.</p>
@@ -1661,15 +1669,19 @@ function initPageAnimations() {
 /* ═══════════════════════════════════════════════════════ */
 /* LENIS SMOOTH SCROLL                                     */
 /* ═══════════════════════════════════════════════════════ */
-var lenis = new Lenis({
-  duration: 1.2,
-  easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-  smoothWheel: true,
-});
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
-window.__lenis = lenis;
+var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var lenis;
+if (!isMobileDevice) {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
+  gsap.ticker.lagSmoothing(0);
+  window.__lenis = lenis;
+}
 
 /* ═══════════════════════════════════════════════════════ */
 /* HEADER + TICKER + HERO ENTRANCE SEQUENCE                */
@@ -1909,8 +1921,8 @@ document.querySelectorAll('.who-split-left h2, .values-header h2, .approach-left
   hamburger.addEventListener('click', function() {
     isOpen = !isOpen;
     hamburger.classList.toggle('open', isOpen);
-    if (isOpen) { lenis.stop(); tl.play(); }
-    else { tl.reverse().then(function() { lenis.start(); }); }
+    if (isOpen) { if (lenis) lenis.stop(); tl.play(); }
+    else { tl.reverse().then(function() { if (lenis) lenis.start(); }); }
   });
 
   closeLinks.forEach(function(link) {
@@ -1918,7 +1930,7 @@ document.querySelectorAll('.who-split-left h2, .values-header h2, .approach-left
       if (isOpen) {
         isOpen = false;
         hamburger.classList.remove('open');
-        tl.reverse().then(function() { lenis.start(); });
+        tl.reverse().then(function() { if (lenis) lenis.start(); });
       }
     });
   });
@@ -1969,7 +1981,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     var target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      lenis.scrollTo(target, { offset: -120 });
+      if (lenis) lenis.scrollTo(target, { offset: -120 });
     }
   });
 });
