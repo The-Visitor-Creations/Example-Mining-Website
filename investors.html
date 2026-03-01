@@ -142,6 +142,32 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   background: rgba(0,0,0,0.04);
   transform: translateY(-2px);
 }
+.btn-outline .arrow { transition: transform 0.3s ease; }
+.btn-outline:hover .arrow { transform: translateX(4px); }
+
+/* Outline button with accent-red slide-fill on hover */
+.btn-outline-fill {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.btn-outline-fill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+.btn-outline-fill:hover::before {
+  transform: translateX(0);
+}
+.btn-outline-fill:hover {
+  color: var(--white);
+  border-color: var(--accent);
+  background: transparent;
+}
 
 /* ================================================================ */
 /* HEADER                                                             */
@@ -1141,7 +1167,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
     <p class="hero-sub">Boet Materials Corp. is a vertically integrated critical minerals platform with C$51M in available capital, zero debt, and listings on three international exchanges.</p>
     <div class="hero-buttons">
       <a href="https://pitch-deck-demo.vercel.app/" class="btn-primary">Corporate Presentation <span class="arrow">&rarr;</span></a>
-      <a href="contact.html" class="btn-outline">Contact IR <span class="arrow">&rarr;</span></a>
+      <a href="contact.html" class="btn-outline btn-outline-fill">Contact IR <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -1152,20 +1178,20 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <section class="invest-highlights">
   <div class="invest-highlights-inner">
     <div class="invest-stat">
-      <div class="invest-stat-number" data-count="51" data-prefix="C$" data-suffix="M">C$0M</div>
-      <div class="invest-stat-label">Available Capital</div>
+      <div class="invest-stat-number" data-count="412" data-prefix="$" data-suffix="M">$0M</div>
+      <div class="invest-stat-label">Market Cap</div>
     </div>
     <div class="invest-stat">
-      <div class="invest-stat-number" data-count="0" data-prefix="" data-suffix="">0</div>
-      <div class="invest-stat-label">Total Debt</div>
+      <div class="invest-stat-number" data-count="18" data-prefix="" data-suffix="x">0x</div>
+      <div class="invest-stat-label">P/E Ratio</div>
     </div>
     <div class="invest-stat">
       <div class="invest-stat-number" data-count="3" data-prefix="" data-suffix="">0</div>
       <div class="invest-stat-label">Exchange Listings</div>
     </div>
     <div class="invest-stat">
-      <div class="invest-stat-number" data-count="412" data-prefix="$" data-suffix="M">$0M</div>
-      <div class="invest-stat-label">Market Cap</div>
+      <div class="invest-stat-number" data-count="47" data-prefix="+" data-suffix="%">+0%</div>
+      <div class="invest-stat-label">TTM Stock Price Growth</div>
     </div>
   </div>
 </section>
@@ -1285,7 +1311,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   <p class="cta-sub fade-up">See how Boet Materials Corp. is positioned to become a leading North American critical minerals producer. Review our corporate presentation for full details.</p>
   <div class="cta-buttons fade-up">
     <a href="https://pitch-deck-demo.vercel.app/" class="btn-primary">Corporate Presentation <span class="arrow">&rarr;</span></a>
-    <a href="contact.html" class="btn-outline">Contact IR <span class="arrow">&rarr;</span></a>
+    <a href="contact.html" class="btn-outline btn-outline-fill">Contact IR <span class="arrow">&rarr;</span></a>
   </div>
 </section>
 
