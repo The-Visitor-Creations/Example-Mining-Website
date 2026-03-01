@@ -523,10 +523,10 @@ ul { list-style: none; }
 }
 /* Triggered by JS once video is playing */
 .hero.hero-revealed .hero-title {
-  animation: heroTitleIn 0.8s ease-out 0.3s forwards;
+  animation: heroTitleIn 0.6s ease-out 0.1s forwards;
 }
 .hero.hero-revealed .hero-subtitle {
-  animation: heroTitleIn 0.8s ease-out 0.6s forwards;
+  animation: heroTitleIn 0.6s ease-out 0.25s forwards;
 }
 .hero-scroll {
   position: absolute;
@@ -545,7 +545,7 @@ ul { list-style: none; }
   opacity: 0;
 }
 .hero.hero-revealed .hero-scroll {
-  animation: heroTitleIn 0.6s ease-out 0.9s forwards, bounce 2s infinite 1.8s;
+  animation: heroTitleIn 0.5s ease-out 0.4s forwards, bounce 2s infinite 1.2s;
 }
 .hero-scroll:hover { border-color: var(--white); }
 .hero-scroll svg { width: 16px; height: 16px; stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 2; }
@@ -1520,13 +1520,11 @@ if (!isMobileDevice) {
   function revealHero() {
     if (revealed) return;
     revealed = true;
-    /* Fade in the video */
     video.classList.add('vid-ready');
-    /* After the video fade completes, reveal the text */
-    setTimeout(function() {
-      hero.classList.add('hero-revealed');
-    }, 400);
   }
+
+  /* Show text content immediately — don't wait for video */
+  hero.classList.add('hero-revealed');
 
   /* Ensure autoplay fires once data is available */
   function tryPlay() {
