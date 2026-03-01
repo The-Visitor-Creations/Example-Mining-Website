@@ -906,7 +906,9 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('photo-industrial-2-desktop.jpg');
+  background-image: url('photo-industrial-2-desktop.webp');
+  background-image: -webkit-image-set(url('photo-industrial-2-desktop.webp') type('image/webp'), url('photo-industrial-2-desktop.jpg') type('image/jpeg'));
+  background-image: image-set(url('photo-industrial-2-desktop.webp') type('image/webp'), url('photo-industrial-2-desktop.jpg') type('image/jpeg'));
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -2173,7 +2175,7 @@ sup.ast {
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img"></a>
+        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img" loading="lazy"></a>
         <div class="footer-tickers">
           <span class="ticker-symbol">TSXV: AUM</span> &nbsp;|&nbsp;
           <span class="ticker-symbol">OTCQX: AURMF</span> &nbsp;|&nbsp;
@@ -2625,12 +2627,17 @@ ScrollTrigger.create({
   video.addEventListener('canplay', function() { tryPlay(); setTimeout(reveal, 200); }, { once: true });
   video.addEventListener('loadeddata', function() { tryPlay(); setTimeout(reveal, 200); }, { once: true });
 
-  // Mobile: defer video load until after page renders (don't compete for bandwidth)
-  // Desktop: start loading immediately so it's ready when overlay finishes
-  if (isMobile) {
-    setTimeout(function() { video.src = 'home-hero.mp4'; }, 300);
-  } else {
-    video.src = 'home-hero.mp4';
+  // Skip video on slow connections; serve smaller file on mobile
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g');
+  var weakSignal = conn && ((conn.downlink && conn.downlink < 2) || (conn.rtt && conn.rtt > 300));
+  if (!slow && !weakSignal) {
+    var heroFile = isMobile ? 'home-hero-mobile.mp4' : 'home-hero.mp4';
+    if (isMobile) {
+      setTimeout(function() { video.src = heroFile; }, 300);
+    } else {
+      video.src = heroFile;
+    }
   }
 
   /* iOS Low Power Mode: force-play on first user gesture */

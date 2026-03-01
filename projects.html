@@ -1347,7 +1347,10 @@ ul { list-style: none; }
       <div class="location-map op">
         <picture>
           <source srcset="elevation-map.webp" type="image/webp">
-          <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="elevation-map.webp">
+            <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img" loading="lazy">
+          </picture>
         </picture>
         <button class="map-dot" data-site="0" style="top:28%;left:32%;" aria-label="Highland Ridge">
           <span class="map-dot-pulse"></span>
@@ -1393,7 +1396,10 @@ ul { list-style: none; }
       <div class="activity-stat-label">Million Tonnes — Annual Brine Throughput</div>
     </div>
     <div class="activity-image op">
-      <img src="https://picsum.photos/id/1015/1400/600" alt="Mountain landscape" loading="lazy">
+      <picture>
+        <source type="image/webp" srcset="photo-industrial-1-desktop.webp">
+        <img src="photo-industrial-1-desktop.jpg" alt="Mining landscape" loading="lazy">
+      </picture>
     </div>
   </div>
 </section>
@@ -1407,7 +1413,7 @@ ul { list-style: none; }
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img"></a>
+        <a href="index.html"><img src="boet-full-logo.png" alt="Boet Materials" class="footer-logo-img" loading="lazy"></a>
         <div class="footer-tickers">
           <span class="ticker-symbol">TSXV: AUM</span> &nbsp;|&nbsp;
           <span class="ticker-symbol">OTCQX: AURMF</span> &nbsp;|&nbsp;
@@ -1552,10 +1558,11 @@ if (!isMobileDevice) {
   var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g');
   var weakSignal = conn && ((conn.downlink && conn.downlink < 2) || (conn.rtt && conn.rtt > 300));
   if (!slow && !weakSignal) {
+    var heroFile = isMobile ? 'projects-hero-mobile.mp4' : 'projects-hero.mp4';
     if (isMobile) {
-      setTimeout(function() { video.src = 'projects-hero.mp4'; }, 300);
+      setTimeout(function() { video.src = heroFile; }, 300);
     } else {
-      video.src = 'projects-hero.mp4';
+      video.src = heroFile;
     }
   }
 
@@ -1682,13 +1689,19 @@ if (!isMobileDevice) {
     title: 'Three Flagship Operations',
     desc: 'Boet Materials Corp. operates three world-class mining sites across strategically significant mineral basins. Combined annual production of 7.3 million tonnes with industry-leading recovery rates and fully integrated processing.',
     img: 'photo-industrial-1-desktop.jpg',
+    imgWebp: 'photo-industrial-1-desktop.webp',
     stats: [{ val: '3', label: 'Active Sites' }, { val: '7.3M', label: 'Total Tonnes/Yr' }, { val: '94%', label: 'Recovery Rate' }]
   };
 
+  var supportsWebp = (function() {
+    var c = document.createElement('canvas');
+    return c.toDataURL && c.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+  })();
+
   var sites = [
-    { eyebrow: 'Advanced Exploration', title: 'Highland Ridge', desc: 'Lithium brine extraction project in the northern highlands. Advanced DLE processing with 92% recovery rates across a 12km strike length.', img: 'photo-industrial-2-desktop.jpg', stats: [{ val: '2.4M', label: 'Tonnes/Year' }, { val: '92%', label: 'Recovery' }, { val: '12km', label: 'Strike Length' }] },
-    { eyebrow: 'Exploration Target', title: 'Kingsgate', desc: 'Lithium brine exploration target with prospective brine aquifer system. Industry-leading worker safety record and fully permitted for expansion.', img: 'photo-industrial-3-desktop.jpg', stats: [{ val: '1.8M', label: 'Tonnes/Year' }, { val: 'DLE', label: 'Technology' }, { val: '15yr', label: 'Mine Life' }] },
-    { eyebrow: 'Flagship Project', title: 'Clearwater Basin', desc: 'Flagship brine-hosted project with integrated processing facility. Premier lithium asset with direct lithium extraction technology.', img: 'photo-tech-1-desktop.jpg', stats: [{ val: '3.1M', label: 'Tonnes/Year' }, { val: 'DLE', label: 'Technology' }, { val: '$4.8B', label: 'NPV' }] }
+    { eyebrow: 'Advanced Exploration', title: 'Highland Ridge', desc: 'Lithium brine extraction project in the northern highlands. Advanced DLE processing with 92% recovery rates across a 12km strike length.', img: 'photo-industrial-2-desktop.jpg', imgWebp: 'photo-industrial-2-desktop.webp', stats: [{ val: '2.4M', label: 'Tonnes/Year' }, { val: '92%', label: 'Recovery' }, { val: '12km', label: 'Strike Length' }] },
+    { eyebrow: 'Exploration Target', title: 'Kingsgate', desc: 'Lithium brine exploration target with prospective brine aquifer system. Industry-leading worker safety record and fully permitted for expansion.', img: 'photo-industrial-3-desktop.jpg', imgWebp: 'photo-industrial-3-desktop.webp', stats: [{ val: '1.8M', label: 'Tonnes/Year' }, { val: 'DLE', label: 'Technology' }, { val: '15yr', label: 'Mine Life' }] },
+    { eyebrow: 'Flagship Project', title: 'Clearwater Basin', desc: 'Flagship brine-hosted project with integrated processing facility. Premier lithium asset with direct lithium extraction technology.', img: 'photo-tech-1-desktop.jpg', imgWebp: 'photo-tech-1-desktop.webp', stats: [{ val: '3.1M', label: 'Tonnes/Year' }, { val: 'DLE', label: 'Technology' }, { val: '$4.8B', label: 'NPV' }] }
   ];
 
   var active = -1;
@@ -1699,7 +1712,7 @@ if (!isMobileDevice) {
     locEyebrow.textContent = data.eyebrow;
     locTitle.textContent = data.title;
     locDesc.textContent = data.desc;
-    infoCard.style.backgroundImage = "url('" + data.img + "')";
+    infoCard.style.backgroundImage = "url('" + (supportsWebp && data.imgWebp ? data.imgWebp : data.img) + "')";
     locStats.innerHTML = data.stats.map(function(st) {
       return '<div class="loc-stat"><span class="loc-stat-val">' + st.val + '</span><span class="loc-stat-label">' + st.label + '</span></div>';
     }).join('');
