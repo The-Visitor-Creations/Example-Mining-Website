@@ -2224,18 +2224,18 @@ function safeInitPageAnimations() {
   var CHAR_HEIGHT   = 1.15;
 
   /* Timing (ms) */
-  var B_ASSEMBLE_START  = 100;
-  var B_PIECE_STAGGER   = 80;
-  var B_SETTLE_HOLD     = 180;
-  var LOGO_REVEAL_DUR   = 350;
-  var POST_LOGO_HOLD    = 100;
-  var ODO_STAGGER       = 50;
-  var ODO_DURATION      = 400;
-  var POST_PRICE_HOLD   = 80;
-  var DAY_CHANGE_HOLD   = 300;
-  var TEXT_FADE          = 150;
-  var BLOCK_STAGGER     = 20;
-  var BLOCK_DURATION    = 300;
+  var B_ASSEMBLE_START  = 200;
+  var B_PIECE_STAGGER   = 120;
+  var B_SETTLE_HOLD     = 400;
+  var LOGO_REVEAL_DUR   = 600;
+  var POST_LOGO_HOLD    = 300;
+  var ODO_STAGGER       = 70;
+  var ODO_DURATION      = 600;
+  var POST_PRICE_HOLD   = 150;
+  var DAY_CHANGE_HOLD   = 600;
+  var TEXT_FADE          = 200;
+  var BLOCK_STAGGER     = 30;
+  var BLOCK_DURATION    = 450;
 
   /* B centering math — B occupies x:0–43.62 in 647.28-wide viewBox */
   var B_CENTER_OFFSET = 301.83;
@@ -2390,7 +2390,7 @@ function safeInitPageAnimations() {
 
   setTimeout(function() {
     /* Slide B to its home position */
-    bGroup.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+    bGroup.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
     bGroup.style.transform = 'translate(0, 0)';
 
     /* Reveal OET */
