@@ -2628,7 +2628,7 @@ ScrollTrigger.create({
   // Mobile: defer video load until after page renders (don't compete for bandwidth)
   // Desktop: start loading immediately so it's ready when overlay finishes
   if (isMobile) {
-    setTimeout(function() { video.src = 'home-hero.mp4'; }, 2000);
+    setTimeout(function() { video.src = 'home-hero.mp4'; }, 300);
   } else {
     video.src = 'home-hero.mp4';
   }

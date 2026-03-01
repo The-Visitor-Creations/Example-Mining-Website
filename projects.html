@@ -1550,7 +1550,7 @@ if (!isMobileDevice) {
   var weakSignal = conn && ((conn.downlink && conn.downlink < 2) || (conn.rtt && conn.rtt > 300));
   if (!slow && !weakSignal) {
     if (isMobile) {
-      setTimeout(function() { video.src = 'projects-hero.mp4'; }, 2000);
+      setTimeout(function() { video.src = 'projects-hero.mp4'; }, 300);
     } else {
       video.src = 'projects-hero.mp4';
     }
