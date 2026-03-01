@@ -2033,6 +2033,95 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 });
 
 /* ═══════════════════════════════════════════════════════ */
+/* CREATE HOTSPOT BUTTONS + BLUEPRINT SHAPES               */
+/* ═══════════════════════════════════════════════════════ */
+(function() {
+  var wrapper = document.getElementById('techScene');
+  if (!wrapper) return;
+
+  /* Feature shapes — blueprint building footprints beside each hotspot */
+  var g = 'rgba(205,170,136,';  /* --gold base */
+  var featureShapes = [
+    /* Extraction — terraced pit benches */
+    { target: 'extraction', left: '74%', top: '8%', w: '20%', h: '30%',
+      svg: '<svg viewBox="0 0 100 100" fill="none">'
+        + '<rect x="5" y="5" width="90" height="90" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
+        + '<rect x="15" y="15" width="70" height="70" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
+        + '<rect x="25" y="25" width="50" height="50" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
+        + '<rect x="35" y="35" width="30" height="30" stroke="'+g+'0.4)" stroke-width="1" fill="'+g+'0.06)"/>'
+        + '<line x1="5" y1="5" x2="35" y2="35" stroke="'+g+'0.3)" stroke-width="0.8"/>'
+        + '<line x1="95" y1="5" x2="65" y2="35" stroke="'+g+'0.3)" stroke-width="0.8"/>'
+        + '<line x1="5" y1="95" x2="35" y2="65" stroke="'+g+'0.3)" stroke-width="0.8"/>'
+        + '<line x1="95" y1="95" x2="65" y2="65" stroke="'+g+'0.3)" stroke-width="0.8"/>'
+        + '</svg>' },
+    /* Processing — plant hall with rooms */
+    { target: 'processing', left: '48%', top: '34%', w: '18%', h: '24%',
+      svg: '<svg viewBox="0 0 100 100" fill="none">'
+        + '<rect x="5" y="10" width="90" height="80" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
+        + '<line x1="5" y1="45" x2="95" y2="45" stroke="'+g+'0.5)" stroke-width="1.2"/>'
+        + '<line x1="50" y1="10" x2="50" y2="90" stroke="'+g+'0.5)" stroke-width="1.2"/>'
+        + '<rect x="12" y="18" width="30" height="20" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '<rect x="58" y="18" width="30" height="20" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '<rect x="12" y="53" width="30" height="28" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '<rect x="58" y="53" width="30" height="28" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '</svg>' },
+    /* Tailings — containment cells */
+    { target: 'tailings', left: '36%', top: '70%', w: '20%', h: '24%',
+      svg: '<svg viewBox="0 0 100 100" fill="none">'
+        + '<rect x="5" y="10" width="90" height="80" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
+        + '<rect x="5" y="10" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
+        + '<rect x="50" y="10" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
+        + '<rect x="5" y="50" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
+        + '<rect x="50" y="50" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
+        + '<rect x="15" y="20" width="25" height="20" stroke="'+g+'0.35)" stroke-width="0.8" fill="'+g+'0.05)"/>'
+        + '<rect x="60" y="20" width="25" height="20" stroke="'+g+'0.35)" stroke-width="0.8" fill="'+g+'0.05)"/>'
+        + '</svg>' },
+    /* Power — generator building + transformer yard */
+    { target: 'power', left: '4%', top: '24%', w: '16%', h: '22%',
+      svg: '<svg viewBox="0 0 100 100" fill="none">'
+        + '<rect x="5" y="5" width="55" height="90" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
+        + '<rect x="65" y="25" width="30" height="50" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
+        + '<line x1="60" y1="45" x2="65" y2="45" stroke="'+g+'0.6)" stroke-width="1.5"/>'
+        + '<line x1="60" y1="55" x2="65" y2="55" stroke="'+g+'0.6)" stroke-width="1.5"/>'
+        + '<rect x="12" y="15" width="40" height="30" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '<rect x="12" y="55" width="40" height="30" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '<rect x="70" y="32" width="20" height="14" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '<rect x="70" y="54" width="20" height="14" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
+        + '</svg>' }
+  ];
+
+  featureShapes.forEach(function(f) {
+    var el = document.createElement('div');
+    el.className = 'map-feature';
+    el.dataset.target = f.target;
+    el.style.left = f.left;
+    el.style.top = f.top;
+    el.style.width = f.w;
+    el.style.height = f.h;
+    el.innerHTML = f.svg;
+    wrapper.appendChild(el);
+  });
+
+  /* Add hotspot buttons — positioned on topo map features */
+  var hotspotData = [
+    { target: 'extraction', left: '68%', top: '22%', label: 'Extraction', icon: '<svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l7 14H5l7-14z"/></svg>' },
+    { target: 'processing', left: '40%', top: '45%', label: 'Processing', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4m-9-11h4m14 0h4m-3.3-6.7l-2.8 2.8m-9.8 9.8l-2.8 2.8m0-15.4l2.8 2.8m9.8 9.8l2.8 2.8"/></svg>' },
+    { target: 'tailings', left: '28%', top: '78%', label: 'Tailings', icon: '<svg viewBox="0 0 24 24"><path d="M3 17h18v2H3v-2zm0-5h18v2H3v-2zm0-5h18v2H3V7z"/></svg>' },
+    { target: 'power', left: '18%', top: '18%', label: 'Power', icon: '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>' }
+  ];
+
+  hotspotData.forEach(function(h) {
+    var btn = document.createElement('button');
+    btn.className = 'hotspot';
+    btn.dataset.target = h.target;
+    btn.style.left = h.left;
+    btn.style.top = h.top;
+    btn.innerHTML = h.icon + '<span class="hotspot-label">' + h.label + '</span>';
+    wrapper.appendChild(btn);
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════ */
 /* HOTSPOT INTERACTIONS                                    */
 /* ═══════════════════════════════════════════════════════ */
 (function() {
@@ -2131,95 +2220,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 })();
 
 } /* end initPageAnimations */
-</script>
-
-<!-- Add hotspot buttons to scene wrapper -->
-<script>
-(function() {
-  var wrapper = document.getElementById('techScene');
-  if (!wrapper) return;
-
-  /* Feature shapes — blueprint building footprints beside each hotspot */
-  var g = 'rgba(205,170,136,';  /* --gold base */
-  var featureShapes = [
-    /* Extraction — terraced pit benches */
-    { target: 'extraction', left: '74%', top: '8%', w: '20%', h: '30%',
-      svg: '<svg viewBox="0 0 100 100" fill="none">'
-        + '<rect x="5" y="5" width="90" height="90" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
-        + '<rect x="15" y="15" width="70" height="70" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
-        + '<rect x="25" y="25" width="50" height="50" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
-        + '<rect x="35" y="35" width="30" height="30" stroke="'+g+'0.4)" stroke-width="1" fill="'+g+'0.06)"/>'
-        + '<line x1="5" y1="5" x2="35" y2="35" stroke="'+g+'0.3)" stroke-width="0.8"/>'
-        + '<line x1="95" y1="5" x2="65" y2="35" stroke="'+g+'0.3)" stroke-width="0.8"/>'
-        + '<line x1="5" y1="95" x2="35" y2="65" stroke="'+g+'0.3)" stroke-width="0.8"/>'
-        + '<line x1="95" y1="95" x2="65" y2="65" stroke="'+g+'0.3)" stroke-width="0.8"/>'
-        + '</svg>' },
-    /* Processing — plant hall with rooms */
-    { target: 'processing', left: '48%', top: '34%', w: '18%', h: '24%',
-      svg: '<svg viewBox="0 0 100 100" fill="none">'
-        + '<rect x="5" y="10" width="90" height="80" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
-        + '<line x1="5" y1="45" x2="95" y2="45" stroke="'+g+'0.5)" stroke-width="1.2"/>'
-        + '<line x1="50" y1="10" x2="50" y2="90" stroke="'+g+'0.5)" stroke-width="1.2"/>'
-        + '<rect x="12" y="18" width="30" height="20" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '<rect x="58" y="18" width="30" height="20" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '<rect x="12" y="53" width="30" height="28" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '<rect x="58" y="53" width="30" height="28" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '</svg>' },
-    /* Tailings — containment cells */
-    { target: 'tailings', left: '36%', top: '70%', w: '20%', h: '24%',
-      svg: '<svg viewBox="0 0 100 100" fill="none">'
-        + '<rect x="5" y="10" width="90" height="80" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
-        + '<rect x="5" y="10" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
-        + '<rect x="50" y="10" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
-        + '<rect x="5" y="50" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
-        + '<rect x="50" y="50" width="45" height="40" stroke="'+g+'0.5)" stroke-width="1.2" fill="none"/>'
-        + '<rect x="15" y="20" width="25" height="20" stroke="'+g+'0.35)" stroke-width="0.8" fill="'+g+'0.05)"/>'
-        + '<rect x="60" y="20" width="25" height="20" stroke="'+g+'0.35)" stroke-width="0.8" fill="'+g+'0.05)"/>'
-        + '</svg>' },
-    /* Power — generator building + transformer yard */
-    { target: 'power', left: '4%', top: '24%', w: '16%', h: '22%',
-      svg: '<svg viewBox="0 0 100 100" fill="none">'
-        + '<rect x="5" y="5" width="55" height="90" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
-        + '<rect x="65" y="25" width="30" height="50" stroke="'+g+'0.7)" stroke-width="1.8" fill="'+g+'0.08)"/>'
-        + '<line x1="60" y1="45" x2="65" y2="45" stroke="'+g+'0.6)" stroke-width="1.5"/>'
-        + '<line x1="60" y1="55" x2="65" y2="55" stroke="'+g+'0.6)" stroke-width="1.5"/>'
-        + '<rect x="12" y="15" width="40" height="30" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '<rect x="12" y="55" width="40" height="30" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '<rect x="70" y="32" width="20" height="14" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '<rect x="70" y="54" width="20" height="14" stroke="'+g+'0.4)" stroke-width="1" fill="none"/>'
-        + '</svg>' }
-  ];
-
-  featureShapes.forEach(function(f) {
-    var el = document.createElement('div');
-    el.className = 'map-feature';
-    el.dataset.target = f.target;
-    el.style.left = f.left;
-    el.style.top = f.top;
-    el.style.width = f.w;
-    el.style.height = f.h;
-    el.innerHTML = f.svg;
-    wrapper.appendChild(el);
-  });
-
-  /* Add hotspot buttons — positioned on topo map features */
-  var hotspotData = [
-    { target: 'extraction', left: '68%', top: '22%', label: 'Extraction', icon: '<svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4l7 14H5l7-14z"/></svg>' },
-    { target: 'processing', left: '40%', top: '45%', label: 'Processing', icon: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4m-9-11h4m14 0h4m-3.3-6.7l-2.8 2.8m-9.8 9.8l-2.8 2.8m0-15.4l2.8 2.8m9.8 9.8l2.8 2.8"/></svg>' },
-    { target: 'tailings', left: '28%', top: '78%', label: 'Tailings', icon: '<svg viewBox="0 0 24 24"><path d="M3 17h18v2H3v-2zm0-5h18v2H3v-2zm0-5h18v2H3V7z"/></svg>' },
-    { target: 'power', left: '18%', top: '18%', label: 'Power', icon: '<svg viewBox="0 0 24 24"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>' }
-  ];
-
-  hotspotData.forEach(function(h) {
-    var btn = document.createElement('button');
-    btn.className = 'hotspot';
-    btn.dataset.target = h.target;
-    btn.style.left = h.left;
-    btn.style.top = h.top;
-    btn.innerHTML = h.icon + '<span class="hotspot-label">' + h.label + '</span>';
-    wrapper.appendChild(btn);
-  });
-})();
 </script>
 </body>
 </html>
