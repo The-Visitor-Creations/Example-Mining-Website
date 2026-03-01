@@ -850,27 +850,26 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-  align-items: stretch;
-  margin-bottom: 60px;
+  align-items: start;
+  margin-bottom: 40px;
 }
 
 .tech-info-col {
-  position: sticky;
-  top: 140px;
+  position: relative;
+  display: grid;
+  min-height: 400px;
 }
 
 .info-panel {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  grid-row: 1;
+  grid-column: 1;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   background: rgba(255,255,255,0.7);
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 12px;
-  padding: 32px;
+  padding: 36px 32px;
   backdrop-filter: blur(8px);
   opacity: 0;
   transform: translateY(16px);
@@ -897,8 +896,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   font-size: 15px;
   color: #5a5046;
   line-height: 1.75;
-  margin-bottom: 24px;
-  flex: 1;
+  margin-bottom: 28px;
 }
 .info-stats {
   display: flex;
@@ -1057,8 +1055,9 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 
 /* Bottom tabs */
 .tech-tabs {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
   padding: 0 60px 80px;
   max-width: 1440px;
   margin: 0 auto;
@@ -1066,7 +1065,6 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   z-index: 1;
 }
 .tech-tab {
-  flex: 1;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -1234,14 +1232,13 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 /* ================================================================ */
 @media (max-width: 1100px) {
   .tech-layout { gap: 24px; }
-  .tech-tabs { flex-wrap: wrap; }
-  .tech-tab { flex: 1 1 calc(50% - 6px); }
+  .tech-tabs { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .interactive-inner { padding: 0 24px; }
-  .tech-tabs { padding: 0 24px 60px; flex-direction: column; }
-  .tech-tab { flex: 1 1 100%; }
+  .tech-tabs { padding: 0 24px 60px; grid-template-columns: 1fr 1fr; z-index: 0; }
+  .tech-tab { min-width: 0; }
   .interactive-header { padding: 0 24px; }
   .interactive-section { padding: 80px 0 0; }
 
@@ -1252,9 +1249,11 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
   }
   .tech-scene-wrapper { order: 1; }
   .tech-info-col {
+    display: block;
     position: fixed;
     inset: 0;
     z-index: 9999;
+    min-height: 0;
     background: rgba(0,0,0,0.45);
     opacity: 0;
     pointer-events: none;
@@ -1265,12 +1264,12 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
     pointer-events: auto;
   }
   .tech-info-col .info-panel {
+    position: absolute;
     top: auto;
     bottom: 0;
     left: 0;
     right: 0;
     width: auto;
-    height: auto;
     max-height: 55vh;
     background: #fff;
     border-radius: 20px 20px 0 0;
@@ -1335,13 +1334,12 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
     <a href="projects.html">Projects</a>
     <a href="technology.html" class="nav-active">Technology</a>
     <div class="nav-dropdown">
-      <a href="index.html#investors" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
+      <a href="investors.html" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
       <div class="nav-dropdown-menu">
         <div class="nav-dropdown-menu-inner">
-          <a href="index.html#investors">Investor Overview</a>
+          <a href="investors.html">Investor Overview</a>
           <a href="https://pitch-deck-demo.vercel.app/">Corporate Presentation</a>
-          <a href="#">News & Press Releases</a>
-          <a href="#">Stock Information</a>
+          <a href="investors.html#news">News Releases</a>
         </div>
       </div>
     </div>
@@ -1373,10 +1371,9 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
       <li>
         <div class="nav-sub-trigger" id="investorsTrigger">Investors <span class="sub-chevron">&#9662;</span></div>
         <div class="nav-sub-links" id="investorsSubLinks">
-          <a href="index.html#investors">Investor Overview</a>
+          <a href="investors.html">Investor Overview</a>
           <a href="https://pitch-deck-demo.vercel.app/">Corporate Presentation</a>
-          <a href="#">News &amp; Press Releases</a>
-          <a href="#">Stock Information</a>
+          <a href="investors.html#news">News Releases</a>
         </div>
       </li>
       <li><a href="contact.html">Contact</a></li>
@@ -1616,7 +1613,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
         <a href="technology.html">Technology</a>
-        <a href="index.html#investors">Investors</a>
+        <a href="investors.html">Investors</a>
         <a href="contact.html">Contact</a>
       </nav>
     </div>

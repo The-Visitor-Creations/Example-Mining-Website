@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Boet Materials Corp.</title>
+<title>Investors — Boet Materials Corp.</title>
 <link rel="icon" type="image/png" href="boet-icon-logo.png">
 <link rel="apple-touch-icon" href="boet-icon-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ================================================================ */
-/* CSS CUSTOM PROPERTIES — matches home page                        */
+/* CSS CUSTOM PROPERTIES                                              */
 /* ================================================================ */
 :root {
   --dark: #0c0a09;
@@ -40,7 +40,7 @@
 }
 
 /* ================================================================ */
-/* RESET & BASE                                                      */
+/* RESET & BASE                                                       */
 /* ================================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
@@ -60,7 +60,7 @@ a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 
 /* ================================================================ */
-/* TYPOGRAPHY                                                        */
+/* TYPOGRAPHY                                                         */
 /* ================================================================ */
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
@@ -94,7 +94,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* BUTTONS                                                           */
+/* BUTTONS                                                            */
 /* ================================================================ */
 .btn-primary {
   display: inline-flex;
@@ -144,7 +144,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* HEADER                                                            */
+/* HEADER                                                             */
 /* ================================================================ */
 .header {
   position: fixed;
@@ -296,7 +296,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* TICKER STRIP                                                      */
+/* TICKER STRIP                                                       */
 /* ================================================================ */
 .page-content { position: relative; z-index: 1; }
 .ticker-strip {
@@ -327,7 +327,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 .ticker-strip.ticker-cream .ticker-label { color: #6b5f52; }
 .ticker-strip.ticker-cream .ticker-symbol { color: var(--accent); }
-.ticker-strip.ticker-sep { color: rgba(0,0,0,0.15); }
+.ticker-strip.ticker-cream .ticker-sep { color: rgba(0,0,0,0.15); }
 .ticker-strip.ticker-cream .ticker-price { color: #5a5046; }
 
 .ticker-strip.ticker-dark {
@@ -352,7 +352,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* MOBILE NAV OVERLAY                                                */
+/* MOBILE NAV OVERLAY                                                 */
 /* ================================================================ */
 .nav-overlay {
   position: fixed;
@@ -473,14 +473,14 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .nav-sub-links a:hover { color: var(--accent) !important; }
 
 /* ================================================================ */
-/* LOAD-IN: start elements off-screen                                */
+/* LOAD-IN: start elements off-screen                                 */
 /* ================================================================ */
 .header { transform: translateY(-100%); }
 .ticker-strip { transform: translateY(-100%); opacity: 0; }
 .ticker-strip > span { opacity: 0; transform: translateY(6px); }
 
 /* ================================================================ */
-/* LOAD-IN OVERLAY                                                   */
+/* LOAD-IN OVERLAY                                                    */
 /* ================================================================ */
 .load-overlay-bg {
   position: fixed;
@@ -547,10 +547,11 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   .header { transform: none; }
   .ticker-strip { transform: none; opacity: 1; }
   .ticker-strip > span { opacity: 1; transform: none; }
-  .about-hero { clip-path: none; }
-  .about-hero-content .eyebrow,
-  .about-hero-content h1,
-  .about-hero-content .hero-sub { opacity: 1; transform: none; }
+  .investor-hero { clip-path: none; }
+  .investor-hero-content .eyebrow,
+  .investor-hero-content h1,
+  .investor-hero-content .hero-sub,
+  .investor-hero-content .hero-buttons { opacity: 1; transform: none; }
   .load-overlay-text, .load-company-name, .load-accent-line,
   .load-page-label {
     transition-duration: 0.01ms !important;
@@ -558,7 +559,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* MAIN CONTENT OFFSET                                               */
+/* MAIN CONTENT OFFSET                                                */
 /* ================================================================ */
 .main-content {
   padding-top: calc(var(--header-h) + 36px);
@@ -567,9 +568,9 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* HERO SECTION — About page                                         */
+/* HERO — Investor page (cream bg, about-page pattern)                */
 /* ================================================================ */
-.about-hero {
+.investor-hero {
   position: relative;
   padding: 120px 60px 100px;
   min-height: 80vh;
@@ -579,10 +580,10 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   background: var(--cream);
   clip-path: inset(100% 0 0 0);
 }
-.about-hero.hero-entered {
+.investor-hero.hero-entered {
   clip-path: inset(0 0 0 0);
 }
-.about-hero-bg {
+.investor-hero-bg {
   position: absolute;
   inset: 0;
   background: url('mining-pattern.jpg') center / 1200px auto repeat;
@@ -590,44 +591,100 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   opacity: 0.06;
   z-index: 0;
 }
-.about-hero-bg::after {
-  display: none;
-}
-.about-hero-content {
+.investor-hero-content {
   position: relative;
   z-index: 1;
   max-width: 900px;
 }
-.about-hero-content .eyebrow {
+.investor-hero-content .eyebrow {
   opacity: 0;
   transform: translateY(20px);
 }
-.about-hero-content h1 {
+.investor-hero-content h1 {
   font-size: clamp(44px, 7vw, 88px);
   margin-bottom: 28px;
   opacity: 0;
   transform: translateY(30px);
   color: var(--dark);
 }
-.about-hero-content .hero-sub {
+.investor-hero-content .hero-sub {
   font-size: 18px;
   color: #5a5046;
   line-height: 1.8;
   max-width: 620px;
   opacity: 0;
   transform: translateY(20px);
+  margin-bottom: 36px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 /* ================================================================ */
-/* WHO WE ARE — Two-column split                                     */
+/* INVESTMENT HIGHLIGHTS STRIP (dark bg)                              */
 /* ================================================================ */
-.who-split {
+.invest-highlights {
+  padding: 80px 60px;
+  background: var(--dark-mid);
+  position: relative;
+  overflow: hidden;
+}
+.invest-highlights::before {
+  content: '';
+  position: absolute;
+  top: -30%; left: -10%;
+  width: 60%; height: 160%;
+  background: radial-gradient(ellipse, rgba(158,27,50,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.invest-highlights-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+  z-index: 1;
+}
+.invest-stat {
+  text-align: center;
+  padding: 32px 24px;
+  border-right: 1px solid var(--border-card);
+  opacity: 0;
+  transform: translateY(30px);
+}
+.invest-stat:last-child { border-right: none; }
+.invest-stat-number {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(36px, 4.5vw, 56px);
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.invest-stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+
+/* ================================================================ */
+/* NEWS & PRESS RELEASES (cream bg)                                   */
+/* ================================================================ */
+.news-section {
   padding: 100px 60px;
   background: var(--cream);
   position: relative;
   overflow: hidden;
 }
-.who-split::before {
+.news-section::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -636,114 +693,95 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   opacity: 0.06;
   pointer-events: none;
 }
-.who-split-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 80px;
-  max-width: 1200px;
+.news-inner {
+  max-width: 900px;
   margin: 0 auto;
-  align-items: start;
   position: relative;
   z-index: 1;
 }
-.who-split-left h2 {
-  font-size: clamp(32px, 4.5vw, 56px);
+.news-header {
+  margin-bottom: 56px;
+}
+.news-header h2 {
   text-transform: uppercase;
-  line-height: 1.05;
   color: var(--dark);
 }
-.who-split-left h2 .gold-word {
-  color: var(--gold);
-}
-.who-split-right p {
-  color: #5a5046;
-  font-size: 17px;
-  line-height: 1.8;
-  margin-bottom: 24px;
-}
-.who-split-right p:last-child { margin-bottom: 0; }
-
-/* Gold divider */
-.gold-divider {
-  width: 60px;
-  height: 3px;
-  background: var(--accent);
-  margin: 28px 0;
-}
-
-/* ================================================================ */
-/* CORE VALUES — Grid                                                */
-/* ================================================================ */
-.values-section {
-  padding: 100px 60px;
-  background: var(--dark-mid);
-}
-.values-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.values-header {
-  text-align: center;
-  margin-bottom: 64px;
-}
-.values-header h2 {
-  text-transform: uppercase;
-}
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-}
-.value-card {
-  background: var(--dark-card);
-  border: 1px solid var(--border-card);
-  border-radius: 8px;
-  padding: 40px 28px;
-  text-align: center;
-  transition: transform 0.4s cubic-bezier(0.25,1,0.5,1), border-color 0.4s ease;
-  opacity: 0;
-  transform: translateY(50px);
-}
-.value-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255,255,255,0.15);
-}
-.value-icon {
-  font-size: 42px;
-  margin-bottom: 20px;
+.news-list {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0;
 }
-.value-icon svg {
-  width: 48px; height: 48px;
-  stroke: var(--gold);
-  stroke-width: 1.5;
-  fill: none;
+.news-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 32px;
+  padding: 36px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  align-items: start;
 }
-.value-card h3 {
-  font-size: 18px;
+.news-card:first-child { padding-top: 0; }
+.news-card:last-child { border-bottom: none; }
+
+.news-date-col {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  color: var(--white);
+  letter-spacing: 1.5px;
+  color: var(--text-label);
+  padding-top: 4px;
 }
-.value-card p {
+.news-content {}
+.news-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.news-title {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--dark);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.news-excerpt {
   font-size: 15px;
-  color: var(--text-muted);
+  color: #5a5046;
   line-height: 1.7;
+  margin-bottom: 14px;
 }
+.news-link {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s ease;
+}
+.news-link:hover { gap: 10px; }
 
 /* ================================================================ */
-/* OUR APPROACH — Dark accent section                                */
+/* INVESTOR RESOURCES (dark bg)                                       */
 /* ================================================================ */
-.approach-section {
+.resources-section {
   padding: 100px 60px;
   background: var(--dark-deep);
   position: relative;
   overflow: hidden;
 }
-.approach-section::before {
+.resources-section::before {
   content: '';
   position: absolute;
   top: -20%; right: -10%;
@@ -751,325 +789,80 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   background: radial-gradient(ellipse, rgba(158,27,50,0.04) 0%, transparent 70%);
   pointer-events: none;
 }
-.approach-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  position: relative;
-  z-index: 1;
-}
-.approach-left h2 {
-  font-size: clamp(32px, 4.5vw, 56px);
-  text-transform: uppercase;
-  line-height: 1.05;
-  margin-bottom: 24px;
-}
-.approach-left .approach-sub {
-  font-size: 17px;
-  color: var(--text-muted);
-  line-height: 1.8;
-}
-.approach-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-}
-.approach-step {
-  display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 20px;
-  align-items: start;
-  opacity: 0;
-  transform: translateY(30px);
-}
-.step-number {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: 32px;
-  color: var(--gold);
-  line-height: 1;
-}
-.step-content h4 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--white);
-  margin-bottom: 6px;
-}
-.step-content p {
-  font-size: 15px;
-  color: var(--text-muted);
-  line-height: 1.7;
-}
-
-/* ================================================================ */
-/* GLOBAL STATS — Count-up strip                                     */
-/* ================================================================ */
-.stats-section {
-  padding: 80px 60px;
-  background: var(--cream);
-  position: relative;
-  overflow: hidden;
-}
-.stats-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('mining-pattern.jpg') center / 1200px auto repeat;
-  background-attachment: fixed;
-  opacity: 0.06;
-  pointer-events: none;
-}
-.stats-inner {
+.resources-inner {
   max-width: 1000px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
   position: relative;
   z-index: 1;
 }
-.stat-item {
+.resources-header {
   text-align: center;
-  padding: 32px 24px;
-  border-right: 1px solid rgba(0,0,0,0.08);
-  opacity: 0;
-  transform: translateY(30px);
+  margin-bottom: 56px;
 }
-.stat-item:last-child { border-right: none; }
-.stat-number {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: clamp(42px, 5vw, 64px);
-  color: var(--accent);
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.stat-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #6b5f52;
-}
-
-/* ================================================================ */
-/* LEADERSHIP TEAM                                                   */
-/* ================================================================ */
-.team-section {
-  padding: 100px 60px;
-}
-.team-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.team-header {
-  margin-bottom: 64px;
-}
-.team-header h2 {
+.resources-header h2 {
   text-transform: uppercase;
 }
-.team-grid {
+.resources-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
 }
-.team-card {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
+.resource-card {
   background: var(--dark-card);
   border: 1px solid var(--border-card);
-  aspect-ratio: 3 / 4;
-  cursor: pointer;
+  border-radius: 8px;
+  padding: 40px 32px;
+  transition: transform 0.4s cubic-bezier(0.25,1,0.5,1), border-color 0.4s ease;
   opacity: 0;
   transform: translateY(50px);
-}
-.team-card-img {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s cubic-bezier(0.25,1,0.5,1);
-}
-.team-card:hover .team-card-img {
-  transform: scale(1.04);
-}
-.team-card-linkedin {
-  position: absolute;
-  top: 16px; left: 16px;
-  width: 36px; height: 36px;
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  cursor: pointer;
-  opacity: 0.75;
-}
-.team-card-linkedin:hover {
-  transform: scale(1.12);
-  opacity: 1;
-}
-.team-card-linkedin svg {
-  width: 20px; height: 20px;
-  fill: var(--white);
-}
-.team-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(12,10,9,0.9) 0%, rgba(12,10,9,0.3) 40%, transparent 70%);
-  z-index: 1;
-}
-.team-card-content {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 28px;
-  z-index: 2;
-}
-.team-card-name {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: 22px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.team-card-credentials {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.team-card-role {
-  font-size: 13px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Read Bio hover badge */
-.team-card-bio {
-  position: absolute;
-  top: 16px; right: 16px;
-  z-index: 4;
-  background: var(--accent);
-  color: var(--white);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  padding: 10px 18px;
-  border-radius: 4px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-.team-card-bio .bio-arrow {
-  transition: transform 0.3s ease;
-}
-.team-card:hover .team-card-bio {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.team-card:hover .team-card-bio .bio-arrow {
-  transform: translateX(3px);
-}
-
-/* Bio overlay */
-.team-card-bio-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  background: rgba(12,10,9,0.92);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 28px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
 }
-.team-card-bio-overlay.bio-active {
-  opacity: 1;
-  pointer-events: auto;
+.resource-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.15);
 }
-.bio-close {
-  position: absolute;
-  top: 16px; right: 16px;
-  width: 32px; height: 32px;
+.resource-icon {
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: none;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 4px;
-  cursor: pointer;
-  color: var(--white);
+}
+.resource-icon svg {
+  width: 40px; height: 40px;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  fill: none;
+}
+.resource-card h3 {
   font-size: 18px;
-  line-height: 1;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--white);
+  margin-bottom: 10px;
 }
-.bio-close:hover {
-  border-color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.08);
-}
-.bio-text {
+.resource-card p {
   font-size: 15px;
-  color: rgba(255,255,255,0.75);
+  color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 20px;
+  flex: 1;
 }
-.bio-overlay-name {
+.resource-link {
   font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--white);
-  margin-bottom: 2px;
-}
-.bio-overlay-credentials {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.bio-overlay-role {
+  font-weight: 700;
   font-size: 12px;
-  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s ease, color 0.3s ease;
 }
-/* Hide the normal hover badge when bio is open */
-.team-card.bio-open .team-card-bio {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
+.resource-link:hover { gap: 10px; color: var(--gold-hover); }
 
 /* ================================================================ */
-/* CTA SECTION                                                       */
+/* CTA SECTION                                                        */
 /* ================================================================ */
 .cta-section {
   padding: 100px 60px;
@@ -1137,7 +930,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* FOOTER                                                            */
+/* FOOTER                                                             */
 /* ================================================================ */
 .footer {
   background: var(--dark-deep);
@@ -1218,7 +1011,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .footer-credit a:hover { color: var(--gold-hover); }
 
 /* ================================================================ */
-/* FADE-UP HELPER                                                    */
+/* FADE-UP HELPER                                                     */
 /* ================================================================ */
 .fade-up {
   opacity: 0;
@@ -1226,32 +1019,35 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* RESPONSIVE                                                        */
+/* RESPONSIVE                                                         */
 /* ================================================================ */
 @media (max-width: 1024px) {
-  .who-split-grid { grid-template-columns: 1fr; gap: 48px; }
-  .approach-inner { grid-template-columns: 1fr; gap: 48px; }
-  .values-grid { grid-template-columns: repeat(2, 1fr); }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .resources-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .about-hero { padding: 80px 24px 60px; min-height: 60vh; }
-  .who-split { padding: 60px 24px; }
-  .values-section { padding: 60px 24px; }
-  .approach-section { padding: 60px 24px; }
-  .stats-section { padding: 48px 24px; }
-  .stats-inner { grid-template-columns: 1fr; gap: 0; }
-  .stat-item { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); padding: 24px 16px; }
-  .stat-item:last-child { border-bottom: none; }
-  .team-section { padding: 60px 24px; }
-  .team-grid { grid-template-columns: 1fr; }
-  .values-grid { grid-template-columns: 1fr; }
+  .investor-hero { padding: 80px 24px 60px; min-height: 60vh; }
+  .invest-highlights { padding: 48px 24px; }
+  .invest-highlights-inner { grid-template-columns: 1fr 1fr; gap: 0; }
+  .invest-stat { border-right: none; padding: 24px 16px; }
+  .invest-stat:nth-child(1),
+  .invest-stat:nth-child(2) { border-bottom: 1px solid var(--border-card); }
+  .invest-stat:nth-child(odd) { border-right: 1px solid var(--border-card); }
+  .news-section { padding: 60px 24px; }
+  .news-card { grid-template-columns: 1fr; gap: 8px; }
+  .resources-section { padding: 60px 24px; }
+  .resources-grid { grid-template-columns: 1fr; }
   .cta-section { padding: 60px 24px; }
   .footer { padding: 40px 24px 32px; }
   .footer-top { flex-direction: column; }
   .footer-bottom { flex-direction: column; }
   .footer-brand .footer-logo-img { max-width: 200px; height: auto; }
+}
+
+@media (max-width: 480px) {
+  .invest-highlights-inner { grid-template-columns: 1fr; }
+  .invest-stat { border-right: none !important; border-bottom: 1px solid var(--border-card); }
+  .invest-stat:last-child { border-bottom: none; }
 }
 </style>
 </head>
@@ -1263,7 +1059,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   <div style="text-align:center; padding: 24px;">
     <div class="load-company-name" id="loadCompanyName">Boet Materials</div>
     <div class="load-accent-line" id="loadAccentLine"></div>
-    <div class="load-page-label" id="loadPageLabel">About Us</div>
+    <div class="load-page-label" id="loadPageLabel">Investor Relations</div>
   </div>
 </div>
 
@@ -1276,11 +1072,11 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   </a>
 
   <nav class="desktop-nav" id="desktop-nav">
-    <a href="about.html" class="nav-active">About</a>
+    <a href="about.html">About</a>
     <a href="projects.html">Projects</a>
     <a href="technology.html">Technology</a>
     <div class="nav-dropdown">
-      <a href="investors.html" class="nav-dropdown-trigger">Investors <span class="chevron">&#9662;</span></a>
+      <a href="investors.html" class="nav-dropdown-trigger nav-active">Investors <span class="chevron">&#9662;</span></a>
       <div class="nav-dropdown-menu">
         <div class="nav-dropdown-menu-inner">
           <a href="investors.html">Investor Overview</a>
@@ -1292,23 +1088,27 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
     <a href="contact.html">Contact</a>
   </nav>
 
-  <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+  <div class="hamburger" id="hamburger">
     <span></span>
     <span></span>
   </div>
 </header>
 
-<!-- Ticker Strip -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- TICKER STRIP                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
 <div class="ticker-strip" id="ticker-strip">
-  <span><span class="ticker-label">TSXV:</span> <span class="ticker-symbol">AUM</span> <span class="ticker-price">$2.34</span></span>
+  <span><span class="ticker-label">TSX-V</span> <span class="ticker-symbol">AUM</span> <span class="ticker-price">$5.10</span></span>
   <span class="ticker-sep">|</span>
-  <span><span class="ticker-label">OTCQX:</span> <span class="ticker-symbol">AURMF</span> <span class="ticker-price">$1.68</span></span>
+  <span><span class="ticker-label">OTCQX</span> <span class="ticker-symbol">AURMF</span> <span class="ticker-price">$3.58</span></span>
   <span class="ticker-sep">|</span>
-  <span><span class="ticker-label">FSE:</span> <span class="ticker-symbol">9AUM</span> <span class="ticker-price">€1.55</span></span>
+  <span><span class="ticker-label">FSE</span> <span class="ticker-symbol">9AUM</span> <span class="ticker-price">&euro;3.40</span></span>
 </div>
 
-<!-- Mobile Nav Overlay -->
-<nav class="nav-overlay" id="nav-overlay">
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MOBILE NAV OVERLAY                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="nav-overlay" id="nav-overlay">
   <div class="nav-overlay-content">
     <ul class="nav-links" id="nav-links">
       <li><a href="about.html">About</a></li>
@@ -1316,207 +1116,176 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
       <li><a href="technology.html">Technology</a></li>
       <li>
         <div class="nav-sub-trigger" id="investorsTrigger">Investors <span class="sub-chevron">&#9662;</span></div>
-        <div class="nav-sub-links" id="investorsSubLinks">
-          <a href="investors.html">Investor Overview</a>
-          <a href="https://pitch-deck-demo.vercel.app/">Corporate Presentation</a>
-          <a href="investors.html#news">News Releases</a>
-        </div>
+        <ul class="nav-sub-links" id="investorsSubLinks">
+          <li><a href="investors.html">Investor Overview</a></li>
+          <li><a href="https://pitch-deck-demo.vercel.app/">Corporate Presentation</a></li>
+          <li><a href="investors.html#news">News Releases</a></li>
+        </ul>
       </li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
-</nav>
+</div>
 
 <div class="page-content">
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- MAIN CONTENT                                            -->
-<!-- ═══════════════════════════════════════════════════════ -->
 <div class="main-content">
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 1. HERO                                                 -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="about-hero" id="about-hero">
-  <div class="about-hero-bg"></div>
-  <div class="about-hero-content">
-    <div class="eyebrow">About Boet Materials</div>
-    <h1 id="hero-h1">Our Story in Mining</h1>
-    <p class="hero-sub">Boet Materials Corp. is a multidisciplinary mine-building firm committed to delivering world-class mining projects with precision, integrity, and respect for people and the planet.</p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- GLOBAL STATS — Count-up strip                           -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section class="stats-section">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <div class="stat-number" data-count="102" data-suffix="+">0+</div>
-      <div class="stat-label">Projects Delivered</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-count="20" data-suffix="+">0+</div>
-      <div class="stat-label">Countries of Operation</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-count="500" data-suffix="+">0+</div>
-      <div class="stat-label">Experts Worldwide</div>
+<section class="investor-hero" id="investor-hero">
+  <div class="investor-hero-bg"></div>
+  <div class="investor-hero-content">
+    <div class="eyebrow">Investor Relations</div>
+    <h1 id="hero-h1">Building a Generational Critical Minerals Asset</h1>
+    <p class="hero-sub">Boet Materials Corp. is a vertically integrated critical minerals platform with C$51M in available capital, zero debt, and listings on three international exchanges.</p>
+    <div class="hero-buttons">
+      <a href="https://pitch-deck-demo.vercel.app/" class="btn-primary">Corporate Presentation <span class="arrow">&rarr;</span></a>
+      <a href="contact.html" class="btn-outline">Contact IR <span class="arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════ -->
-<!-- 2. WHO WE ARE — Two-column split                        -->
+<!-- 2. INVESTMENT HIGHLIGHTS STRIP                          -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="who-split">
-  <div class="who-split-grid">
-    <div class="who-split-left fade-up">
-      <h2>Built on <span class="gold-word">Expertise.</span> Driven by Purpose.</h2>
-      <div class="gold-divider"></div>
+<section class="invest-highlights">
+  <div class="invest-highlights-inner">
+    <div class="invest-stat">
+      <div class="invest-stat-number" data-count="51" data-prefix="C$" data-suffix="M">C$0M</div>
+      <div class="invest-stat-label">Available Capital</div>
     </div>
-    <div class="who-split-right fade-up">
-      <p>Founded with a clear mission to advance the global energy transition, Boet Materials Corp. has grown from a regional exploration company into a vertically integrated critical minerals platform. Our team combines decades of geological, engineering, and environmental expertise.</p>
-      <p>With operations spanning from the resource-rich Clearwater Basin to emerging prospects in stable mining jurisdictions worldwide, we bring a global perspective with local precision. Every project begins with rigorous scientific assessment and community engagement.</p>
-      <p>We believe that responsible resource development is not just possible — it's essential. Our proprietary extraction technologies reduce environmental impact while maximizing recovery, setting a new standard for sustainable mining in the 21st century.</p>
+    <div class="invest-stat">
+      <div class="invest-stat-number" data-count="0" data-prefix="" data-suffix="">0</div>
+      <div class="invest-stat-label">Total Debt</div>
     </div>
-  </div>
-</section>
-
-
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 6. LEADERSHIP TEAM                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<section class="team-section" id="team">
-  <div class="team-inner">
-    <div class="team-header fade-up">
-      <div class="eyebrow">Leadership</div>
-      <h2>The Team Behind Boet</h2>
+    <div class="invest-stat">
+      <div class="invest-stat-number" data-count="3" data-prefix="" data-suffix="">0</div>
+      <div class="invest-stat-label">Exchange Listings</div>
     </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <img src="headshot-ceo.png" alt="James Thornton" class="team-card-img" loading="lazy">
-        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <div class="team-card-overlay"></div>
-        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
-        <div class="team-card-content">
-          <div class="team-card-credentials">P.Eng., MBA</div>
-          <div class="team-card-name">James Thornton</div>
-          <div class="team-card-role">Chief Executive Officer</div>
-        </div>
-        <div class="team-card-bio-overlay">
-          <button class="bio-close">&times;</button>
-          <div class="bio-text">With over 25 years in the mining and resources sector, James has led the development of multiple large-scale mineral projects across North America. He holds a P.Eng. designation and an MBA from the University of Toronto, bringing both technical depth and strategic vision to Boet Materials Corp.</div>
-          <div class="bio-overlay-credentials">P.Eng., MBA</div>
-          <div class="bio-overlay-name">James Thornton</div>
-          <div class="bio-overlay-role">Chief Executive Officer</div>
-        </div>
-      </div>
-      <div class="team-card">
-        <img src="headshot-2.png" alt="Robert Fraser" class="team-card-img" loading="lazy">
-        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <div class="team-card-overlay"></div>
-        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
-        <div class="team-card-content">
-          <div class="team-card-credentials">P.Geo., M.Sc.</div>
-          <div class="team-card-name">Robert Fraser</div>
-          <div class="team-card-role">VP Exploration</div>
-        </div>
-        <div class="team-card-bio-overlay">
-          <button class="bio-close">&times;</button>
-          <div class="bio-text">Robert is a professional geoscientist with 18 years of exploration experience across sedimentary basins in Western Canada. He specialises in lithium brine geochemistry and has been instrumental in defining the Clearwater Basin resource. He holds an M.Sc. in Geology from the University of Alberta.</div>
-          <div class="bio-overlay-credentials">P.Geo., M.Sc.</div>
-          <div class="bio-overlay-name">Robert Fraser</div>
-          <div class="bio-overlay-role">VP Exploration</div>
-        </div>
-      </div>
-      <div class="team-card">
-        <img src="headshot-3.png" alt="Jacklyn Davis" class="team-card-img" loading="lazy">
-        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <div class="team-card-overlay"></div>
-        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
-        <div class="team-card-content">
-          <div class="team-card-credentials">CPA, CFA</div>
-          <div class="team-card-name">Jacklyn Davis</div>
-          <div class="team-card-role">Chief Financial Officer</div>
-        </div>
-        <div class="team-card-bio-overlay">
-          <button class="bio-close">&times;</button>
-          <div class="bio-text">Jacklyn brings 20 years of capital markets and corporate finance expertise to Boet. Previously a managing director at a leading Canadian investment bank, she has structured over C$2 billion in mining financings. Her CPA and CFA designations underpin her rigorous approach to financial stewardship.</div>
-          <div class="bio-overlay-credentials">CPA, CFA</div>
-          <div class="bio-overlay-name">Jacklyn Davis</div>
-          <div class="bio-overlay-role">Chief Financial Officer</div>
-        </div>
-      </div>
-      <div class="team-card">
-        <img src="headshot-4.png" alt="John Peters" class="team-card-img" loading="lazy">
-        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <div class="team-card-overlay"></div>
-        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
-        <div class="team-card-content">
-          <div class="team-card-credentials">Ph.D., P.Eng.</div>
-          <div class="team-card-name">John Peters</div>
-          <div class="team-card-role">Chief Technology Officer</div>
-        </div>
-        <div class="team-card-bio-overlay">
-          <button class="bio-close">&times;</button>
-          <div class="bio-text">John holds a Ph.D. in Chemical Engineering and is the architect of Boet's proprietary sorbent-based direct lithium extraction process. With 15 years in process engineering and extractive metallurgy, he has driven innovations that reduce water use by 90% compared to conventional methods.</div>
-          <div class="bio-overlay-credentials">Ph.D., P.Eng.</div>
-          <div class="bio-overlay-name">John Peters</div>
-          <div class="bio-overlay-role">Chief Technology Officer</div>
-        </div>
-      </div>
-      <div class="team-card">
-        <img src="headshot-5.png" alt="Nicole Bersman" class="team-card-img" loading="lazy">
-        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <div class="team-card-overlay"></div>
-        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
-        <div class="team-card-content">
-          <div class="team-card-credentials">P.Eng., M.Eng.</div>
-          <div class="team-card-name">Nicole Bersman</div>
-          <div class="team-card-role">VP Operations</div>
-        </div>
-        <div class="team-card-bio-overlay">
-          <button class="bio-close">&times;</button>
-          <div class="bio-text">Nicole oversees all site operations and construction management across Boet's portfolio. A licensed professional engineer with an M.Eng. in Mining Engineering, she has managed large-scale build-outs in Alberta, British Columbia, and internationally, with an impeccable safety record.</div>
-          <div class="bio-overlay-credentials">P.Eng., M.Eng.</div>
-          <div class="bio-overlay-name">Nicole Bersman</div>
-          <div class="bio-overlay-role">VP Operations</div>
-        </div>
-      </div>
-      <div class="team-card">
-        <img src="headshot-6.png" alt="Rubert Holmes" class="team-card-img" loading="lazy">
-        <a href="#" class="team-card-linkedin" aria-label="LinkedIn profile"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-        <div class="team-card-overlay"></div>
-        <div class="team-card-bio">Read Bio <span class="bio-arrow">&rarr;</span></div>
-        <div class="team-card-content">
-          <div class="team-card-credentials">LL.B., ESG-P</div>
-          <div class="team-card-name">Rubert Holmes</div>
-          <div class="team-card-role">VP Sustainability & ESG</div>
-        </div>
-        <div class="team-card-bio-overlay">
-          <button class="bio-close">&times;</button>
-          <div class="bio-text">Rubert leads Boet's sustainability strategy, community relations, and ESG reporting. A qualified lawyer with an ESG practitioner certification, he ensures all operations meet the highest environmental and social governance standards while maintaining meaningful relationships with indigenous communities.</div>
-          <div class="bio-overlay-credentials">LL.B., ESG-P</div>
-          <div class="bio-overlay-name">Rubert Holmes</div>
-          <div class="bio-overlay-role">VP Sustainability & ESG</div>
-        </div>
-      </div>
+    <div class="invest-stat">
+      <div class="invest-stat-number" data-count="412" data-prefix="$" data-suffix="M">$0M</div>
+      <div class="invest-stat-label">Market Cap</div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════ -->
-<!-- 7. CTA SECTION                                          -->
+<!-- 3. NEWS & PRESS RELEASES                                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="news-section" id="news">
+  <div class="news-inner">
+    <div class="news-header fade-up">
+      <div class="eyebrow">Latest Updates</div>
+      <h2>News &amp; <span class="gold-word">Press Releases</span></h2>
+    </div>
+    <div class="news-list">
+
+      <div class="news-card fade-up">
+        <div class="news-date-col">Feb 12, 2026</div>
+        <div class="news-content">
+          <div class="news-tag">Operations Update</div>
+          <div class="news-title">Boet Materials Reports Record Q4 Extraction Volumes at Clearwater Basin</div>
+          <div class="news-excerpt">Fourth quarter direct lithium extraction operations delivered 4,200 tonnes of lithium carbonate equivalent, surpassing initial forecasts by 18% and marking the highest quarterly output since commercial operations commenced.</div>
+          <a href="#" class="news-link">Read Full Release <span>&rarr;</span></a>
+        </div>
+      </div>
+
+      <div class="news-card fade-up">
+        <div class="news-date-col">Jan 28, 2026</div>
+        <div class="news-content">
+          <div class="news-tag">Financial</div>
+          <div class="news-title">Boet Materials Closes C$18M Non-Brokered Private Placement</div>
+          <div class="news-excerpt">Proceeds will fund the Phase II expansion of the Clearwater DLE facility and advance exploration activities at the company's northern Saskatchewan properties, with construction targeted for Q3 2026.</div>
+          <a href="#" class="news-link">Read Full Release <span>&rarr;</span></a>
+        </div>
+      </div>
+
+      <div class="news-card fade-up">
+        <div class="news-date-col">Dec 15, 2025</div>
+        <div class="news-content">
+          <div class="news-tag">Resource Estimate</div>
+          <div class="news-title">Updated NI 43-101 Resource Estimate Increases Indicated Resource by 34%</div>
+          <div class="news-excerpt">The independent technical report prepared by SLR Consulting confirms a significant expansion of the indicated mineral resource at the flagship Clearwater Basin project, supporting the company's long-term production targets.</div>
+          <a href="#" class="news-link">Read Full Release <span>&rarr;</span></a>
+        </div>
+      </div>
+
+      <div class="news-card fade-up">
+        <div class="news-date-col">Nov 3, 2025</div>
+        <div class="news-content">
+          <div class="news-tag">Corporate</div>
+          <div class="news-title">Boet Materials Appoints Dr. Sarah Chen to Board of Directors</div>
+          <div class="news-excerpt">Dr. Chen brings over two decades of experience in sustainable mining and critical minerals policy. Her appointment strengthens the board's technical oversight as the company advances toward full-scale commercial production.</div>
+          <a href="#" class="news-link">Read Full Release <span>&rarr;</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 4. INVESTOR RESOURCES                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="resources-section">
+  <div class="resources-inner">
+    <div class="resources-header fade-up">
+      <div class="eyebrow">Resources</div>
+      <h2>Investor <span class="gold-word">Resources</span></h2>
+    </div>
+    <div class="resources-grid">
+
+      <a href="#" class="resource-card">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 17H7v-7h2m4 7h-2V7h2m4 10h-2v-4h2M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <h3>Quarterly Reports</h3>
+        <p>Access quarterly financial statements, MD&amp;A reports, and interim filings for the current and prior fiscal years.</p>
+        <span class="resource-link">View Reports <span>&rarr;</span></span>
+      </a>
+
+      <a href="#" class="resource-card">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>Company Financials</h3>
+        <p>Review audited annual financial statements, management discussion and analysis, and annual information forms on SEDAR+.</p>
+        <span class="resource-link">View Financials <span>&rarr;</span></span>
+      </a>
+
+      <a href="https://pitch-deck-demo.vercel.app/" class="resource-card">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Corporate Presentation</h3>
+        <p>View the latest investor deck covering our strategy, assets, financial position, and growth roadmap for the year ahead.</p>
+        <span class="resource-link">View Presentation <span>&rarr;</span></span>
+      </a>
+
+      <a href="contact.html" class="resource-card">
+        <div class="resource-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>Contact IR</h3>
+        <p>Reach our investor relations team for questions about the company, financial disclosures, or partnership opportunities.</p>
+        <span class="resource-link">Get in Touch <span>&rarr;</span></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 5. CTA SECTION                                          -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section class="cta-section">
-  <div class="eyebrow fade-up">Get In Touch</div>
-  <h2 class="fade-up">Ready to Partner With Us?</h2>
-  <p class="cta-sub fade-up">Learn how Boet Materials Corp. is pioneering the future of responsible resource development and advancing the global energy transition.</p>
+  <div class="eyebrow fade-up">Take the Next Step</div>
+  <h2 class="fade-up">Explore the Opportunity</h2>
+  <p class="cta-sub fade-up">See how Boet Materials Corp. is positioned to become a leading North American critical minerals producer. Review our corporate presentation for full details.</p>
   <div class="cta-buttons fade-up">
     <a href="https://pitch-deck-demo.vercel.app/" class="btn-primary">Corporate Presentation <span class="arrow">&rarr;</span></a>
-    <a href="contact.html" class="btn-outline">Contact Us <span class="arrow">&rarr;</span></a>
+    <a href="contact.html" class="btn-outline">Contact IR <span class="arrow">&rarr;</span></a>
   </div>
 </section>
 
@@ -1581,7 +1350,6 @@ gsap.registerPlugin(ScrollTrigger);
   var isInternalNav = sameOriginReferrer && (navType === 'navigate' || navType === 'back_forward');
 
   if (isInternalNav) {
-    /* Keep dark mining-pattern backdrop, skip text + blocks */
     overlayText.style.display = 'none';
     overlayBg.style.zIndex = '1';
     initPageAnimations();
@@ -1618,7 +1386,6 @@ gsap.registerPlugin(ScrollTrigger);
 
     setTimeout(function() {
       overlayText.style.display = 'none';
-      /* Drop overlay z-index so page content sits above it */
       overlayBg.style.zIndex = '1';
       document.body.style.overflow = '';
       initPageAnimations();
@@ -1650,11 +1417,12 @@ window.__lenis = lenis;
 (function() {
   var header      = document.getElementById('header');
   var ticker      = document.getElementById('ticker-strip');
-  var hero        = document.getElementById('about-hero');
-  var heroContent = document.querySelector('.about-hero-content');
+  var hero        = document.getElementById('investor-hero');
+  var heroContent = document.querySelector('.investor-hero-content');
   var eyebrow     = heroContent.querySelector('.eyebrow');
   var h1          = document.getElementById('hero-h1');
   var heroSub     = heroContent.querySelector('.hero-sub');
+  var heroButtons = heroContent.querySelector('.hero-buttons');
 
   /* Split h1 into word-reveal spans */
   var text = h1.textContent;
@@ -1669,8 +1437,6 @@ window.__lenis = lenis;
 
   var tl = gsap.timeline({ delay: 0.3 });
 
-  /* ── Phase 1: Nav bar + background ── */
-
   /* 1. Header slides down */
   tl.to(header, { y: 0, duration: 0.6, ease: 'power2.out' });
 
@@ -1678,15 +1444,13 @@ window.__lenis = lenis;
   tl.to(ticker, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.3');
   tl.to(tickerItems, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.12 }, '-=0.2');
 
-  /* 3. Hero background reveals via clip-path (slides up over dark mining pattern) */
+  /* 3. Hero background reveals via clip-path */
   tl.to(hero, { clipPath: 'inset(0% 0 0 0)', duration: 1.0, ease: 'power3.inOut',
     onComplete: function() {
       var bg = document.getElementById('loadOverlayBg');
       if (bg) bg.style.display = 'none';
     }
   }, '-=0.15');
-
-  /* ── Phase 2: Title + description ── */
 
   /* 4. Eyebrow fades up */
   tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
@@ -1701,10 +1465,13 @@ window.__lenis = lenis;
 
   /* 6. Subtitle fades up */
   tl.to(heroSub, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4');
+
+  /* 7. Buttons fade up */
+  tl.to(heroButtons, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
 })();
 
 /* ═══════════════════════════════════════════════════════ */
-/* 2. FADE-UP SCROLL REVEALS                               */
+/* FADE-UP SCROLL REVEALS                                  */
 /* ═══════════════════════════════════════════════════════ */
 gsap.utils.toArray('.fade-up').forEach(function(el) {
   gsap.to(el, {
@@ -1719,56 +1486,22 @@ gsap.utils.toArray('.fade-up').forEach(function(el) {
 });
 
 /* ═══════════════════════════════════════════════════════ */
-/* 3. VALUE CARDS — staggered cascade                      */
+/* INVESTMENT HIGHLIGHTS — stagger + count-up              */
 /* ═══════════════════════════════════════════════════════ */
 (function() {
-  var cards = gsap.utils.toArray('.value-card');
-  gsap.to(cards, {
-    opacity: 1, y: 0,
-    duration: 0.8, ease: 'power2.out',
-    stagger: 0.12,
-    scrollTrigger: {
-      trigger: '.values-grid',
-      start: 'top 80%',
-      once: true
-    }
-  });
-})();
-
-/* ═══════════════════════════════════════════════════════ */
-/* 4. APPROACH STEPS — stagger in                          */
-/* ═══════════════════════════════════════════════════════ */
-(function() {
-  var steps = gsap.utils.toArray('.approach-step');
-  gsap.to(steps, {
-    opacity: 1, y: 0,
-    duration: 0.7, ease: 'power2.out',
-    stagger: 0.15,
-    scrollTrigger: {
-      trigger: '.approach-steps',
-      start: 'top 80%',
-      once: true
-    }
-  });
-})();
-
-/* ═══════════════════════════════════════════════════════ */
-/* 5. STATS COUNT-UP                                       */
-/* ═══════════════════════════════════════════════════════ */
-(function() {
-  var statItems = gsap.utils.toArray('.stat-item');
-  gsap.to(statItems, {
+  var stats = gsap.utils.toArray('.invest-stat');
+  gsap.to(stats, {
     opacity: 1, y: 0,
     duration: 0.7, ease: 'power2.out',
     stagger: 0.12,
     scrollTrigger: {
-      trigger: '.stats-inner',
+      trigger: '.invest-highlights-inner',
       start: 'top 85%',
       once: true
     }
   });
 
-  var counters = document.querySelectorAll('.stat-number[data-count]');
+  var counters = document.querySelectorAll('.invest-stat-number[data-count]');
   counters.forEach(function(el) {
     var target = parseFloat(el.dataset.count);
     var suffix = el.dataset.suffix || '';
@@ -1796,16 +1529,16 @@ gsap.utils.toArray('.fade-up').forEach(function(el) {
 })();
 
 /* ═══════════════════════════════════════════════════════ */
-/* 6. TEAM CARDS — staggered cascade                       */
+/* RESOURCE CARDS — staggered cascade                      */
 /* ═══════════════════════════════════════════════════════ */
 (function() {
-  var cards = gsap.utils.toArray('.team-card');
+  var cards = gsap.utils.toArray('.resource-card');
   gsap.to(cards, {
     opacity: 1, y: 0,
     duration: 0.8, ease: 'power2.out',
     stagger: 0.12,
     scrollTrigger: {
-      trigger: '.team-grid',
+      trigger: '.resources-grid',
       start: 'top 80%',
       once: true
     }
@@ -1813,12 +1546,11 @@ gsap.utils.toArray('.fade-up').forEach(function(el) {
 })();
 
 /* ═══════════════════════════════════════════════════════ */
-/* 7. HEADING WORD REVEALS                                 */
+/* HEADING WORD REVEALS                                    */
 /* ═══════════════════════════════════════════════════════ */
-document.querySelectorAll('.who-split-left h2, .values-header h2, .approach-left h2, .team-header h2, .cta-section h2').forEach(function(heading) {
+document.querySelectorAll('.news-header h2, .resources-header h2, .cta-section h2').forEach(function(heading) {
   if (heading.id === 'hero-h1') return;
   var text = heading.innerHTML;
-  /* preserve gold-word spans */
   var tempDiv = document.createElement('div');
   tempDiv.innerHTML = text;
   var nodes = [];
@@ -1858,7 +1590,7 @@ document.querySelectorAll('.who-split-left h2, .values-header h2, .approach-left
 });
 
 /* ═══════════════════════════════════════════════════════ */
-/* 8. MOBILE NAV                                           */
+/* MOBILE NAV                                              */
 /* ═══════════════════════════════════════════════════════ */
 (function() {
   var hamburger = document.getElementById('hamburger');
@@ -1908,32 +1640,7 @@ document.querySelectorAll('.who-split-left h2, .values-header h2, .approach-left
 })();
 
 /* ═══════════════════════════════════════════════════════ */
-/* 9. BIO OVERLAY OPEN / CLOSE                             */
-/* ═══════════════════════════════════════════════════════ */
-(function() {
-  document.querySelectorAll('.team-card-bio').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var card = btn.closest('.team-card');
-      var overlay = card.querySelector('.team-card-bio-overlay');
-      card.classList.add('bio-open');
-      overlay.classList.add('bio-active');
-    });
-  });
-
-  document.querySelectorAll('.bio-close').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var card = btn.closest('.team-card');
-      var overlay = card.querySelector('.team-card-bio-overlay');
-      overlay.classList.remove('bio-active');
-      card.classList.remove('bio-open');
-    });
-  });
-})();
-
-/* ═══════════════════════════════════════════════════════ */
-/* 10. SMOOTH ANCHOR SCROLL (via Lenis)                    */
+/* SMOOTH ANCHOR SCROLL (via Lenis)                        */
 /* ═══════════════════════════════════════════════════════ */
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   a.addEventListener('click', function(e) {
@@ -1948,12 +1655,14 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 });
 
 /* ═══════════════════════════════════════════════════════ */
-/* 11. SCROLL-BASED HEADER COLOR TRANSITIONS               */
+/* SCROLL-BASED HEADER COLOR TRANSITIONS                   */
 /* ═══════════════════════════════════════════════════════ */
 (function() {
   var header = document.getElementById('header');
   var ticker = document.getElementById('ticker-strip');
-  var teamSection = document.querySelector('.team-section');
+  var highlightsSection = document.querySelector('.invest-highlights');
+  var newsSection = document.querySelector('.news-section');
+  var resourcesSection = document.querySelector('.resources-section');
   var ctaSection = document.querySelector('.cta-section');
   var footerSection = document.querySelector('.footer');
   var currentState = '';
@@ -1961,22 +1670,31 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   function updateHeaderState() {
     var scrollY = window.scrollY;
     var headerH = header.offsetHeight + ticker.offsetHeight;
-    var teamTop = teamSection.getBoundingClientRect().top + scrollY - headerH;
+
+    var highlightsTop = highlightsSection.getBoundingClientRect().top + scrollY - headerH;
+    var newsTop = newsSection.getBoundingClientRect().top + scrollY - headerH;
+    var resourcesTop = resourcesSection.getBoundingClientRect().top + scrollY - headerH;
     var ctaTop = ctaSection.getBoundingClientRect().top + scrollY - headerH;
     var footerTop = footerSection.getBoundingClientRect().top + scrollY - headerH;
 
     var newState;
-    if (scrollY < teamTop) {
-      /* Over hero / stats / who-we-are (cream sections) */
+    if (scrollY < highlightsTop) {
+      /* Over hero (cream) */
+      newState = 'cream';
+    } else if (scrollY < newsTop) {
+      /* Over highlights (dark) */
+      newState = 'dark';
+    } else if (scrollY < resourcesTop) {
+      /* Over news (cream) */
       newState = 'cream';
     } else if (scrollY < ctaTop) {
-      /* Over leadership (dark section) */
+      /* Over resources (dark) */
       newState = 'dark';
     } else if (scrollY < footerTop) {
-      /* Over CTA (cream section) */
+      /* Over CTA (cream) */
       newState = 'cream';
     } else {
-      /* Over footer (dark section) */
+      /* Over footer (dark) */
       newState = 'dark';
     }
 
