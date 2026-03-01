@@ -1254,7 +1254,7 @@ function initPageAnimations() {
 /* ═══════════════════════════════════════════════════════ */
 /* LENIS SMOOTH SCROLL                                     */
 /* ═══════════════════════════════════════════════════════ */
-var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var isMobileDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 var lenis;
 if (!isMobileDevice) {
   lenis = new Lenis({

@@ -1028,15 +1028,15 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 .flagship::before {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  background: url('mining-pattern.webp') center / 1200px auto repeat;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('mining-pattern.webp') center / cover no-repeat;
   opacity: 0.07;
   pointer-events: none;
+  z-index: 0;
 }
 .flagship-grid {
   display: grid;
@@ -2486,7 +2486,7 @@ function initPageAnimations() {
 /* ═══════════════════════════════════════════════════════ */
 /* 1. LENIS SMOOTH SCROLL                                  */
 /* ═══════════════════════════════════════════════════════ */
-var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var isMobileDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 var lenis;
 if (!isMobileDevice) {
   lenis = new Lenis({

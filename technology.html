@@ -1831,7 +1831,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 function initPageAnimations() {
 
 /* Lenis smooth scroll */
-var isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var isMobileDevice = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 var lenis;
 if (!isMobileDevice) {
   lenis = new Lenis({
