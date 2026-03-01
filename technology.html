@@ -8,7 +8,10 @@
 <link rel="apple-touch-icon" href="boet-icon-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"></noscript>
 <style>
 /* ================================================================ */
 /* CSS CUSTOM PROPERTIES                                              */
@@ -1425,14 +1428,14 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
       </div>
       <div class="step-marker"><span>01</span></div>
       <div class="step-image">
-        <img src="photo-tech-1-desktop.jpg" alt="Open-pit mining extraction" loading="lazy">
+        <img srcset="photo-tech-1-mobile.jpg 600w, photo-tech-1-desktop.jpg 1200w" sizes="(max-width: 768px) 100vw, 50vw" src="photo-tech-1-desktop.jpg" alt="Open-pit mining extraction" loading="lazy">
       </div>
     </div>
 
     <!-- Step 2 -->
     <div class="process-step" data-step="2">
       <div class="step-image">
-        <img src="photo-tech-2-desktop.jpg" alt="Ore processing plant" loading="lazy">
+        <img srcset="photo-tech-2-mobile.jpg 600w, photo-tech-2-desktop.jpg 1200w" sizes="(max-width: 768px) 100vw, 50vw" src="photo-tech-2-desktop.jpg" alt="Ore processing plant" loading="lazy">
       </div>
       <div class="step-marker"><span>02</span></div>
       <div class="step-content">
@@ -1459,7 +1462,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
       </div>
       <div class="step-marker"><span>03</span></div>
       <div class="step-image">
-        <img src="photo-tech-3-desktop.jpg" alt="Tailings management facility" loading="lazy">
+        <img srcset="photo-tech-3-mobile.jpg 600w, photo-tech-3-desktop.jpg 1200w" sizes="(max-width: 768px) 100vw, 50vw" src="photo-tech-3-desktop.jpg" alt="Tailings management facility" loading="lazy">
       </div>
     </div>
 
@@ -1467,7 +1470,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
     <div class="process-step" data-step="4">
       <div class="step-image">
         <picture>
-          <img src="photo-tech-1-desktop.jpg" alt="Power infrastructure and solar array" loading="lazy" style="filter: hue-rotate(30deg) brightness(1.05);">
+          <img srcset="photo-tech-1-mobile.jpg 600w, photo-tech-1-desktop.jpg 1200w" sizes="(max-width: 768px) 100vw, 50vw" src="photo-tech-1-desktop.jpg" alt="Power infrastructure and solar array" loading="lazy" style="filter: hue-rotate(30deg) brightness(1.05);">
         </picture>
       </div>
       <div class="step-marker"><span>04</span></div>
@@ -1556,7 +1559,7 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 
       <!-- Right: SVG Scene -->
       <div class="tech-scene-wrapper" id="techScene">
-        <img src="site-map.svg" alt="Mine site topographic map" style="display:block; width:100%; height:auto;">
+        <img src="site-map.svg" alt="Mine site topographic map" loading="lazy" style="display:block; width:100%; height:auto;">
       </div>
     </div>
   </div>
@@ -1631,9 +1634,9 @@ h3 { font-size: clamp(18px, 2vw, 24px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SCRIPTS                                                 -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
 /* ═══════════════════════════════════════════════════════ */
 /* LOAD-IN OVERLAY                                         */
@@ -1775,10 +1778,14 @@ window.__lenis = lenis;
 
   /* Load video */
   function loadVid() {
-    video.src = 'technology-hero.mp4';
-    var playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(function() { /* autoplay blocked — rely on safety timeout */ });
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g');
+    if (!slow) {
+      video.src = 'technology-hero.mp4';
+      var playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(function() { /* autoplay blocked — rely on safety timeout */ });
+      }
     }
   }
   if ('requestIdleCallback' in window) { requestIdleCallback(loadVid); }

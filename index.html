@@ -8,6 +8,8 @@
 <link rel="apple-touch-icon" href="boet-icon-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://unpkg.com">
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"></noscript>
 <style>
@@ -1892,7 +1894,7 @@ sup.ast {
 <!-- HERO SECTION                                            -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section class="hero" id="hero">
-  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto"></video>
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="none"></video>
   <div class="hero-bg" id="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-grain"></div>
@@ -2187,10 +2189,24 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SCRIPTS: GSAP + ScrollTrigger + Lenis                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
+/* ── Guard: wait for deferred GSAP/Lenis before running page animations ── */
+function safeInitPageAnimations() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+    initPageAnimations();
+  } else {
+    var id = setInterval(function() {
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+        clearInterval(id);
+        initPageAnimations();
+      }
+    }, 16);
+  }
+}
+
 /* ═══════════════════════════════════════════════════════ */
 /* LOAD-IN OVERLAY ANIMATION                               */
 /* ═══════════════════════════════════════════════════════ */
@@ -2242,7 +2258,7 @@ sup.ast {
   if (isInternalNav) {
     overlayBg.style.display   = 'none';
     overlayText.style.display = 'none';
-    initPageAnimations();
+    safeInitPageAnimations();
     return;
   }
 
@@ -2330,7 +2346,7 @@ sup.ast {
         overlayBg.style.display   = 'none';
         overlayText.style.display = 'none';
         document.body.style.overflow = '';
-        initPageAnimations();
+        safeInitPageAnimations();
       }, 400);
     }, 300);
     return;
@@ -2432,7 +2448,7 @@ sup.ast {
           setTimeout(function() {
             blockContainer.style.display = 'none';
             document.body.style.overflow = '';
-            initPageAnimations();
+            safeInitPageAnimations();
           }, grid.maxDelay + BLOCK_DURATION + 100);
 
         }, TEXT_FADE);
@@ -2574,6 +2590,15 @@ ScrollTrigger.create({
 (function() {
   var video = document.getElementById('heroVideo');
   if (!video) return;
+
+  // Skip video entirely on slow connections to save ~35 MB
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var slow = conn && (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g');
+  if (slow) {
+    // Leave video element empty; background color shows through
+    return;
+  }
+
   function reveal() {
     video.classList.add('vid-ready');
   }
