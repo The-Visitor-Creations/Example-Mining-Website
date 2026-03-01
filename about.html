@@ -544,12 +544,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .load-page-label.visible { opacity: 1; }
 
 /* ================================================================ */
-/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
-/* ================================================================ */
-.cv-defer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* cv-defer disabled — content-visibility caused scroll layout jumps */
 
 @media (prefers-reduced-motion: reduce) {
   .header { transform: none; }
@@ -1357,7 +1352,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- GLOBAL STATS — Count-up strip                           -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="stats-section cv-defer">
+<section class="stats-section">
   <div class="stats-inner">
     <div class="stat-item">
       <div class="stat-number" data-count="15" data-suffix="+">0+</div>
@@ -1377,7 +1372,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 2. WHO WE ARE — Two-column split                        -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="who-split cv-defer">
+<section class="who-split">
   <div class="who-split-grid">
     <div class="who-split-left fade-up">
       <h2>Built on <span class="gold-word">Expertise.</span> Driven by Purpose.</h2>
@@ -1396,7 +1391,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 6. LEADERSHIP TEAM                                      -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="team-section cv-defer" id="team">
+<section class="team-section" id="team">
   <div class="team-inner">
     <div class="team-header fade-up">
       <div class="eyebrow">Leadership</div>
@@ -1536,7 +1531,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 7. CTA SECTION                                          -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="cta-section cv-defer">
+<section class="cta-section">
   <div class="eyebrow fade-up">Get In Touch</div>
   <h2 class="fade-up">Ready to Partner With Us?</h2>
   <p class="cta-sub fade-up">Learn how Boet Materials Corp. is pioneering the future of responsible resource development and advancing the global energy transition.</p>

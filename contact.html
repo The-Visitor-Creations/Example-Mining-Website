@@ -492,12 +492,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 }
 
 /* ================================================================ */
-/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
-/* ================================================================ */
-.cv-defer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* cv-defer disabled — content-visibility caused scroll layout jumps */
 
 @media (prefers-reduced-motion: reduce) {
   .header { transform: none; }
@@ -992,7 +987,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- CONTACT FORM + SIDEBAR                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="contact-section cv-defer">
+<section class="contact-section">
   <div class="contact-grid">
 
     <!-- Left: Contact Form -->

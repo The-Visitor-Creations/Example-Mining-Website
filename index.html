@@ -1034,7 +1034,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  background: url('mining-pattern.webp') center / cover no-repeat;
+  background: url('mining-pattern.webp') center / 1200px auto repeat;
   opacity: 0.07;
   pointer-events: none;
 }
@@ -1594,10 +1594,7 @@ sup.ast {
 /* ================================================================ */
 /* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
 /* ================================================================ */
-.cv-defer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* disabled — content-visibility caused scroll layout jumps */
 
 /* ================================================================ */
 /* REDUCED MOTION                                                    */
@@ -1957,7 +1954,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 2 — WHO WE ARE                                  -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="who-we-are cv-defer" id="about">
+<section class="who-we-are" id="about">
   <div class="who-we-are-grid">
     <div class="who-we-are-copy fade-up">
       <div class="eyebrow">Who We Are</div>
@@ -1994,7 +1991,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 3 — TECHNOLOGY TEASER                           -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="tech-teaser cv-defer" id="technology">
+<section class="tech-teaser" id="technology">
   <div class="tech-teaser-bg" id="tech-bg"></div>
   <div class="tech-teaser-overlay"></div>
   <div class="tech-teaser-content fade-up">
@@ -2008,7 +2005,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 4 — THE OPPORTUNITY                             -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="opportunity cv-defer" id="opportunity">
+<section class="opportunity" id="opportunity">
   <div class="opportunity-inner">
     <div class="opportunity-header fade-up">
       <div class="eyebrow">The Opportunity</div>
@@ -2164,7 +2161,7 @@ sup.ast {
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- SECTION 8 — INVESTORS CTA                               -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="investors-cta cv-defer" id="investors">
+<section class="investors-cta" id="investors">
   <div class="investors-cta-inner fade-up">
     <div class="eyebrow" style="color: var(--gold);">Investor Relations</div>
     <h2>Building a Generational Critical Minerals Asset</h2>

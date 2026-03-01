@@ -1220,12 +1220,7 @@ ul { list-style: none; }
 .back-link:hover { background: var(--accent); transform: translateY(-2px); }
 
 /* ================================================================ */
-/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
-/* ================================================================ */
-.cv-defer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* cv-defer disabled — content-visibility caused scroll layout jumps */
 </style>
 </head>
 <body>
@@ -1312,7 +1307,7 @@ ul { list-style: none; }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- INTRO                                                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="intro cv-defer" id="intro">
+<section class="intro" id="intro">
   <div class="intro-left op-child">
     <div class="section-label">Our Projects</div>
     <h2>Three Strategic Lithium Projects</h2>
@@ -1328,7 +1323,7 @@ ul { list-style: none; }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- THREE MINING SITE CARDS                                 -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="cards-section cv-defer" id="cards">
+<section class="cards-section" id="cards">
   <div class="cards-grid">
     <div class="site-card card-dark curtain" data-delay="0">
       <div>
@@ -1369,7 +1364,7 @@ ul { list-style: none; }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- LOCATION MAP                                            -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="location-section cv-defer" id="locations">
+<section class="location-section" id="locations">
   <div class="location-inner">
     <div class="section-label op">Our Locations</div>
     <h2 class="slide-up">Strategic Mine Locations</h2>
@@ -1415,7 +1410,7 @@ ul { list-style: none; }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- ACTIVITY                                                -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="activity-section cv-defer" id="activity">
+<section class="activity-section" id="activity">
   <div class="activity-inner">
     <div class="section-label op">Activity</div>
     <h2 class="slide-up">We Create Value Through Responsible Resource Extraction</h2>

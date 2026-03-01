@@ -570,12 +570,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 .load-page-label.visible { opacity: 1; }
 
 /* ================================================================ */
-/* DEFER RENDERING OF OFF-SCREEN SECTIONS                            */
-/* ================================================================ */
-.cv-defer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
+/* cv-defer disabled — content-visibility caused scroll layout jumps */
 
 @media (prefers-reduced-motion: reduce) {
   .header { transform: none; }
@@ -1267,7 +1262,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 2. INVESTMENT HIGHLIGHTS STRIP                          -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="invest-highlights cv-defer">
+<section class="invest-highlights">
   <div class="invest-highlights-inner">
     <div class="invest-stat">
       <div class="invest-stat-number" data-count="482" data-prefix="$" data-suffix="M">$0M</div>
@@ -1291,7 +1286,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 3. NEWS & PRESS RELEASES                                -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="news-section cv-defer" id="news">
+<section class="news-section" id="news">
   <div class="news-inner">
     <div class="news-header fade-up">
       <div class="eyebrow">Latest Updates</div>
@@ -1346,7 +1341,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 4. INVESTOR RESOURCES                                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="resources-section cv-defer">
+<section class="resources-section">
   <div class="resources-inner">
     <div class="resources-header fade-up">
       <div class="eyebrow">Resources</div>
@@ -1397,7 +1392,7 @@ h3 { font-size: clamp(20px, 2.5vw, 28px); }
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- 5. CTA SECTION                                          -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="cta-section cv-defer">
+<section class="cta-section">
   <div class="eyebrow fade-up">Take the Next Step</div>
   <h2 class="fade-up">Explore the Opportunity</h2>
   <p class="cta-sub fade-up">See how Boet Materials Corp. is positioned to become a leading North American critical minerals producer. Review our corporate presentation for full details.</p>
