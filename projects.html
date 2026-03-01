@@ -888,6 +888,28 @@ ul { list-style: none; }
   color: var(--text-muted);
 }
 
+/* Popup site navigation dots (mobile only) */
+.popup-nav {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+.popup-nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.popup-nav-dot.nav-active {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
 /* Close button for mobile popup */
 .loc-popup-close {
   display: none;
@@ -941,6 +963,7 @@ ul { list-style: none; }
     pointer-events: auto;
   }
   .loc-popup-close { display: flex; }
+  .popup-nav { display: flex; }
 
   /* Backdrop overlay on the map area */
   .location-map::after {
@@ -956,6 +979,9 @@ ul { list-style: none; }
   .location-map.backdrop-active::after {
     opacity: 1;
     pointer-events: auto;
+  }
+  .location-map.backdrop-active .map-dot {
+    z-index: 9999;
   }
 }
 
@@ -1350,11 +1376,8 @@ ul { list-style: none; }
     <div class="location-grid">
       <div class="location-map op">
         <picture>
-          <source srcset="elevation-map.webp" type="image/webp">
-          <picture>
-            <source type="image/webp" srcset="elevation-map.webp">
-            <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img" loading="lazy">
-          </picture>
+          <source type="image/webp" srcset="elevation-map.webp">
+          <img src="elevation-map.png" alt="Elevation map showing mine locations" class="elevation-img" loading="lazy">
         </picture>
         <button class="map-dot" data-site="0" style="top:28%;left:32%;" aria-label="Highland Ridge">
           <span class="map-dot-pulse"></span>
@@ -1371,6 +1394,11 @@ ul { list-style: none; }
       </div>
       <div class="location-info" id="locationInfo">
         <button class="loc-popup-close" id="locPopupClose" aria-label="Close">&times;</button>
+        <div class="popup-nav" id="popupNav">
+          <button class="popup-nav-dot" data-idx="0" aria-label="Highland Ridge"></button>
+          <button class="popup-nav-dot" data-idx="1" aria-label="Kingsgate"></button>
+          <button class="popup-nav-dot" data-idx="2" aria-label="Clearwater Basin"></button>
+        </div>
         <div class="loc-eyebrow" id="locEyebrow">Select a Site</div>
         <h3 class="loc-title" id="locTitle">Explore Our Operations</h3>
         <p class="loc-desc" id="locDesc">Click on a map marker to learn more about each of our three flagship mining sites and their operational capabilities.</p>
@@ -1722,9 +1750,19 @@ if (!isMobileDevice) {
     }).join('');
   }
 
+  var navDots = document.querySelectorAll('.popup-nav-dot');
+
+  function updateNavDots(idx) {
+    navDots.forEach(function(nd, i) { nd.classList.toggle('nav-active', i === idx); });
+  }
+
   function showPopup() {
     infoCard.classList.add('popup-active');
-    if (locMap) locMap.classList.add('backdrop-active');
+    if (locMap) {
+      locMap.classList.add('backdrop-active');
+      /* Scroll map into view so dots stay above the bottom sheet */
+      locMap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   function hidePopup() {
@@ -1746,11 +1784,12 @@ if (!isMobileDevice) {
     active = idx;
     dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
     renderCard(sites[idx]);
+    updateNavDots(idx);
     if (isMobile()) showPopup();
   }
 
   dots.forEach(function(dot, i) {
-    dot.addEventListener('click', function() { selectSite(i); });
+    dot.addEventListener('click', function(e) { e.stopPropagation(); selectSite(i); });
   });
 
   /* Close button */
@@ -1763,6 +1802,14 @@ if (!isMobileDevice) {
       renderCard(overview);
     });
   }
+
+  /* Popup nav dots — switch between sites from inside the bottom sheet */
+  navDots.forEach(function(nd, i) {
+    nd.addEventListener('click', function(e) {
+      e.stopPropagation();
+      selectSite(i);
+    });
+  });
 
   /* Backdrop tap to dismiss */
   if (locMap) {
