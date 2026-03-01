@@ -2588,6 +2588,16 @@ ScrollTrigger.create({
   } else {
     setTimeout(function() { video.src = 'home-hero.mp4'; }, 100);
   }
+  /* iOS Low Power Mode: force-play on first user gesture */
+  var gestures = ['touchstart', 'click', 'scroll'];
+  function onGesture() {
+    if (video.paused && video.src) video.play().catch(function() {});
+    gestures.forEach(function(e) { document.removeEventListener(e, onGesture); });
+  }
+  gestures.forEach(function(e) {
+    document.addEventListener(e, onGesture, { passive: true });
+  });
+
   setTimeout(reveal, 4000);
 })();
 

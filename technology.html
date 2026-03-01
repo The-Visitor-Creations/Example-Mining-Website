@@ -1804,6 +1804,16 @@ window.__lenis = lenis;
     setTimeout(reveal, 300);
   }, { once: true });
 
+  /* iOS Low Power Mode: force-play on first user gesture */
+  var gestures = ['touchstart', 'click', 'scroll'];
+  function onGesture() {
+    if (video.paused && video.src) video.play().catch(function() {});
+    gestures.forEach(function(e) { document.removeEventListener(e, onGesture); });
+  }
+  gestures.forEach(function(e) {
+    document.addEventListener(e, onGesture, { passive: true });
+  });
+
   setTimeout(reveal, 4000);
 })();
 
